@@ -6,6 +6,6 @@ public class Launcher {
 	
 	public static void main(String args[]){
 		
-		Monoko monoko = new Monoko();
+		//Monoko monoko = new Monoko();
 	}
 }
