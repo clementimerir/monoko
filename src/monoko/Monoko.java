@@ -1,4 +1,4 @@
-package monoko.ui;
+package monoko;
 
 import java.io.IOException;
 

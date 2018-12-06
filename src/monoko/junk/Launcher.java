@@ -1,6 +1,6 @@
-package monoko;
+package monoko.junk;
 
-import monoko.ui.Monoko;
+import monoko.Monoko;
 
 public class Launcher {
 	
