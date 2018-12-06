@@ -5,18 +5,15 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
 public class FirstIso extends Application{
 	
 	
-	static int tilesWidth = 8;
+	static int tilesWidth = 32;
 	
 	public static final int TILE_WIDTH = 32;
 	public static final int TILE_HEIGHT = 16;
