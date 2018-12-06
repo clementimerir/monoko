@@ -11,8 +11,6 @@ import javafx.stage.Stage;
 public class Monoko extends Application {
 	
 	public Monoko() {
-		//super();
-		
 		System.out.println("Constructing...");
 	}
 
@@ -22,7 +20,7 @@ public class Monoko extends Application {
 		primaryStage.setTitle("Monoko");
 		
 		try {
-			FXMLLoader loader = new FXMLLoader(Monoko.class.getResource("mainMenu.fxml"));
+			FXMLLoader loader = new FXMLLoader(Monoko.class.getResource("./ui/mainMenu.fxml"));
 			BorderPane page = (BorderPane) loader.load();
 			Scene scene = new Scene(page);
 			primaryStage.setScene(scene);
