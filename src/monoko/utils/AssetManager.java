@@ -2,7 +2,7 @@ package monoko.utils;
 
 import java.awt.image.BufferedImage;
 
-import monoko.objects.SpriteSheet;
+import monoko.junk.SpriteSheet;
 
 public class AssetManager {
 	private static final int width = 64, height = 64;

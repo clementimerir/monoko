@@ -1,4 +1,4 @@
-package monoko.objects;
+package monoko.junk;
 
 import java.awt.image.BufferedImage;
 
