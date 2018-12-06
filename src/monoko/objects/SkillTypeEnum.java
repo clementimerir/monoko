@@ -4,5 +4,5 @@ public enum SkillTypeEnum {
 	OFFENSE,
 	SUPPORT,
 	MOVEMENT,
-	PASSIVE
+	PASSIVE;
 }
