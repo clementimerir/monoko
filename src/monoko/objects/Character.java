@@ -1,9 +1,13 @@
 package monoko.objects;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Character extends Nameable{
 	private Attributes attributes;
 	private Soul job;
 	private Soul god;
+	private List<Skill> skills;
 	
 	public Character(int id, String name, Soul job, Soul god) {
 		setId(id);
@@ -45,5 +49,15 @@ public class Character extends Nameable{
 
 	public void setGod(Soul god) {
 		this.god = god;
+	}
+	public List<Skill> getSkills() {
+		if(skills == null) {
+			skills = new ArrayList<Skill>();
+		}
+		return skills;
+	}
+
+	public void setSkills(List<Skill> skills) {
+		this.skills = skills;
 	}
 }

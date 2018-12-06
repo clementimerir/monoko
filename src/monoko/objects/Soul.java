@@ -1,5 +1,10 @@
 package monoko.objects;
 
+/**
+ * Job or God of a character
+ * @author Bourdarie
+ *
+ */
 public class Soul extends Nameable{
 	private Attributes attributes;
 	
