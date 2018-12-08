@@ -85,7 +85,7 @@ public class RenderTestFX extends Application  {
         gc.setStroke( Color.BLACK );
         gc.setLineWidth(1);
 
-        Image bullseye = new Image( "bullseye.png" );
+        Image bullseye = new Image( "/textures/sheet.png" );
 
         new AnimationTimer()
         {
