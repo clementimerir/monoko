@@ -1,20 +1,24 @@
 package monoko.utils;
 
-import java.awt.image.BufferedImage;
-
-import monoko.junk.SpriteSheet;
+import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.WritableImage;
 
 public class AssetManager {
-	private static final int width = 64, height = 64;
 
-    public static BufferedImage grass, water, selected;
-
+	public static WritableImage grass;
+	
     public static void init(){
-        //Temp
-        SpriteSheet tileSheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet.png"));
 
-        grass = tileSheet.crop(width*2, 0, width, height);
-        water = tileSheet.crop(width*9, height*5, width, height);
-        selected = tileSheet.crop(0, height*5, width, height);
+//    	Image tiles = new Image("/monoko/res/tiles.png");
+//    	PixelReader reader = tiles.getPixelReader();
+//    	WritableImage newImage = new WritableImage(reader, 910, 690, 110, 80);
+//    	grass = newImage;
+    	
+    	
+    	Image tiles = new Image("/monoko/res/tiles3d.png");
+    	PixelReader reader = tiles.getPixelReader();
+    	WritableImage newImage = new WritableImage(reader, 681, 164, 137, 86);
+    	grass = newImage;
     }
 }
