@@ -19,7 +19,7 @@ public class TextureIso extends Application{
  
     public void start(Stage theStage) 
     {
-    	Image tiles = new Image("/tiles3d.png");
+    	Image tiles = new Image("/textures/tiles3d.png");
     	PixelReader reader = tiles.getPixelReader();
     	WritableImage grass = new WritableImage(reader, 681, 164, 127, 75);
     	
