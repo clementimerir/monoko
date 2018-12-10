@@ -5,9 +5,8 @@ import javafx.application.Platform;
 public class MainMenuController extends MainMenuBase{
 
 	public MainMenuController() {
-		
 	}
-
+	
 	@Override
 	void onPlayButtonClicked() {
 		System.out.println("play");

@@ -1,32 +1,28 @@
 package monoko.ui;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
 public abstract class CharacterCreationBase implements Initializable{
 
-	@FXML Label _titleLabel;
+	@FXML ComboBox<String> _jobComboBox;
+	@FXML ComboBox<String> _godComboBox;
+	@FXML ComboBox<String> _itemsComboBox;
 	
-	@FXML Button _playButton;
-	@FXML Button _teamEditorButton;
-	@FXML Button _helpButton;
-	@FXML Button _loreButton;
-	@FXML Button _quitButton;
+	@FXML Button _jobInfoButton;
+	@FXML Button _godInfoButton;
+	@FXML Button _createCharacterButton;
 	
-	@FXML abstract void onPlayButtonClicked();
-	@FXML abstract void onTeamEditorButtonClicked();
-	@FXML abstract void onHelpButtonClicked();
-	@FXML abstract void onLoreButtonClicked();
-	@FXML abstract void onQuitButtonClicked();
+	@FXML Label _hpValueLabel;
+	@FXML Label _strValueLabel;
+	@FXML Label _dexValueLabel;
+	@FXML Label _intValueLabel;
+	@FXML Label _spdValueLabel;
+	@FXML Label _costValueLabel;
 	
-	@Override
-	public void initialize(URL url, ResourceBundle bundle) {
-
-	}
-
+	@FXML abstract void onCreateCharacterButtonClicked();
+	
 }
