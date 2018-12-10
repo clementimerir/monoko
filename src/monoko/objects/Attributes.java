@@ -16,6 +16,14 @@ public class Attributes {
 		setSpeed(speed);
 	}
 	
+	public void setAttributes(Attributes a, Attributes b) {
+		setHp(a.getHp()+b.getHp());
+		setStrength(a.getStrength()+b.getStrength());
+		setDexterity(a.getDexterity()+b.getDexterity());
+		setIntelligence(a.getIntelligence()+b.getIntelligence());
+		setSpeed(a.getSpeed()+b.getSpeed());
+	}
+	
 	//GETTERS SETTERS
 	public int getHp() {
 		return hp;
