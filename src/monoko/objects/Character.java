@@ -8,13 +8,17 @@ public class Character extends Nameable{
 	private Soul job;
 	private Soul god;
 	private List<Skill> skills;
+	private String inGameSprite;
+	private String inMenuSprite;
 	
-	public Character(int id, String name, Soul job, Soul god) {
+	public Character(int id, String name, Soul job, Soul god, String inGameSprite, String inMenuSprite) {
 		setId(id);
 		setName(name);
 		setJob(job);
 		setGod(god);
 		buildAttributes(job,god);
+		setInGameSprite(inGameSprite);
+		setInMenuSprite(inMenuSprite);
 	}
 	
 	/**
@@ -23,11 +27,13 @@ public class Character extends Nameable{
 	 * @param god the chosen god
 	 */
 	public void buildAttributes(Soul job, Soul god) {
-		getAttributes().setHp( Math.max(0, job.getAttributes().getHp() + god.getAttributes().getHp() ) );
-		getAttributes().setStrength( Math.max(0, job.getAttributes().getHp() + god.getAttributes().getHp() ) );
-		getAttributes().setDexterity( Math.max(0, job.getAttributes().getHp() + god.getAttributes().getHp() ) );
-		getAttributes().setIntelligence( Math.max(0, job.getAttributes().getHp() + god.getAttributes().getHp() ) );
-		getAttributes().setSpeed( Math.max(0, job.getAttributes().getHp() + god.getAttributes().getHp() ) );
+		if(job != null) {
+			getAttributes().setHp( Math.max(0, job.getAttributes().getHp() + god.getAttributes().getHp() ) );
+			getAttributes().setStrength( Math.max(0, job.getAttributes().getHp() + god.getAttributes().getHp() ) );
+			getAttributes().setDexterity( Math.max(0, job.getAttributes().getHp() + god.getAttributes().getHp() ) );
+			getAttributes().setIntelligence( Math.max(0, job.getAttributes().getHp() + god.getAttributes().getHp() ) );
+			getAttributes().setSpeed( Math.max(0, job.getAttributes().getHp() + god.getAttributes().getHp() ) );
+		}
 	}
 	
 	//GETTERS SETTERS
@@ -50,6 +56,7 @@ public class Character extends Nameable{
 	public void setGod(Soul god) {
 		this.god = god;
 	}
+	
 	public List<Skill> getSkills() {
 		if(skills == null) {
 			skills = new ArrayList<Skill>();
@@ -60,4 +67,21 @@ public class Character extends Nameable{
 	public void setSkills(List<Skill> skills) {
 		this.skills = skills;
 	}
+	
+	public String getInGameSprite() {
+		return inGameSprite;
+	}
+
+	public void setInGameSprite(String inGameSprite) {
+		this.inGameSprite = inGameSprite;
+	}
+
+	public String getInMenuSprite() {
+		return inMenuSprite;
+	}
+
+	public void setInMenuSprite(String inMenuSprite) {
+		this.inMenuSprite = inMenuSprite;
+	}
+
 }
