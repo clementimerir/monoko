@@ -21,7 +21,7 @@ public class MainMenuController extends MainMenuBase{
 	
 	@Override
 	void onPlayButtonClicked() {
-//		_parent.getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/play.fxml").load());
+		_parent.getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/game.fxml", new GameController()).load());
 	}
 
 	@Override
