@@ -3,58 +3,40 @@ package monoko.junk;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
-
 import javax.net.ssl.HttpsURLConnection;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.*;
+
+import com.sun.media.jfxmedia.events.NewFrameEvent;
+
+import monoko.objects.Character;
+import monoko.objects.Player;
+import monoko.objects.Soul;
+import monoko.objects.Team;
 
 public class Network {
 
+	private String username;
+	private String password;
+	StringBuffer response;
+
 	public static void main(String[] args) throws Exception {
-
 		Network http = new Network();
-
-		//System.out.println("Testing 1 - Send Http GET request");
-		//http.sendGet();
-		
-		System.out.println("\nTesting 2 - Send Http POST request");
-		http.sendPost();
-
-	}
-
-	// HTTP GET request
-	private void sendGet() throws Exception {
-
-		String url = "https://multiplayer-mambab.c9users.io/";
-		
-		URL obj = new URL(url);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-		// optional default is GET
-		con.setRequestMethod("GET");
-		
-		int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'GET' request to URL : " + url);
-		System.out.println("Response Code : " + responseCode);
-
-		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
-
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
-		}
-		in.close();
-
-		//print result
-		System.out.println("Response : " + response.toString());
-
+		//System.out.println("\nTesting 2 - Send Http POST request");
+		//http.sendPost("{\\\"username\\\":\\\"Mambab\\\",\\\"password\\\":\\\"azerty\\\"}");
+		Character c1 = new Character(0, "Escanor", null, null, "unSprite", "unAutreSprite");
+		Character c2 = new Character(1, "Phillipe", null, null, "unSprite", "unAutreSprite");
+		Character c3 = new Character(2, "Jean", null, null, "unSprite", "unAutreSprite");
+		http.login("Mambab", "azerty");
+		/*http.saveCharacter(c1);
+		http.saveCharacter(c2);
+		http.saveCharacter(c3);*/
+		//http.deleteCharacter(c2);
 	}
 	
-	// HTTP POST request
-	private void sendPost() throws Exception {
-
-		String url = "https://multiplayer-mambab.c9users.io/login";
+	private int sendPost(String url, String urlParameters) throws Exception {
 		URL obj = new URL(url);
 		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 
@@ -62,8 +44,6 @@ public class Network {
 		con.setRequestMethod("POST");
 		con.setRequestProperty("Content-Type", "application/json");
 		con.setRequestProperty("Accept", "application/json");
-
-		String urlParameters = "{\"username\":\"Mambab\",\"password\":\"azerty\"}";
 		
 		// Send post request
 		con.setDoOutput(true);
@@ -73,22 +53,53 @@ public class Network {
 		wr.close();
 
 		int responseCode = con.getResponseCode();
+		/*
 		System.out.println("\nSending 'POST' request to URL : " + url);
 		System.out.println("Post parameters : " + urlParameters);
 		System.out.println("Response Code : " + responseCode);
-
+		*/
 		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		String inputLine;
-		StringBuffer response = new StringBuffer();
+		response = new StringBuffer();
 
 		while ((inputLine = in.readLine()) != null) {
 			response.append(inputLine);
 		}
 		in.close();
-		
-		//print result
-		System.out.println(response.toString());
+		return responseCode;
+	}
 
+	private void saveCharacter(Character c) throws Exception {
+		String urlParameters = "{\"username\":\"" +username+ "\",\"password\":\"" +password+ "\",\"character\":" + c.toJson()+ "}";
+		System.out.println(urlParameters);
+		sendPost("https://multiplayer-mambab.c9users.io/saveCharacter", urlParameters);
+	}
+	
+	private void deleteCharacter(Character c) throws Exception {
+		String urlParameters = "{\"username\":\"" +username+ "\",\"password\":\"" +password+ "\",\"ref\":" +c.getId()+ "}";
+		System.out.println(urlParameters);
+		sendPost("https://multiplayer-mambab.c9users.io/deleteCharacter", urlParameters);
+	}
+
+	private Player login(String _username, String _password) throws Exception {
+		String urlParameters = "{\"username\":\"" +_username+ "\",\"password\":\"" +_password+ "\"}";
+		System.out.println(urlParameters);
+		if(sendPost("https://multiplayer-mambab.c9users.io/login", urlParameters) == 200) {
+			username = _username;
+			password = _password;
+			Player p = new Player(0, "", null);
+			JSONParser parser = new JSONParser();
+			JSONObject playerJSON = (JSONObject) parser.parse(response.toString());
+			System.out.println(playerJSON.get("characters").toString());
+			return p;
+		}
+		else return null;
+	}
+
+	private void register(String _username, String _password) throws Exception {
+		String urlParameters = "{\"username\":\"" +_username+ "\",\"password\":\"" +_password+ "\"}";
+		System.out.println(urlParameters);
+		sendPost("https://multiplayer-mambab.c9users.io/register", urlParameters);
 	}
 
 }

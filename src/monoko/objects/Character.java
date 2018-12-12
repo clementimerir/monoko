@@ -2,6 +2,7 @@ package monoko.objects;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.json.simple.JSONObject;
 
 public class Character extends Nameable{
 	private Attributes attributes;
@@ -19,6 +20,22 @@ public class Character extends Nameable{
 		buildAttributes(job,god);
 		setInGameSprite(inGameSprite);
 		setInMenuSprite(inMenuSprite);
+	}
+	
+	public JSONObject toJson() {
+		JSONObject characterJSON = new JSONObject();
+		characterJSON.put("ref", getId());
+		characterJSON.put("name", getName());
+		if (job!=null)
+			characterJSON.put("job", job.getName());
+		else
+			characterJSON.put("job", "none");
+		if (god!=null)
+			characterJSON.put("god", god.getName());
+		else
+			characterJSON.put("god", "none");
+		System.out.print(characterJSON);
+		return characterJSON;
 	}
 	
 	/**
