@@ -6,8 +6,6 @@ public class Gameboard extends Nameable{
 	private Tile[][] board;
 	private int[] currentlySelected;
 
-	
-
 
 
 	public Gameboard(int id, String name, int width, int height) {
@@ -28,23 +26,25 @@ public class Gameboard extends Nameable{
         for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
 				//Creation de la tile
-				rand = Math.ceil(Math.random() * ( 8 - 0 ));
+				rand = Math.ceil(Math.random() * ( 25 - 0 ));
 				rand2 = Math.ceil(Math.random() * ( 25 - 0 ));
 				mod = (int) rand;
 				mod2 = (int) rand2;
-				mod = Math.floorMod(mod, 3);
-				/*if (mod2 == 1) {
-					Character c = new Character(0, "", null, null, "charaup", "cara29x58.png");
-			        this.board[i][j] = new Tile(mod,c);
-				}else if(mod2 == 2) {
-					Character c = new Character(0, "", null, null, "charadown", "cara29x58.png");
-			        this.board[i][j] = new Tile(mod,c);
+				if(mod <= 20) {
+					if (mod2 == 1) {
+						Character c = new Character(0, "", null, null, "charaup", "cara29x58.png");
+				        this.board[i][j] = new Tile(0,c);
+					}else if(mod2 == 2) {
+						Character c = new Character(0, "", null, null, "charadown", "cara29x58.png");
+				        this.board[i][j] = new Tile(0,c);
+					}else {
+						this.board[i][j] = new Tile(0,null);
+					}
+				}else if(mod <= 23){
+					this.board[i][j] = new Tile(1,null);
 				}else {
-					this.board[i][j] = new Tile(mod,null);
-				}*/
-				Character c = new Character(0, "", null, null, "charadown", "cara29x58.png");
-		        this.board[i][j] = new Tile(mod,c);
-				
+					this.board[i][j] = new Tile(2,null);
+				}
 			}
 		}
         
@@ -82,12 +82,19 @@ public class Gameboard extends Nameable{
 	}
 	
 	public void changeSelected(int i, int j) {
-		int[] oldS = this.getCurrentlySelected();
-		if(oldS[0] >= 0) {
-			this.board[oldS[0]][oldS[1]].setSelected(false);
-		}
-		this.board[i][j].setSelected(true);
-		this.setCurrentlySelected(i, j);
+		
+			int[] oldS = this.getCurrentlySelected();
+			if(oldS[0] >= 0) {
+				this.board[oldS[0]][oldS[1]].setSelected(false);
+			}
+			
+			if(i == -1 || j == -1) {
+				this.setCurrentlySelected(-1, -1);
+			}else{
+				this.board[i][j].setSelected(true);
+				this.setCurrentlySelected(i, j);
+			}
+			
 	}
 	
 	
@@ -98,6 +105,14 @@ public class Gameboard extends Nameable{
 		}
 		this.board[currentlySelected[0]][currentlySelected[1]].setSelected(true);
 		this.setCurrentlySelected(currentlySelected);
+	}
+	
+	public boolean haveSelected() {
+		if(this.getCurrentlySelected()[0] == -1) {
+			return false;
+		}else {
+			return true;
+		}
 	}
 	
 	

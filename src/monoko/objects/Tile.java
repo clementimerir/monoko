@@ -20,6 +20,10 @@ public class Tile{
 		this.type = type;
 	}
 	
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+	
 	public Character getCharacter() {
 		return this.c;
 	}
@@ -32,8 +36,13 @@ public class Tile{
 		return selected;
 	}
 
-	public void setSelected(boolean selected) {
-		this.selected = selected;
+	public boolean haveCharacter() {
+		if (getCharacter() == null) {
+			return false;
+		}else {
+			return true;
+		}
 	}
+
 	
 }
