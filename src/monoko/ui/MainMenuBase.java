@@ -1,15 +1,16 @@
 package monoko.ui;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
-public abstract class MainMenuBase implements Initializable{
+public abstract class MainMenuBase extends Parent implements Initializable{
 
+	@FXML VBox _mainMenuVBox;
+	
 	@FXML Label _titleLabel;
 	
 	@FXML Button _playButton;
@@ -24,9 +25,4 @@ public abstract class MainMenuBase implements Initializable{
 	@FXML abstract void onLoreButtonClicked();
 	@FXML abstract void onQuitButtonClicked();
 	
-	@Override
-	public void initialize(URL url, ResourceBundle bundle) {
-
-	}
-
 }

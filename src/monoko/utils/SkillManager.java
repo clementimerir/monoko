@@ -1,10 +1,13 @@
 package monoko.utils;
 
 import monoko.objects.Character;
+import monoko.objects.Effect;
 import monoko.objects.Skill;
+import monoko.objects.SkillTypeEnum;
 
 /**
- * Singleton that manages skill effects
+ * Manages skill effects
+ * TODO should be a singleton but idk
  * @author Bourdarie
  *
  */
@@ -12,7 +15,7 @@ public class SkillManager {
 
 	private static SkillManager effectManager = new SkillManager();
 	
-	private SkillManager() {}
+	public SkillManager() {}
 	
 	public static SkillManager getInstance( ) {
 		return effectManager;
@@ -28,4 +31,19 @@ public class SkillManager {
 		System.out.println("Applying efefct lol");
 	}
 	
+	
+	public Skill getSkill(String name) {
+		switch (name) {
+		case "Sword":
+			return new Skill(0, name, SkillTypeEnum.OFFENSE, new Effect(), 10);
+		case "Bow":
+			return new Skill(1, name, SkillTypeEnum.OFFENSE, new Effect(), 10);
+		case "Pyromancy Tome":
+			return new Skill(3, name, SkillTypeEnum.OFFENSE, new Effect(), 10);
+		case "Scepter":
+			return new Skill(4, name, SkillTypeEnum.SUPPORT, new Effect(), 10);
+		default:break;
+		}
+		return null;
+	}
 }

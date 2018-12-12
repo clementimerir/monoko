@@ -17,11 +17,11 @@ public class Attributes {
 	}
 	
 	public void setAttributes(Attributes a, Attributes b) {
-		setHp(a.getHp()+b.getHp());
-		setStrength(a.getStrength()+b.getStrength());
-		setDexterity(a.getDexterity()+b.getDexterity());
-		setIntelligence(a.getIntelligence()+b.getIntelligence());
-		setSpeed(a.getSpeed()+b.getSpeed());
+		setHp( Math.max(0, a.getHp()+b.getHp() ) );
+		setStrength( Math.max(0, a.getStrength()+b.getStrength() ) );
+		setDexterity( Math.max(0, a.getDexterity()+b.getDexterity() ) );
+		setIntelligence( Math.max(0, a.getIntelligence()+b.getIntelligence() ) );
+		setSpeed( Math.max(0, a.getSpeed()+b.getSpeed() ) );
 	}
 	
 	//GETTERS SETTERS

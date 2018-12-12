@@ -1,12 +1,10 @@
 package monoko;
 
-import java.io.IOException;
-
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import monoko.ui.MonokoController;
+import monoko.utils.FxmlManager;
 
 public class Monoko extends Application {
 	
@@ -18,17 +16,9 @@ public class Monoko extends Application {
 	public void start(Stage primaryStage) {
 		System.out.println("Starting...");
 		primaryStage.setTitle("Monoko");
-
-		try {
-			FXMLLoader loader = new FXMLLoader(Monoko.class.getResource("./ui/characterCreation.fxml"));
-			AnchorPane page = (AnchorPane) loader.load();
-			Scene scene = new Scene(page);
-			primaryStage.setScene(scene);
-			primaryStage.show();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		Scene scene = new Scene( new FxmlManager("./ui/monoko.fxml", new MonokoController()).load() );
+		primaryStage.setScene(scene);
+		primaryStage.show();
 	}
 
 	@Override

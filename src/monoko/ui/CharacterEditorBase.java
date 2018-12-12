@@ -5,8 +5,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
-public abstract class CharacterCreationBase implements Initializable{
+public abstract class CharacterEditorBase implements Initializable{
 
 	@FXML ComboBox<String> _jobComboBox;
 	@FXML ComboBox<String> _godComboBox;
@@ -22,6 +23,9 @@ public abstract class CharacterCreationBase implements Initializable{
 	@FXML Label _intValueLabel;
 	@FXML Label _spdValueLabel;
 	@FXML Label _costValueLabel;
+	
+	@FXML VBox _predilectionVBox;
+	@FXML VBox _itemsVBox;
 	
 	@FXML abstract void onCreateCharacterButtonClicked();
 	
