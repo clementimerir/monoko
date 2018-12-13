@@ -60,4 +60,36 @@ public class Skill extends Nameable{
 	public void setIsPredilection(boolean isPredilection) {
 		this.isPredilection = isPredilection;
 	}
+	
+	public int getRange() {
+		return range;
+	}
+
+	public void setRange(int range) {
+		this.range = range;
+	}
+	
+	public int getArea() {
+		return area;
+	}
+
+	public void setArea(int area) {
+		this.area = area;
+	}
+	
+	public int getBaseValue() {
+		return baseValue;
+	}
+
+	public void setBaseValue(int baseValue) {
+		this.baseValue = baseValue;
+	}
+	
+	public AttributesEnumType getAttributeConcerned() {
+		return attributeConcerned;
+	}
+
+	public void setAttributeConcerned(AttributesEnumType attributeConcerned) {
+		this.attributeConcerned = attributeConcerned;
+	}
 }
