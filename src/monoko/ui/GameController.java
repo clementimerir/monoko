@@ -4,11 +4,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import monoko.objects.Gameboard;
 import monoko.objects.Tile;
 import monoko.utils.AssetManager;
@@ -39,7 +41,7 @@ public class GameController extends GameBase{
     	
         final Canvas canvas = new Canvas(AssetManager.GAME_WIDTH, AssetManager.GAME_HEIGHT);
         final GraphicsContext gc = canvas.getGraphicsContext2D();
-        gameHBox.getChildren().add( canvas );
+        root.getChildren().add( canvas );
         
         new AnimationTimer()
         {
@@ -106,7 +108,7 @@ public class GameController extends GameBase{
         }.start();
          
         
-        gameHBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        root.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
             	
@@ -127,7 +129,7 @@ public class GameController extends GameBase{
         });
         
         
-        gameHBox.setOnMouseMoved(new EventHandler<MouseEvent>() {
+        root.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
             	coordMouse = AssetManager.toGrid(event.getSceneX(), event.getSceneY());

@@ -5,6 +5,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 public abstract class CharacterEditorBase implements Initializable{
@@ -26,6 +28,11 @@ public abstract class CharacterEditorBase implements Initializable{
 	
 	@FXML VBox _predilectionVBox;
 	@FXML VBox _itemsVBox;
+	
+	@FXML ImageView _jobImageView;
+	@FXML ImageView _godImageView;
+	
+	@FXML AnchorPane _jobAnchorPane;
 	
 	@FXML abstract void onCreateCharacterButtonClicked();
 	

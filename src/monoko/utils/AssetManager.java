@@ -24,7 +24,7 @@ public class AssetManager {
 	public static final int TILE_HEIGHT_QUARTER = TILE_HEIGHT / 4;
 	public static final int TILE_HEIGHT_8 = TILE_HEIGHT / 8;
 	public static final int GAME_WIDTH = 1920; //Width of the game
-	public static final int GAME_HEIGHT = 1080; //Height of the game
+	public static final int GAME_HEIGHT = 1020; //Height of the game
 	public static final int XOFFSET = (GAME_WIDTH/2)+((TILES_H-TILES_W)*(TILE_WIDTH_HALF-TILE_HEIGHT_QUARTER)); //Width of the game
 	public static final double YOFFSET = (GAME_HEIGHT-(Math.sqrt(Math.pow(TILES_W*TILE_WIDTH_HALF, 2)+Math.pow(TILES_H*TILE_HEIGHT_QUARTER, 2))))/2; //Height of the game
 	public static final double[] POINTS = new double[] {

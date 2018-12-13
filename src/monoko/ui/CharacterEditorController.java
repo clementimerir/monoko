@@ -13,6 +13,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import monoko.objects.Attributes;
 import monoko.objects.Skill;
@@ -74,6 +75,17 @@ public class CharacterEditorController extends CharacterEditorBase{
 	public void initialize(URL location, ResourceBundle resources) {
 		populateComboBoxes();
 		loadAttributes();
+
+		_jobImageView.setFitHeight(_jobAnchorPane.widthProperty().doubleValue() * 0.9);
+		_jobImageView.setFitWidth(_jobAnchorPane.widthProperty().doubleValue() * 0.9);
+		_jobImageView.setX(-125);
+		_jobImageView.setY( 125 );
+		
+		_godImageView.setFitHeight(_jobAnchorPane.widthProperty().doubleValue());
+		_godImageView.setFitWidth(_jobAnchorPane.widthProperty().doubleValue());
+//		_godImageView.setX(-125);
+//		_godImageView.setY( 125 );
+
 	}
 	
 	/**
@@ -218,8 +230,13 @@ public class CharacterEditorController extends CharacterEditorBase{
 				addItem( jobProperties.getProperty( new StringBuilder(newValue).append(".").append("weapon").toString()) );
 				
 				_addingPredilectionWeapon = false;
+				
+				_jobImageView.setImage( new Image( new StringBuilder("/textures/").append(newValue).append(".png").toString() ) );
 			}else {
 				_god = new Soul(1, newValue, new Attributes(newHp, newStr, newDex, newInt, newSpd));
+				
+				_godImageView.setImage( new Image( new StringBuilder("/textures/").append(newValue).append(".png").toString() ) );
+				_godImageView.setFitWidth(291);
 			}
 			
 			loadAttributes();

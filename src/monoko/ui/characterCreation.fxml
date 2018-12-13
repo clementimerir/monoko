@@ -33,9 +33,9 @@
                   <children>
                     <Pane prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="NEVER" />
                     <ComboBox id="classComboBox" fx:id="_jobComboBox" maxWidth="1.7976931348623157E308" VBox.vgrow="NEVER" />
-                    <AnchorPane id="AnchorPane" minWidth="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                    <AnchorPane id="AnchorPane" fx:id="_jobAnchorPane" minWidth="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                       <children>
-                        <ImageView id="classImageView" fx:id="jobImageView" fitHeight="150.0" fitWidth="200.0" layoutX="42.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="0.0" />
+                        <ImageView id="classImageView" fx:id="_jobImageView" fitHeight="150.0" fitWidth="200.0" layoutX="42.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="0.0" />
                       </children>
                     </AnchorPane>
                     <Button fx:id="jobInfoButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Informations" visible="true" VBox.vgrow="NEVER" />
@@ -58,7 +58,7 @@
                     <ComboBox id="godComboBox" fx:id="_godComboBox" maxWidth="1.7976931348623157E308" VBox.vgrow="NEVER" />
                     <AnchorPane id="AnchorPane" minWidth="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                       <children>
-                        <ImageView id="classImageView" fx:id="godImageView" fitHeight="150.0" fitWidth="200.0" layoutX="42.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView id="classImageView" fx:id="_godImageView" fitHeight="150.0" fitWidth="200.0" layoutX="42.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true" />
                       </children>
                     </AnchorPane>
                     <Button fx:id="godInfoButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Informations" visible="true" VBox.vgrow="NEVER" />

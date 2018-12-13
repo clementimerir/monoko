@@ -18,6 +18,7 @@ public class Monoko extends Application {
 		primaryStage.setTitle("Monoko");
 		Scene scene = new Scene( new FxmlManager("./ui/monoko.fxml", new MonokoController()).load() );
 		primaryStage.setScene(scene);
+		primaryStage.setMaximized(true);
 		primaryStage.show();
 	}
 
