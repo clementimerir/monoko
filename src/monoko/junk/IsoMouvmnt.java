@@ -126,18 +126,21 @@ public class IsoMouvmnt extends Application{
             public void handle(MouseEvent event) {
             	coordSelected = AssetManager.toGrid(event.getSceneX(), event.getSceneY());
             	//We check if a character is present on the selected tile
-            	if(board.getTile(coordSelected).getType() == 0) {
+
+            	if(board.haveSelected() && board.getCurrentTileSelected().haveCharacter() && board.getTile(coordSelected).isMvmnt()) {
+            		board.getTile(coordSelected).setCharacter(board.getTile(board.getCurrentlySelected()).getCharacter());
+            		board.getTile(board.getCurrentlySelected()).setCharacter(null);
+            		board.changeSelected(-1, -1);
             		board.resetMvmnt();
-            		if(board.haveSelected() && board.getCurrentTileSelected().haveCharacter() && !board.getTile(coordSelected).haveCharacter()) {
-                		board.getTile(coordSelected).setCharacter(board.getTile(board.getCurrentlySelected()).getCharacter());
-                		board.getTile(board.getCurrentlySelected()).setCharacter(null);
-                		board.changeSelected(-1, -1);
-                	}else{
-                		board.changeSelected(coordSelected);
-                		if(board.getCurrentTileSelected().haveCharacter()){
-                			board.setTabMvmnt();
-        				}
-                	}
+            	}else if(board.getTile(coordSelected).getType() == 0) {
+            		board.changeSelected(coordSelected);
+            		if(board.getCurrentTileSelected().haveCharacter()){
+            			board.resetMvmnt();
+            			board.setTabMvmnt();
+    				}else {
+    					board.resetMvmnt();
+    				}
+            		
             	}
             	
             	System.out.println("X :" + coordSelected[0]+ "Y :" +coordSelected[1]);

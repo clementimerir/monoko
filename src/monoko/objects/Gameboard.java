@@ -130,7 +130,7 @@ public class Gameboard extends Nameable{
 			if(i>=0 && i<board.length) {
 				for(int j = this.getCurrentlySelected()[1]-back; j<=this.getCurrentlySelected()[1]+back; j++) {
 					if(j>=0 && j<board[i].length) {
-						if(i == getCurrentlySelected()[0] && i == j) {
+						if(i == getCurrentlySelected()[0] && j == getCurrentlySelected()[1]) {
 							board[i][j].setMvmnt(false);
 						}else if(board[i][j].getType() == 0 && !board[i][j].haveCharacter()){
 							board[i][j].setMvmnt(true);
