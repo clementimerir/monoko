@@ -32,10 +32,10 @@ public class Gameboard extends Nameable{
 				mod2 = (int) rand2;
 				if(mod <= 20) {
 					if (mod2 == 1) {
-						Character c = new Character(0, "", new Soul(404, "None", new Attributes(1, 1, 1, 1, 5) ), new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ), "charaup", "cara29x58.png");
+						Character c = new Character(0, "", new Soul(404, "None", new Attributes(1, 1, 1, 1, 2) ), new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ), "charaup", "cara29x58.png");
 				        this.board[i][j] = new Tile(0,c);
 					}else if(mod2 == 2) {
-						Character c = new Character(0, "", new Soul(404, "None", new Attributes(1, 1, 1, 1, 4) ), new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ), "charadown", "cara29x58.png");
+						Character c = new Character(0, "", new Soul(404, "None", new Attributes(1, 1, 1, 1, 1) ), new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ), "charadown", "cara29x58.png");
 				        this.board[i][j] = new Tile(0,c);
 					}else {
 						this.board[i][j] = new Tile(0,null);
@@ -132,16 +132,16 @@ public class Gameboard extends Nameable{
 					if(j>=0 && j<board[i].length) {
 						if(i == getCurrentlySelected()[0] && i == j) {
 							board[i][j].setMvmnt(false);
-						}else if(board[i][j].getType() == 0){
+						}else if(board[i][j].getType() == 0 && !board[i][j].haveCharacter()){
 							board[i][j].setMvmnt(true);
 						}
 					}
 				}
-				if(back == speed) {
-					multiplicateur = -1;
-				}
-				back = back+(1*multiplicateur);
 			}
+			if(back == speed) {
+				multiplicateur = -1;
+			}
+			back = back+(1*multiplicateur);
 			
 		}
 		
