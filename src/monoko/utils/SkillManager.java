@@ -1,7 +1,7 @@
 package monoko.utils;
 
 import monoko.objects.Character;
-import monoko.objects.Effect;
+import monoko.objects.EffectTypeEnum;
 import monoko.objects.Skill;
 import monoko.objects.SkillTypeEnum;
 
@@ -35,13 +35,13 @@ public class SkillManager {
 	public Skill getSkill(String name) {
 		switch (name) {
 		case "Sword":
-			return new Skill(0, name, SkillTypeEnum.OFFENSE, new Effect(), 10);
+			return new Skill(0, name, SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10);
 		case "Bow":
-			return new Skill(1, name, SkillTypeEnum.OFFENSE, new Effect(), 10);
+			return new Skill(1, name, SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10);
 		case "Pyromancy Tome":
-			return new Skill(3, name, SkillTypeEnum.OFFENSE, new Effect(), 10);
+			return new Skill(3, name, SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10);
 		case "Scepter":
-			return new Skill(4, name, SkillTypeEnum.SUPPORT, new Effect(), 10);
+			return new Skill(4, name, SkillTypeEnum.SUPPORT, EffectTypeEnum.DAMAGE, 10);
 		default:break;
 		}
 		return null;

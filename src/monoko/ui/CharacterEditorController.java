@@ -113,12 +113,7 @@ public class CharacterEditorController extends CharacterEditorBase{
 	      });
 	}
 
-	/**
-	 * 
-	 * @param name name of the item or weapon
-	 */
-	private void addItem(String name) {
-		//avoid putting it again
+	public boolean isEquipped(String name) {
 		boolean isEquipped = false;
 		for(Skill currentItem : _itemList) {
 			if(currentItem.getName().equals(name)) {
@@ -126,8 +121,18 @@ public class CharacterEditorController extends CharacterEditorBase{
 			}
 		}
 		
-		//if the item isn't already equipped
-		if( !isEquipped ) {
+		return isEquipped;
+	}
+	
+	/**
+	 * 
+	 * @param name name of the item or weapon
+	 */
+	private void addItem(String name) {
+		
+		if (isEquipped(name) && _addingPredilectionWeapon) {
+			
+		}else if( !isEquipped(name) ) {//if the item isn't already equipped
 			Skill itemChosen = _skillManager.getSkill(name);
 			itemChosen.setId(_itemsVBox.getChildren().size());
 			

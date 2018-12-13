@@ -7,16 +7,16 @@ package monoko.objects;
  */
 public class Skill extends Nameable{
 	private SkillTypeEnum type;
-	private Effect effect;
+	private EffectTypeEnum effect;
 	private int price;
 	
-	public Skill(int id, String name, SkillTypeEnum type, Effect effect) {
+	public Skill(int id, String name, SkillTypeEnum type, EffectTypeEnum effect) {
 		setId(id);
 		setName(name);
 		setEffect(effect);
 	}
 	
-	public Skill(int id, String name, SkillTypeEnum type, Effect effect, int price) {
+	public Skill(int id, String name, SkillTypeEnum type, EffectTypeEnum effect, int price) {
 		setId(id);
 		setName(name);
 		setEffect(effect);
@@ -31,11 +31,11 @@ public class Skill extends Nameable{
 	public void setType(SkillTypeEnum type) {
 		this.type = type;
 	}
-	public Effect getEffect() {
+	public EffectTypeEnum getEffect() {
 		return effect;
 	}
 
-	public void setEffect(Effect effect) {
+	public void setEffect(EffectTypeEnum effect) {
 		this.effect = effect;
 	}
 	
