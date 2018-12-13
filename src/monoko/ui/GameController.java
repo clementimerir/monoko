@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import monoko.objects.Gameboard;
 import monoko.objects.Tile;
 import monoko.utils.AssetManager;
+import monoko.utils.FxmlManager;
 
 public class GameController extends GameBase{
 	
@@ -26,6 +27,7 @@ public class GameController extends GameBase{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		start();
+		root.getChildren().add( new FxmlManager("./ui/skillBar.fxml", new SkillBarController()).load() );
 	}
  
     public void start(/*Stage theStage*/) 
