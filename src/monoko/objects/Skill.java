@@ -10,6 +10,10 @@ public class Skill extends Nameable{
 	private EffectTypeEnum effect;
 	private int price;
 	private boolean isPredilection = false;
+	private int range;
+	private int area;
+	private int baseValue;
+	private AttributesEnumType attributeConcerned;
 	
 	public Skill(int id, String name, SkillTypeEnum type, EffectTypeEnum effect) {
 		setId(id);
