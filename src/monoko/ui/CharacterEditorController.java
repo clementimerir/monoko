@@ -184,7 +184,7 @@ public class CharacterEditorController extends CharacterEditorBase{
 			i++;
 		}
 
-		_itemsComboBox.getSelectionModel().select(null);
+//		_itemsComboBox.getSelectionModel().select(null);
 		setTotalPrice( _addingPredilectionWeapon ? getTotalPrice() : getTotalPrice() - item.getPrice() );
 		
 		loadAttributes();

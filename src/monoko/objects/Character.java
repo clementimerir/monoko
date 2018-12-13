@@ -22,6 +22,7 @@ public class Character extends Nameable{
 		setInMenuSprite(inMenuSprite);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public JSONObject toJson() {
 		JSONObject characterJSON = new JSONObject();
 		characterJSON.put("ref", getId());
