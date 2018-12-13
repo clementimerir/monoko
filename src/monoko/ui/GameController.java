@@ -35,15 +35,9 @@ public class GameController extends GameBase{
 		
     	Gameboard board = new Gameboard(0, "map1", AssetManager.TILES_W, AssetManager.TILES_H);
     	
-//        theStage.setTitle("Monoko");
-        
-//        Group root = new Group();
-//        Scene theScene = new Scene( root );
-//        theStage.setScene( theScene );
-             
         final Canvas canvas = new Canvas(AssetManager.GAME_WIDTH, AssetManager.GAME_HEIGHT);
         final GraphicsContext gc = canvas.getGraphicsContext2D();
-        root.getChildren().add( canvas );
+        gameHBox.getChildren().add( canvas );
         
         new AnimationTimer()
         {
@@ -110,7 +104,7 @@ public class GameController extends GameBase{
         }.start();
          
         
-        root.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        gameHBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
             	
@@ -131,7 +125,7 @@ public class GameController extends GameBase{
         });
         
         
-        root.setOnMouseMoved(new EventHandler<MouseEvent>() {
+        gameHBox.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
             	coordMouse = AssetManager.toGrid(event.getSceneX(), event.getSceneY());
