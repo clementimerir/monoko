@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<HBox fx:id="_itemsHBox" alignment="CENTER" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <children>
+    <Label id="_itemNameLabel" fx:id="_nameLabel" text="ItemName">
+      <font>
+        <Font size="14.0" />
+      </font>
+    </Label>
+    <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+    <Button fx:id="_deleteButton" mnemonicParsing="false" onAction="#deleteItemButtonClicked" text="X" />
+  </children>
+</HBox>

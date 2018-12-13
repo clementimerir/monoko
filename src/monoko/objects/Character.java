@@ -17,7 +17,7 @@ public class Character extends Nameable{
 		setName(name);
 		setJob(job);
 		setGod(god);
-		setAttributes(attributes);
+		setAttributes( new Attributes(0, 0, 0, 0, 0) );
 		buildAttributes(job,god);
 		setInGameSprite(inGameSprite);
 		setInMenuSprite(inMenuSprite);
