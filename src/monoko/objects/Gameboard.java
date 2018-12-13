@@ -32,10 +32,10 @@ public class Gameboard extends Nameable{
 				mod2 = (int) rand2;
 				if(mod <= 20) {
 					if (mod2 == 1) {
-						Character c = new Character(0, "", null, null, "charaup", "cara29x58.png");
+						Character c = new Character(0, "", new Soul(404, "None", new Attributes(1, 1, 1, 1, 5) ), new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ), "charaup", "cara29x58.png");
 				        this.board[i][j] = new Tile(0,c);
 					}else if(mod2 == 2) {
-						Character c = new Character(0, "", null, null, "charadown", "cara29x58.png");
+						Character c = new Character(0, "", new Soul(404, "None", new Attributes(1, 1, 1, 1, 4) ), new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ), "charadown", "cara29x58.png");
 				        this.board[i][j] = new Tile(0,c);
 					}else {
 						this.board[i][j] = new Tile(0,null);
@@ -69,6 +69,11 @@ public class Gameboard extends Nameable{
 	
 	public int[] getCurrentlySelected() {
 		return currentlySelected;
+	}
+	
+	public Tile getCurrentTileSelected() {
+		Tile tile = board[currentlySelected[0]][currentlySelected[1]];
+		return tile;
 	}
 
 
@@ -114,6 +119,44 @@ public class Gameboard extends Nameable{
 			return true;
 		}
 	}
+	
+	public void setTabMvmnt(){
+		
+		int speed = getCurrentTileSelected().getCharaMvmnt();
+		System.out.println(speed);
+		int back = 0;
+		int multiplicateur = 1;
+		for (int i=this.getCurrentlySelected()[0]-speed; i<=this.getCurrentlySelected()[0]+speed; i++) {
+			if(i>=0 && i<board.length) {
+				for(int j = this.getCurrentlySelected()[1]-back; j<=this.getCurrentlySelected()[1]+back; j++) {
+					if(j>=0 && j<board[i].length) {
+						if(i == getCurrentlySelected()[0] && i == j) {
+							board[i][j].setMvmnt(false);
+						}else if(board[i][j].getType() == 0){
+							board[i][j].setMvmnt(true);
+						}
+					}
+				}
+				if(back == speed) {
+					multiplicateur = -1;
+				}
+				back = back+(1*multiplicateur);
+			}
+			
+		}
+		
+	}
+	
+	public void resetMvmnt() {
+		for (int i=0; i<board.length; i++) {
+			for(int j=0; j<board[i].length; j++) {
+				board[i][j].setMvmnt(false);
+			}
+		}
+	}
+	
+		
+		
 	
 	
 }

@@ -74,6 +74,7 @@ public class IsoMouvmnt extends Application{
         					gc.drawImage(AssetManager.blocade, coordISO[0], coordISO[1], AssetManager.TILE_WIDTH, AssetManager.TILE_HEIGHT);
         				}
 		        		
+		        		//Where the mouse is pointing
 		        		if(coordMouse[0] != -1 && i == coordMouse[0] && j == coordMouse[1]) {
 		        			gc.setFill(Color.BLUE);
         					gc.setGlobalAlpha(0.5);
@@ -83,9 +84,19 @@ public class IsoMouvmnt extends Application{
         				gc.setFill(null);
         				gc.setGlobalAlpha(1.0);
 		        		
-		        		
+		        		//The tile selected
 		        		if(currentTile.isSelected()) {
         					gc.setFill(Color.GREEN);
+        					gc.setGlobalAlpha(0.5);
+            		        gc.fillPolygon(new double[]{p1[0], p2[0], p3[0], p4[0]},
+            		                       new double[]{p1[1], p2[1], p3[1], p4[1]}, 4);
+    					}
+        				gc.setFill(null);
+        				gc.setGlobalAlpha(1.0);
+        				
+        				//The tile where the character can move
+        				if(currentTile.isMvmnt()) {
+        					gc.setFill(Color.BLUE);
         					gc.setGlobalAlpha(0.5);
             		        gc.fillPolygon(new double[]{p1[0], p2[0], p3[0], p4[0]},
             		                       new double[]{p1[1], p2[1], p3[1], p4[1]}, 4);
@@ -113,16 +124,19 @@ public class IsoMouvmnt extends Application{
         root.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-            	
             	coordSelected = AssetManager.toGrid(event.getSceneX(), event.getSceneY());
             	//We check if a character is present on the selected tile
             	if(board.getTile(coordSelected).getType() == 0) {
-            		if(board.haveSelected() && board.getTile(board.getCurrentlySelected()).haveCharacter()) {
+            		board.resetMvmnt();
+            		if(board.haveSelected() && board.getCurrentTileSelected().haveCharacter() && !board.getTile(coordSelected).haveCharacter()) {
                 		board.getTile(coordSelected).setCharacter(board.getTile(board.getCurrentlySelected()).getCharacter());
                 		board.getTile(board.getCurrentlySelected()).setCharacter(null);
                 		board.changeSelected(-1, -1);
                 	}else{
                 		board.changeSelected(coordSelected);
+                		if(board.getCurrentTileSelected().haveCharacter()){
+                			board.setTabMvmnt();
+        				}
                 	}
             	}
             	
@@ -140,8 +154,6 @@ public class IsoMouvmnt extends Application{
             	}
             }
           });
-        
-        
         
         theStage.show();
     }
