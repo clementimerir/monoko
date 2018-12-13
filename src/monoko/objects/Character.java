@@ -17,6 +17,7 @@ public class Character extends Nameable{
 		setName(name);
 		setJob(job);
 		setGod(god);
+		setAttributes(attributes);
 		buildAttributes(job,god);
 		setInGameSprite(inGameSprite);
 		setInMenuSprite(inMenuSprite);
@@ -58,7 +59,9 @@ public class Character extends Nameable{
 	public Attributes getAttributes() {
 		return attributes;
 	}
-
+	public void setAttributes(Attributes attributes) {
+        this.attributes = attributes;
+    }
 	public Soul getJob() {
 		return job;
 	}

@@ -9,6 +9,7 @@ public class Skill extends Nameable{
 	private SkillTypeEnum type;
 	private EffectTypeEnum effect;
 	private int price;
+	private boolean isPredilection = false;
 	
 	public Skill(int id, String name, SkillTypeEnum type, EffectTypeEnum effect) {
 		setId(id);
@@ -16,11 +17,12 @@ public class Skill extends Nameable{
 		setEffect(effect);
 	}
 	
-	public Skill(int id, String name, SkillTypeEnum type, EffectTypeEnum effect, int price) {
+	public Skill(int id, String name, SkillTypeEnum type, EffectTypeEnum effect, int price, boolean isPredilection) {
 		setId(id);
 		setName(name);
 		setEffect(effect);
 		setPrice(price);
+		setIsPredilection(isPredilection);
 	}
 	
 	//GETTERS SETTERS
@@ -45,5 +47,13 @@ public class Skill extends Nameable{
 
 	public void setPrice(int price) {
 		this.price = price;
+	}
+	
+	public boolean isPredilection() {
+		return isPredilection;
+	}
+
+	public void setIsPredilection(boolean isPredilection) {
+		this.isPredilection = isPredilection;
 	}
 }

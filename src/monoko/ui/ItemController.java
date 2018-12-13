@@ -18,7 +18,7 @@ public class ItemController extends ItemBase{
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
 		_nameLabel.setText(_item.getName());
-		_deleteButton.setDisable( _parent.isAddingPredilectionWeapon() );
+		_deleteButton.setDisable( _item.isPredilection() );
 	}
 
 	//GETTERS SETTERS

@@ -35,13 +35,13 @@ public class SkillManager {
 	public Skill getSkill(String name) {
 		switch (name) {
 		case "Sword":
-			return new Skill(0, name, SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10);
+			return new Skill(0, name, SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10, false);
 		case "Bow":
-			return new Skill(1, name, SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10);
+			return new Skill(1, name, SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10, false);
 		case "Pyromancy Tome":
-			return new Skill(3, name, SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10);
+			return new Skill(3, name, SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10, false);
 		case "Scepter":
-			return new Skill(4, name, SkillTypeEnum.SUPPORT, EffectTypeEnum.DAMAGE, 10);
+			return new Skill(4, name, SkillTypeEnum.SUPPORT, EffectTypeEnum.DAMAGE, 10, false);
 		default:break;
 		}
 		return null;

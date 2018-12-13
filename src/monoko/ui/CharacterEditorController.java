@@ -135,6 +135,7 @@ public class CharacterEditorController extends CharacterEditorBase{
 		}else if( !isEquipped(name) ) {//if the item isn't already equipped
 			Skill itemChosen = _skillManager.getSkill(name);
 			itemChosen.setId(_itemsVBox.getChildren().size());
+			itemChosen.setIsPredilection( _addingPredilectionWeapon );
 			
 			Parent itemInterface = new FxmlManager("./ui/item.fxml", new ItemController(itemChosen, this)).load();
 			//if the item is offered by the class
@@ -175,7 +176,7 @@ public class CharacterEditorController extends CharacterEditorBase{
 		int i = 0;
 		for(Skill currentItem : _itemList) {
 			currentItem.setId(i);
-			if(_addingPredilectionWeapon) {
+			if(currentItem.isPredilection()) {
 				_predilectionVBox.getChildren().add( new FxmlManager("./ui/item.fxml", new ItemController(currentItem, this)).load() );
 			}else {
 				_itemsVBox.getChildren().add( new FxmlManager("./ui/item.fxml", new ItemController(currentItem, this)).load() );				
