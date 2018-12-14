@@ -1,5 +1,7 @@
 package monoko.objects;
 
+import java.util.List;
+
 public class Gameboard extends Nameable{
 
 	
@@ -169,8 +171,107 @@ public class Gameboard extends Nameable{
 		}
 	}
 	
-		
-		
+}
+
+class Dijkstra {
+	private List<TileToCheck> tilesQueue;
+	private List<TileToCheck> tilesVisited;
+	int speed;
 	
+	public Dijkstra(boolean[][] board, int speed) {
+		int x, y;
+		TileToCheck t;
+		this.speed = speed;
+		
+		for(y=0; y<board.length; y++) {
+			for(x=0; x<board.length; x++) {
+				t = new TileToCheck(x,y,1000);
+				if(x==speed && y==speed)
+					t.minDist = 0;
+				if(board[x][y]==false)
+					t.minDist = -1;
+				tilesQueue.add(t);
+			}
+		}
+		
+		for(y=0; y<board.length; y++) {
+			for(x=0; x<board.length; x++) {
+				t = tilesQueue.get(x+y*board.length);
+				if(board[x][y]==true) {
+					if(t.x+1<board.length) {
+						if(board[x+1][y]==true) {
+							t.addNeighbour(tilesQueue.get((x+1)+y*board.length));
+						}
+					}
+					if(t.x-1<board.length) {
+						if(board[x-1][y]==true) {
+							t.addNeighbour(tilesQueue.get((x-1)+y*board.length));
+						}
+					}
+					if(t.y+1<board.length) {
+						if(board[x][y+1]==true) {
+							t.addNeighbour(tilesQueue.get(x+(y+1)*board.length));
+						}
+					}
+					if(t.y-1<board.length) {
+						if(board[x][y-1]==true) {
+							t.addNeighbour(tilesQueue.get(x+(y-1)*board.length));
+						}
+					}
+				}
+			}
+		}
+
+		for(int i=0; i<tilesQueue.size(); i++) {
+			if(tilesQueue.get(i).minDist == -1) {
+				tilesQueue.remove(i);
+				i--;
+			}
+		}
+	}
 	
+	public int[][] resolve() {
+		int x,y,lastIndex;
+		TileToCheck t;
+		int[][] distancesTable = new int[2*speed+1][2*speed+1];
+		for(y=0; y<distancesTable.length; y++) {
+			for(x=0; x<distancesTable.length; x++) {
+				distancesTable[x][y] = 1000;
+			}
+		}
+		while(!tilesQueue.isEmpty()) {
+			t = tilesQueue.get(0);
+			lastIndex=0;
+			for(int i=1; i<tilesQueue.size(); i++) {
+				if(tilesQueue.get(i).minDist < t.minDist) {
+					t=tilesQueue.get(i);
+					lastIndex=i;
+				}
+			}
+			tilesVisited.add(t);
+			tilesQueue.remove(lastIndex);
+			for(TileToCheck n : t.neighbours) {
+				if(t.minDist+1 < n.minDist)
+					n.minDist = t.minDist+1;
+			}
+		}
+		return distancesTable;
+	}
+}
+
+class TileToCheck {
+	public int x;
+	public int y;
+	public int minDist;
+	public List<TileToCheck> neighbours;
+	
+	public TileToCheck(int x, int y, int minDist) {
+		this.x = x;
+		this.y = y;
+		this.minDist = minDist;
+	}
+	
+	public void addNeighbour(TileToCheck t) {
+		neighbours.add(t);
+	}
 }
