@@ -124,7 +124,6 @@ public class Character extends Nameable{
 			characterJSON.put("god", god.getName());
 		else
 			characterJSON.put("god", "none");
-		System.out.print(characterJSON);
 		return characterJSON;
 	}
 	

@@ -8,6 +8,8 @@ import javax.net.ssl.HttpsURLConnection;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.sun.media.jfxmedia.events.NewFrameEvent;
 
@@ -26,14 +28,16 @@ public class Network {
 		Network http = new Network();
 		//System.out.println("\nTesting 2 - Send Http POST request");
 		//http.sendPost("{\\\"username\\\":\\\"Mambab\\\",\\\"password\\\":\\\"azerty\\\"}");
+		List<Character> l = new ArrayList<Character>();
 		Character c1 = new Character(0, "Escanor", null, null, "unSprite", "unAutreSprite");
 		Character c2 = new Character(1, "Phillipe", null, null, "unSprite", "unAutreSprite");
 		Character c3 = new Character(2, "Jean", null, null, "unSprite", "unAutreSprite");
+		l.add(c1);
+		l.add(c2);
+		l.add(c3);
+		Team t = new Team(0, "Team O", l);
 		http.login("Mambab", "azerty");
-		/*http.saveCharacter(c1);
-		http.saveCharacter(c2);
-		http.saveCharacter(c3);*/
-		//http.deleteCharacter(c2);
+		http.saveTeam(t);
 	}
 	
 	private int sendPost(String url, String urlParameters) throws Exception {
@@ -79,6 +83,18 @@ public class Network {
 		String urlParameters = "{\"username\":\"" +username+ "\",\"password\":\"" +password+ "\",\"ref\":" +c.getId()+ "}";
 		System.out.println(urlParameters);
 		sendPost("https://multiplayer-mambab.c9users.io/deleteCharacter", urlParameters);
+	}
+
+	private void saveTeam(Team t) throws Exception {
+		String urlParameters = "{\"username\":\"" +username+ "\",\"password\":\"" +password+ "\",\"team\":" + t.toJson()+ "}";
+		System.out.println(urlParameters);
+		sendPost("https://multiplayer-mambab.c9users.io/saveTeam", urlParameters);
+	}
+	
+	private void deleteTeam(Team t) throws Exception {
+		String urlParameters = "{\"username\":\"" +username+ "\",\"password\":\"" +password+ "\",\"ref\":" +t.getId()+ "}";
+		System.out.println(urlParameters);
+		sendPost("https://multiplayer-mambab.c9users.io/deleteTeam", urlParameters);
 	}
 
 	private Player login(String _username, String _password) throws Exception {
