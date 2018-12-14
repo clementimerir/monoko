@@ -9,7 +9,7 @@
 
 <BorderPane prefHeight="74.0" prefWidth="396.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <center>
-    <Label text="A character can't equip the same item twice.">
+    <Label text="This item is already equipped.">
       <font>
         <Font size="18.0" />
       </font>

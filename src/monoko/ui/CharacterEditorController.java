@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -127,6 +126,11 @@ public class CharacterEditorController extends CharacterEditorBase{
 
 	public boolean isEquipped(String name) {
 		boolean isEquipped = false;
+		
+		if(_predilectionWeapon != null && _predilectionWeapon.getName().equals(name)) {
+			return true;
+		}
+		
 		for(Skill currentItem : _itemList) {
 			if(currentItem.getName().equals(name)) {
 				isEquipped = true;
@@ -142,63 +146,63 @@ public class CharacterEditorController extends CharacterEditorBase{
 	 */
 	private void addItem(String name) {
 		
-		if (isEquipped(name) && _addingPredilectionWeapon) {
+		Skill itemChosen = _skillManager.getSkill(name);
+		
+		if(_addingPredilectionWeapon) {
 			
-		}else if( !isEquipped(name) ) {//if the item isn't already equipped
-			Skill itemChosen = _skillManager.getSkill(name);
-			itemChosen.setId(_itemsVBox.getChildren().size());
+			if( isEquipped(itemChosen.getName()) ) {
+				for(Skill loop : _itemList) {
+					if(loop.getName().equals(itemChosen.getName())) {
+						_itemList.remove(loop);
+						break;
+					}
+				}
+				deleteItem(itemChosen);
+			}
+			
+			_predilectionVBox.getChildren().clear();
+			
+			itemChosen.setId(0);
 			itemChosen.setIsPredilection( _addingPredilectionWeapon );
 			
-			Parent itemInterface = new FxmlManager("./ui/item.fxml", new ItemController(itemChosen, this)).load();
-			//if the item is offered by the class
-			if( _addingPredilectionWeapon ) {
-				if(_predilectionWeapon != null) {
-					deleteItem(_predilectionWeapon);					
-				}
-				_predilectionVBox.getChildren().add(itemInterface);
-				_predilectionWeapon = itemChosen;
-			}else {
-				_itemsVBox.getChildren().add(itemInterface);
+			_predilectionWeapon = itemChosen;
+			_predilectionVBox.getChildren().add( new FxmlManager("./ui/item.fxml", new ItemController(_predilectionWeapon, this)).load() );
+			
+		}else {
+			if(!isEquipped(name)) {
+				_itemsVBox.getChildren().clear();
+				itemChosen.setId(_itemList.size());
+				_itemList.add(itemChosen);
 				setTotalPrice( getTotalPrice() + itemChosen.getPrice() );
+				for (Skill loop : _itemList) {
+					_itemsVBox.getChildren().add( new FxmlManager("./ui/item.fxml", new ItemController(loop, this)).load() );
+				}				
+			}else {
+				Stage dialog = new Stage();
+				Scene dialogScene = new Scene(new FxmlManager("./ui/warning.fxml", new WarningController()).load(), 400, 100);
+                dialog.setScene(dialogScene);
+                dialog.show();
 			}
-
-			_itemList.add(itemChosen);
-
-			loadAttributes();
-		}else if(!_addingPredilectionWeapon) {
-			Stage dialog = new Stage();
-			Scene dialogScene = new Scene(new FxmlManager("./ui/warning.fxml", new WarningController()).load(), 400, 100);
-			dialog.setTitle("Warning");
-			dialog.setScene(dialogScene);
-            dialog.show();
 		}
+		
+		loadAttributes();
+		
 	}
 	
 	public void deleteItem(Skill item) {
 		
-		//reset to prevent wrong indexes
-		if(_addingPredilectionWeapon) {
+		if(item.isPredilection()) {
 			_predilectionVBox.getChildren().clear();
+			_predilectionWeapon = null;
 		}else {
+
 			_itemsVBox.getChildren().clear();
-		}
-
-		_itemList.remove(item);
-		
-		int i = 0;
-		for(Skill currentItem : _itemList) {
-			currentItem.setId(i);
-			if(currentItem.isPredilection()) {
-				_predilectionVBox.getChildren().add( new FxmlManager("./ui/item.fxml", new ItemController(currentItem, this)).load() );
-			}else {
-				_itemsVBox.getChildren().add( new FxmlManager("./ui/item.fxml", new ItemController(currentItem, this)).load() );				
+			_itemList.remove(item);
+			setTotalPrice( getTotalPrice() - item.getPrice() );
+			for(Skill skill : _itemList) {
+				_itemsVBox.getChildren().add( new FxmlManager("./ui/item.fxml", new ItemController(skill, this)).load() );
 			}
-
-			i++;
 		}
-
-//		_itemsComboBox.getSelectionModel().select(null);
-		setTotalPrice( _addingPredilectionWeapon ? getTotalPrice() : getTotalPrice() - item.getPrice() );
 		
 		loadAttributes();
 	}
@@ -224,9 +228,6 @@ public class CharacterEditorController extends CharacterEditorBase{
 				_addingPredilectionWeapon = true;
 
 				_job = new Soul(1, newValue, new Attributes(newHp, newStr, newDex, newInt, newSpd));
-				if(_predilectionWeapon != null) {
-					deleteItem(_predilectionWeapon);
-				}
 				addItem( jobProperties.getProperty( new StringBuilder(newValue).append(".").append("weapon").toString()) );
 				
 				_addingPredilectionWeapon = false;
