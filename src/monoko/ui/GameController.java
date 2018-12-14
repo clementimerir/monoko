@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
@@ -23,10 +24,6 @@ public class GameController extends GameBase{
 	public int[] coordMouse = new int[] {-1,-1};
 	SkillBarController skillBar = new SkillBarController();
 	
-    public GameController() {
-    	
-    }
-    
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		start();
@@ -44,7 +41,7 @@ public class GameController extends GameBase{
 		skillBar.loadSkills();
 	}
  
-    public void start(/*Stage theStage*/) 
+    public void start() 
     {
     	
 		AssetManager.init();
@@ -75,6 +72,7 @@ public class GameController extends GameBase{
         		        int [] p3 = AssetManager.toIsoPoly(i+1,j+1);
         		        int [] p4 = AssetManager.toIsoPoly(i+1,j);
         		        
+
 		        		if (currentTile.getType() == 0) {
         					gc.drawImage(AssetManager.stones, coordISO[0], coordISO[1], AssetManager.TILE_WIDTH, AssetManager.TILE_HEIGHT);
         				}else if (currentTile.getType() == 1) {
@@ -83,6 +81,7 @@ public class GameController extends GameBase{
         					gc.drawImage(AssetManager.blocade, coordISO[0], coordISO[1], AssetManager.TILE_WIDTH, AssetManager.TILE_HEIGHT);
         				}
 		        		
+		        		//Where the mouse is pointing
 		        		if(coordMouse[0] != -1 && i == coordMouse[0] && j == coordMouse[1]) {
 		        			gc.setFill(Color.BLUE);
         					gc.setGlobalAlpha(0.5);
@@ -92,9 +91,19 @@ public class GameController extends GameBase{
         				gc.setFill(null);
         				gc.setGlobalAlpha(1.0);
 		        		
-		        		
+		        		//The tile selected
 		        		if(currentTile.isSelected()) {
         					gc.setFill(Color.GREEN);
+        					gc.setGlobalAlpha(0.5);
+            		        gc.fillPolygon(new double[]{p1[0], p2[0], p3[0], p4[0]},
+            		                       new double[]{p1[1], p2[1], p3[1], p4[1]}, 4);
+    					}
+        				gc.setFill(null);
+        				gc.setGlobalAlpha(1.0);
+        				
+        				//The tile where the character can move
+        				if(currentTile.isMvmnt()) {
+        					gc.setFill(Color.BLUE);
         					gc.setGlobalAlpha(0.5);
             		        gc.fillPolygon(new double[]{p1[0], p2[0], p3[0], p4[0]},
             		                       new double[]{p1[1], p2[1], p3[1], p4[1]}, 4);
@@ -122,22 +131,23 @@ public class GameController extends GameBase{
         root.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-            	
             	coordSelected = AssetManager.toGrid(event.getSceneX(), event.getSceneY());
             	//We check if a character is present on the selected tile
-            	if(board.getTile(coordSelected).getType() == 0) {
-            		if(board.haveSelected() && board.getTile(board.getCurrentlySelected()).haveCharacter()) {
-                		board.getTile(coordSelected).setCharacter(board.getTile(board.getCurrentlySelected()).getCharacter());
-                		board.getTile(board.getCurrentlySelected()).setCharacter(null);
-                		board.changeSelected(-1, -1);
-                		
-//                		if(board.getCurrentTileSelected().getCharacter() != null) {
-//                			Character character = board.getCurrentTileSelected().getCharacter();
-//                    		reloadSkillBar(character);
-//                		}
-                	}else{
-                		board.changeSelected(coordSelected);
-                	}
+
+            	if(board.haveSelected() && board.getCurrentTileSelected().haveCharacter() && board.getTile(coordSelected).isMvmnt()) {
+            		board.getTile(coordSelected).setCharacter(board.getTile(board.getCurrentlySelected()).getCharacter());
+            		board.getTile(board.getCurrentlySelected()).setCharacter(null);
+            		board.changeSelected(-1, -1);
+            		board.resetMvmnt();
+            	}else if(board.getTile(coordSelected).getType() == 0) {
+            		board.changeSelected(coordSelected);
+            		if(board.getCurrentTileSelected().haveCharacter()){
+            			board.resetMvmnt();
+            			board.setTabMvmnt();
+    				}else {
+    					board.resetMvmnt();
+    				}
+            		
             	}
             	
             	System.out.println("X :" + coordSelected[0]+ "Y :" +coordSelected[1]);
@@ -155,9 +165,6 @@ public class GameController extends GameBase{
             }
           });
         
-        
-        
-//        theStage.show();
     }
-
+    
 }
