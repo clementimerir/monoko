@@ -180,7 +180,8 @@ public class CharacterEditorController extends CharacterEditorBase{
 				}				
 			}else {
 				Stage dialog = new Stage();
-				Scene dialogScene = new Scene(new FxmlManager("./ui/warning.fxml", new WarningController()).load(), 400, 100);
+				Scene dialogScene = new Scene(new FxmlManager("./ui/warning.fxml", new WarningController("This item is already equipped.")).load(), 400, 100);
+				dialog.setTitle("Login Error");
                 dialog.setScene(dialogScene);
                 dialog.show();
 			}

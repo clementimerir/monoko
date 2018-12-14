@@ -1,4 +1,4 @@
-package monoko.junk;
+package monoko.utils;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -97,7 +97,7 @@ public class Network {
 		sendPost("https://multiplayer-mambab.c9users.io/deleteTeam", urlParameters);
 	}
 
-	private Player login(String _username, String _password) throws Exception {
+	public Player login(String _username, String _password) throws Exception {
 		String urlParameters = "{\"username\":\"" +_username+ "\",\"password\":\"" +_password+ "\"}";
 		System.out.println(urlParameters);
 		if(sendPost("https://multiplayer-mambab.c9users.io/login", urlParameters) == 200) {
@@ -112,7 +112,7 @@ public class Network {
 		else return null;
 	}
 
-	private void register(String _username, String _password) throws Exception {
+	public void register(String _username, String _password) throws Exception {
 		String urlParameters = "{\"username\":\"" +_username+ "\",\"password\":\"" +_password+ "\"}";
 		System.out.println(urlParameters);
 		sendPost("https://multiplayer-mambab.c9users.io/register", urlParameters);
