@@ -1,6 +1,7 @@
 package monoko.ui;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -138,19 +139,24 @@ public class GameController extends GameBase{
             		board.getTile(board.getCurrentlySelected()).setCharacter(null);
             		board.changeSelected(-1, -1);
             		board.resetMvmnt();
+            		clearSkillBar();
             	}else if(board.getTile(coordSelected).getType() == 0) {
             		board.changeSelected(coordSelected);
             		if(board.getCurrentTileSelected().haveCharacter()){
             			board.resetMvmnt();
             			board.setTabMvmnt();
+            			
+            			reloadSkillBar(board.getCurrentTileSelected().getCharacter());
     				}else {
     					board.resetMvmnt();
+    					clearSkillBar();
     				}
             		
             	}
             	
             	System.out.println("X :" + coordSelected[0]+ "Y :" +coordSelected[1]);
             }
+
         });
         
         
@@ -165,5 +171,10 @@ public class GameController extends GameBase{
           });
         
     }
+    
+	private void clearSkillBar() {
+		skillBar.setSkills(new ArrayList<Skill>());
+		skillBar.loadSkills();
+	}
     
 }
