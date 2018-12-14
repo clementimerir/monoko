@@ -11,6 +11,9 @@ public class Character extends Nameable{
 	private List<Skill> skills;
 	private String inGameSprite;
 	private String inMenuSprite;
+	private int posX;
+	private int posY;
+	private boolean lookSouth;
 	
 	public Character(int id, String name, Soul job, Soul god, String inGameSprite, String inMenuSprite) {
 		setId(id);
@@ -21,6 +24,80 @@ public class Character extends Nameable{
 		buildAttributes(job,god);
 		setInGameSprite(inGameSprite);
 		setInMenuSprite(inMenuSprite);
+		posX=0;
+		posY=0;
+		lookSouth=true;
+	}
+	
+	public void useSkill(Character target, Skill s, int posX, int posY) {
+		switch(s.getEffect()) {
+		case DAMAGE :
+			dealDamage(target, s);
+			break;
+		case HEAL :
+			heal(target, s);
+			break;
+		case DASH :
+			setPosition(posX, posY, getPosY()>posY);
+			break;
+		case PUSH :
+			int newPosX;
+			int newPosY;
+			int directionX;
+			int directionY;
+			directionX = (target.getPosX()>getPosX())?1:-1;
+			newPosX = posX+s.getBaseValue()*directionX;
+			directionY = (target.getPosY()>getPosY())?1:-1;
+			newPosY = posY+s.getBaseValue()*directionY;
+			target.setPosition(newPosX, newPosY, target.getLookSouth());
+			break;
+		default:
+			break;
+		}
+	}
+	
+	public void dealDamage(Character target, Skill s) {
+		int modificator=0;
+		switch(s.getAttributeConcerned()) {
+		case STRENGTH:
+			modificator=getAttributes().getStrength()/2;
+			break;
+		case DEXTERITY:
+			modificator=getAttributes().getDexterity()/2;
+			break;
+		case INTELLIGENCE:
+			modificator=getAttributes().getDexterity()/2;
+			break;
+		default:
+			break;
+		}
+		target.takeDamage(s.getBaseValue()+modificator);
+	}
+
+	public void heal(Character target, Skill s) {
+		int modificator=0;
+		switch(s.getAttributeConcerned()) {
+		case INTELLIGENCE:
+			modificator=getAttributes().getDexterity()/2;
+			break;
+		default:
+			break;
+		}
+		target.getHealed(s.getBaseValue()+modificator);
+	}
+	
+	public void takeDamage(int damage) {
+		getAttributes().setHp(getAttributes().getHp()-damage);
+	}
+	
+	public void getHealed(int heal) {
+		getAttributes().setHp(getAttributes().getHp()+heal);
+	}
+	
+	public void setPosition(int posX, int posY, boolean lookSouth) {
+		setPosX(posX);
+		setPosY(posY);
+		setLookSouth(lookSouth);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -104,5 +181,30 @@ public class Character extends Nameable{
 	public void setInMenuSprite(String inMenuSprite) {
 		this.inMenuSprite = inMenuSprite;
 	}
+
+	public int getPosX() {
+		return posX;
+	}
+
+	public void setPosX(int posX) {
+		this.posX = posX;
+	}
+
+	public int getPosY() {
+		return posY;
+	}
+
+	public void setPosY(int posY) {
+		this.posY = posY;
+	}
+
+	public boolean getLookSouth() {
+		return lookSouth;
+	}
+
+	public void setLookSouth(boolean lookSouth) {
+		this.lookSouth = lookSouth;
+	}
+
 
 }
