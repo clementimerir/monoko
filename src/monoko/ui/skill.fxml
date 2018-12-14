@@ -10,10 +10,6 @@
 
 <VBox id="VBox" alignment="CENTER" spacing="0.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <children>
-    <ToggleButton fx:id="_skillToggleButton" mnemonicParsing="false" text="">
-      <VBox.margin>
-        <Insets />
-      </VBox.margin>
-    </ToggleButton>
+    <Button fx:id="_skillButton" mnemonicParsing="false" style="-fx-background-radius: 50;" text="" />
   </children>
 </VBox>

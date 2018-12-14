@@ -7,4 +7,4 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<ToolBar id="skillToolBar" fx:id="_skillToolBar" blendMode="SRC_OVER" maxHeight="50.0" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="1080.0" style="-fx-background-color: #5e4d41;&#10;-fx-background-radius: 20;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" />
+<HBox fx:id="_skillBar" alignment="CENTER" maxHeight="50.0" maxWidth="400.0" prefHeight="-1.0" prefWidth="-1.0" style="-fx-background-color: #5e4d41;&#10;-fx-background-radius: 20;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" />

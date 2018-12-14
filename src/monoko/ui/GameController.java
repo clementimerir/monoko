@@ -1,17 +1,20 @@
 package monoko.ui;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.animation.AnimationTimer;
-import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.util.Duration;
+import monoko.objects.EffectTypeEnum;
 import monoko.objects.Gameboard;
+import monoko.objects.Skill;
+import monoko.objects.SkillTypeEnum;
 import monoko.objects.Tile;
 import monoko.utils.AssetManager;
 import monoko.utils.FxmlManager;
@@ -29,7 +32,15 @@ public class GameController extends GameBase{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		start();
-		root.getChildren().add( new FxmlManager("./ui/skillBar.fxml", new SkillBarController()).load() );
+		
+		List<Skill> skills = new ArrayList<Skill>();
+		skills.add( new Skill(0, "Sword", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10, false) );
+		skills.add( new Skill(0, "Bow", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10, false) );
+		skills.add( new Skill(0, "Pyromancy Tome", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10, false) );
+		skills.add( new Skill(0, "Scepter", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10, false) );
+		SkillBarController skillBar = new SkillBarController(skills);
+		
+		root.getChildren().add( new FxmlManager("./ui/skillBar.fxml", skillBar).load() );
 	}
  
     public void start(/*Stage theStage*/) 

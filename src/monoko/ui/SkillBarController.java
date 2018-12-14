@@ -16,24 +16,27 @@ public class SkillBarController extends SkillBarBase{
 		_skills = new ArrayList<Skill>();
 	}
 	
+	public SkillBarController(List<Skill> list) {
+		_skills = list;
+	}
+	
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
-		
+		loadSkills();
 	}
 
 	@Override
 	public void addSkill(Skill skill) {
 		getSkills().add(skill);
-		
 	}
 
 	/**
 	 * hard reset and reload the skill bar
 	 */
 	public void loadSkills() {
-		_skillToolBar.getItems().clear();
+		_skillBar.getChildren().clear();
 		for(Skill skill : _skills) {
-			_skillToolBar.getItems().add( new FxmlManager("./ui/skill.fxml", new SkillController(skill)).load() );
+			_skillBar.getChildren().add( new FxmlManager("./ui/skill.fxml", new SkillController(skill)).load() );
 		}
 	}
 	

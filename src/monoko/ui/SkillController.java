@@ -3,6 +3,7 @@ package monoko.ui;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.scene.image.ImageView;
 import monoko.objects.Skill;
 
 public class SkillController extends SkillBase{
@@ -15,6 +16,8 @@ public class SkillController extends SkillBase{
 	
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
+		
+		_skillButton.setGraphic( new ImageView(  new StringBuilder("/skills/").append(_skill.getName()).append(".png").toString()  ) );
 		
 	}
 
