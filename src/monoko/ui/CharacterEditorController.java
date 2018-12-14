@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import monoko.objects.Attributes;
+import monoko.objects.Character;
 import monoko.objects.Skill;
 import monoko.objects.Soul;
 import monoko.utils.FxmlManager;
@@ -265,8 +266,11 @@ public class CharacterEditorController extends CharacterEditorBase{
 	
 	@Override
 	void onCreateCharacterButtonClicked() {
-		//TODO LATER
-		System.out.println("create button clicked");
+		
+		Soul job = new Soul(_jobComboBox.getSelectionModel().getSelectedItem());
+		Soul god = new Soul(_godComboBox.getSelectionModel().getSelectedItem());
+		Character character = new Character(0, _nameTextfield.getText(), job, god, "", "");
+		System.out.println(character);
 	}
 	
 	//GETTERS SETTERS

@@ -155,7 +155,7 @@
       <children>
         <Pane prefHeight="-1.0" prefWidth="-1.0" />
         <Label alignment="CENTER" font="$x1" minHeight="50.0" minWidth="100.0" text="Name : " HBox.hgrow="NEVER" />
-        <TextField maxWidth="500.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+        <TextField fx:id="_nameTextfield" maxWidth="500.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
         <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
         <Label alignment="CENTER" contentDisplay="CENTER" font="$x1" minHeight="50.0" minWidth="50.0" text="Cost : " />
         <Label fx:id="_costValueLabel" alignment="CENTER" font="$x1" minHeight="50.0" minWidth="50.0" text="15" />
