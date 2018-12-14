@@ -32,10 +32,10 @@ public class Gameboard extends Nameable{
 				mod2 = (int) rand2;
 				if(mod <= 20) {
 					if (mod2 == 1) {
-						Character c = new Character(0, "", new Soul(404, "None", new Attributes(1, 1, 1, 1, 2) ), new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ), "charaup", "cara29x58.png");
+						Character c = new Character(0, "", new Soul(404, "None", new Attributes(1, 1, 1, 1, 3) ), new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ), "charaup", "cara29x58.png");
 				        this.board[i][j] = new Tile(0,c);
 					}else if(mod2 == 2) {
-						Character c = new Character(0, "", new Soul(404, "None", new Attributes(1, 1, 1, 1, 1) ), new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ), "charadown", "cara29x58.png");
+						Character c = new Character(0, "", new Soul(404, "None", new Attributes(1, 1, 1, 1, 2) ), new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ), "charadown", "cara29x58.png");
 				        this.board[i][j] = new Tile(0,c);
 					}else {
 						this.board[i][j] = new Tile(0,null);
@@ -142,6 +142,19 @@ public class Gameboard extends Nameable{
 				multiplicateur = -1;
 			}
 			back = back+(1*multiplicateur);
+			
+		}
+		
+	}
+	
+	
+	public void setTabMvmnt2(){
+		
+		int speed = getCurrentTileSelected().getCharaMvmnt();
+		boolean[][] array = new boolean[board.length][board[0].length];
+		int back = 0;
+		int multiplicateur = 1;
+		for (int i=1; i<=speed; i++) {
 			
 		}
 		
