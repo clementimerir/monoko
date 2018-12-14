@@ -38,7 +38,7 @@ public class SkillManager {
 			return new Skill(0, name, SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10, false);
 		case "Bow":
 			return new Skill(1, name, SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10, false);
-		case "Pyromancy Tome":
+		case "Tome:Pyromancy":
 			return new Skill(3, name, SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10, false);
 		case "Scepter":
 			return new Skill(4, name, SkillTypeEnum.SUPPORT, EffectTypeEnum.DAMAGE, 10, false);

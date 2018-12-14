@@ -94,7 +94,7 @@ public class CharacterEditorController extends CharacterEditorBase{
 	private void populateComboBoxes() {
 		_jobComboBox.getItems().addAll("Fighter", "Guardian", "Hunter", "Sage", "Cleric");
 		_godComboBox.getItems().addAll("Ross'Fert", "Simmenoid", "Rey'Varb", "Rey'Telic", "Raeleh", "Prash", "Catarily", "Kreserber", "Rhena'Cen", "Sir'Aloe");
-		_itemsComboBox.getItems().addAll("Sword", "Bow", "Pyromancy Tome", "Scepter");
+		_itemsComboBox.getItems().addAll("Sword", "Bow", "Tome:Pyromancy", "Scepter");
 		
 		_jobComboBox.valueProperty().addListener(new ChangeListener<String>() {
 	        @SuppressWarnings("rawtypes")
