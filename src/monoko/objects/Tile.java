@@ -14,6 +14,16 @@ public class Tile{
 		setMvmnt(false);
 	}
 	
+	public boolean isNotObstacle(Tile tile) {
+		if(type == 0 && !this.haveEnemyCharacter(tile)) {
+			return true;
+		}else {
+			return false;
+		}
+		
+		
+	}
+	
 	public void setCharacter(Character c) {
 		this.c = c;
 	}
@@ -45,6 +55,17 @@ public class Tile{
 			return true;
 		}
 	}
+	
+	public boolean haveEnemyCharacter(Tile tile) {
+		if (getCharacter() == null) {
+			return false;
+		}else if (this.getCharacter().getTeam().getId() == tile.getCharacter().getTeam().getId()){
+			return false;
+		}else {
+			return true;
+		}
+	}
+	
 	
 	public boolean isMvmnt() {
 		return mvmnt;

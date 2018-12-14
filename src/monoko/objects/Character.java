@@ -14,7 +14,9 @@ public class Character extends Nameable{
 	private int posX;
 	private int posY;
 	private boolean lookSouth;
-	
+	private Team team;
+
+
 	public Character(int id, String name, Soul job, Soul god, String inGameSprite, String inMenuSprite) {
 		setId(id);
 		setName(name);
@@ -28,6 +30,15 @@ public class Character extends Nameable{
 		posY=0;
 		lookSouth=true;
 	}
+
+	public Team getTeam() {
+		return team;
+	}
+
+	public void setTeam(Team team) {
+		this.team = team;
+	}
+	
 	
 	public void useSkill(Character target, Skill s, int posX, int posY) {
 		switch(s.getEffect()) {
