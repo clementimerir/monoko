@@ -17,7 +17,7 @@
       </font>
     </Label>
     <Pane maxHeight="500.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS" />
-    <HBox alignment="CENTER" prefHeight="-1.0" prefWidth="-1.0" spacing="10.0">
+    <HBox fx:id="_contentHBox" alignment="CENTER" prefHeight="-1.0" prefWidth="-1.0" spacing="10.0">
       <children>
         <VBox prefHeight="-1.0" prefWidth="-1.0" spacing="10.0">
           <children>
@@ -44,6 +44,11 @@
         <Button fx:id="_quitButton" minHeight="70.0" minWidth="70.0" mnemonicParsing="false" onAction="#onQuitClicked" text="QUIT" />
       </children>
     </HBox>
-    <Pane maxHeight="-1.0" minHeight="300.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="NEVER" />
+    <HBox alignment="TOP_CENTER" minHeight="300.0" prefHeight="-1.0" prefWidth="-1.0">
+      <children>
+        <ProgressIndicator fx:id="_loginProgressIndicator" maxHeight="70.0" minHeight="70.0" minWidth="70.0" progress="-1.0" visible="false" />
+        <Label fx:id="_loginLabel" alignment="CENTER" minHeight="70.0" minWidth="70.0" text="Logging in..." visible="false" HBox.hgrow="ALWAYS" textFill="WHITE"/>
+      </children>
+    </HBox>
   </children>
 </VBox>
