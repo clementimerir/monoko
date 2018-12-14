@@ -29,6 +29,11 @@ public class SkillBarController extends SkillBarBase{
 	public void addSkill(Skill skill) {
 		getSkills().add(skill);
 	}
+	
+	@Override
+	public void addSkills(List<Skill> skills) {
+		setSkills(skills);
+	}
 
 	/**
 	 * hard reset and reload the skill bar

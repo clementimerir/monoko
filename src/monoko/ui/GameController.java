@@ -1,7 +1,6 @@
 package monoko.ui;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -11,10 +10,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import monoko.objects.EffectTypeEnum;
+import monoko.objects.Character;
 import monoko.objects.Gameboard;
 import monoko.objects.Skill;
-import monoko.objects.SkillTypeEnum;
 import monoko.objects.Tile;
 import monoko.utils.AssetManager;
 import monoko.utils.FxmlManager;
@@ -23,7 +21,7 @@ public class GameController extends GameBase{
 	
 	public int[] coordSelected = new int[] {-1,-1};
 	public int[] coordMouse = new int[] {-1,-1};
-	
+	SkillBarController skillBar = new SkillBarController();
 	
     public GameController() {
     	
@@ -32,15 +30,18 @@ public class GameController extends GameBase{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		start();
-		
-		List<Skill> skills = new ArrayList<Skill>();
-		skills.add( new Skill(0, "Sword", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10, false) );
-		skills.add( new Skill(0, "Bow", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10, false) );
-		skills.add( new Skill(0, "Pyromancy Tome", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10, false) );
-		skills.add( new Skill(0, "Scepter", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10, false) );
-		SkillBarController skillBar = new SkillBarController(skills);
-		
 		root.getChildren().add( new FxmlManager("./ui/skillBar.fxml", skillBar).load() );
+	}
+	
+	public void reloadSkillBar(Character character) {
+		
+		List<Skill> skills = character.getSkills();
+//		skills.add( new Skill(0, "Sword", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10, false) );
+//		skills.add( new Skill(0, "Bow", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10, false) );
+//		skills.add( new Skill(0, "Pyromancy Tome", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10, false) );
+//		skills.add( new Skill(0, "Scepter", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10, false) );
+		skillBar.setSkills(skills);
+		skillBar.loadSkills();
 	}
  
     public void start(/*Stage theStage*/) 
@@ -74,7 +75,6 @@ public class GameController extends GameBase{
         		        int [] p3 = AssetManager.toIsoPoly(i+1,j+1);
         		        int [] p4 = AssetManager.toIsoPoly(i+1,j);
         		        
-
 		        		if (currentTile.getType() == 0) {
         					gc.drawImage(AssetManager.stones, coordISO[0], coordISO[1], AssetManager.TILE_WIDTH, AssetManager.TILE_HEIGHT);
         				}else if (currentTile.getType() == 1) {
@@ -130,6 +130,11 @@ public class GameController extends GameBase{
                 		board.getTile(coordSelected).setCharacter(board.getTile(board.getCurrentlySelected()).getCharacter());
                 		board.getTile(board.getCurrentlySelected()).setCharacter(null);
                 		board.changeSelected(-1, -1);
+                		
+//                		if(board.getCurrentTileSelected().getCharacter() != null) {
+//                			Character character = board.getCurrentTileSelected().getCharacter();
+//                    		reloadSkillBar(character);
+//                		}
                 	}else{
                 		board.changeSelected(coordSelected);
                 	}

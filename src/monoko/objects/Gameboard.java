@@ -5,7 +5,7 @@ public class Gameboard extends Nameable{
 	
 	private Tile[][] board;
 	private int[] currentlySelected;
-
+	String items[] = {"Sword", "Bow", "Pyromancy Tome" , "Scepter"};
 
 
 	public Gameboard(int id, String name, int width, int height) {
@@ -28,15 +28,16 @@ public class Gameboard extends Nameable{
 				//Creation de la tile
 				rand = Math.ceil(Math.random() * ( 25 - 0 ));
 				rand2 = Math.ceil(Math.random() * ( 25 - 0 ));
-				mod = (int) rand;
 				mod2 = (int) rand2;
 				if(mod <= 20) {
 					if (mod2 == 1) {
 						Character c = new Character(0, "", new Soul(404, "None", new Attributes(1, 1, 1, 1, 3) ), new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ), "charaup", "cara29x58.png");
-				        this.board[i][j] = new Tile(0,c);
+						c.getSkills().add(new Skill(0, "Sword", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 0, false));
+						this.board[i][j] = new Tile(0,c);
 					}else if(mod2 == 2) {
 						Character c = new Character(0, "", new Soul(404, "None", new Attributes(1, 1, 1, 1, 2) ), new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ), "charadown", "cara29x58.png");
-				        this.board[i][j] = new Tile(0,c);
+						c.getSkills().add(new Skill(0, "Sword", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 0, false));
+						this.board[i][j] = new Tile(0,c);
 					}else {
 						this.board[i][j] = new Tile(0,null);
 					}
