@@ -12,7 +12,8 @@ public class MonokoController extends MonokoBase{
 	
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
-		_rootAnchorPane.getChildren().add(new FxmlManager("./ui/mainMenu.fxml", new MainMenuController(this)).load());
+//		_rootAnchorPane.getChildren().add(new FxmlManager("./ui/mainMenu.fxml", new MainMenuController(this)).load());
+		_rootAnchorPane.getChildren().add(new FxmlManager("./ui/login.fxml", new LoginController(this)).load());
 	}
 
 	@Override
