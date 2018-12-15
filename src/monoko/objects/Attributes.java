@@ -16,6 +16,14 @@ public class Attributes {
 		setSpeed(speed);
 	}
 	
+	public Attributes(Attributes a) {
+		setHp(a.getHp());
+		setStrength(a.getStrength());
+		setDexterity(a.getDexterity());
+		setIntelligence(a.getIntelligence());
+		setSpeed(a.getSpeed());
+	}
+	
 	public void setAttributes(Attributes a, Attributes b) {
 		setHp( Math.max(0, a.getHp()+b.getHp() ) );
 		setStrength( Math.max(0, a.getStrength()+b.getStrength() ) );
