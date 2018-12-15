@@ -136,9 +136,10 @@ public class GameController extends GameBase{
         					gc.setFill(Color.RED);
         					gc.setStroke(Color.BLACK);
         					gc.setGlobalAlpha(0.5);
-        					int charaHp = currentTile.getCharacter().getCurrentAttributes().getHp();
-        					int maxHp = currentTile.getCharacter().getBaseAttributes().getHp();
-        					gc.fillRect(bar[0], bar[1], AssetManager.BAR_WIDTH, AssetManager.BAR_HEIGHT*(charaHp/maxHp));
+        					double charaHp = currentTile.getCharacter().getCurrentAttributes().getHp();
+        					double maxHp = currentTile.getCharacter().getBaseAttributes().getHp();
+        					double percentage = charaHp/maxHp;
+        					gc.fillRect(bar[0], bar[1], AssetManager.BAR_WIDTH*percentage, AssetManager.BAR_HEIGHT);
         					gc.strokeRect(bar[0], bar[1], AssetManager.BAR_WIDTH, AssetManager.BAR_HEIGHT);
         					
     					}
@@ -178,16 +179,28 @@ public class GameController extends GameBase{
             		board.resetAction_Mouvmnnt();
             		clearSkillBar();
             	}else if(board.getTile(coordSelected).getType() == 0) {
-            		board.changeSelected(coordSelected);
-            		if(board.getCurrentTileSelected().haveCharacter()){
+            		if(board.getTile(coordSelected).isAction() && board.getTile(coordSelected).haveEnemyCharacter(board.getCurrentTileSelected())) {
+            			Character c = board.getTile(coordSelected).getCharacter();
+            			c.takeDamage(1);
+            			if(c.getCurrentAttributes().getHp() == 0) {
+            				board.getTile(coordSelected).setCharacter(null);
+            			}
+            			board.changeSelected(-1, -1);
             			board.resetAction_Mouvmnnt();
-            			board.setTabMvmnt();
-            			reloadSkillBar(board.getCurrentTileSelected().getCharacter());
-            			board.setAction();
-    				}else {
-    					board.resetAction_Mouvmnnt();
-    					clearSkillBar();
-    				}
+                		clearSkillBar();
+            		}else {
+            			board.changeSelected(coordSelected);
+                		if(board.getCurrentTileSelected().haveCharacter()){
+                			board.resetAction_Mouvmnnt();
+                			board.setTabMvmnt();
+                			reloadSkillBar(board.getCurrentTileSelected().getCharacter());
+                			board.setAction();
+        				}else {
+        					board.resetAction_Mouvmnnt();
+        					clearSkillBar();
+        				}
+            		}
+            		
             		
             	}
             	

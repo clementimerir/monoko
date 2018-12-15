@@ -24,8 +24,9 @@ public class Character extends Nameable{
 		setJob(job);
 		setGod(god);
 		setBaseAttributes( new Attributes(0, 0, 0, 0, 0) );
+		setCurrentAttributes( new Attributes(0, 0, 0, 0, 0) );
 		buildAttributes(job,god);
-		setCurrentAttributes(getBaseAttributes());
+		buildCurrentAttributes(job, god);
 		setInGameSprite(inGameSprite);
 		setInMenuSprite(inMenuSprite);
 		setPosition(0, 0, true);
@@ -141,6 +142,17 @@ public class Character extends Nameable{
 			getBaseAttributes().setSpeed( Math.max(0, job.getAttributes().getSpeed() + god.getAttributes().getSpeed() ) );
 		}
 	}
+	
+	public void buildCurrentAttributes(Soul job, Soul god) {
+		if(job != null) {
+			getCurrentAttributes().setHp( Math.max(0, job.getAttributes().getHp() + god.getAttributes().getHp() ) );
+			getCurrentAttributes().setStrength( Math.max(0, job.getAttributes().getStrength() + god.getAttributes().getStrength() ) );
+			getCurrentAttributes().setDexterity( Math.max(0, job.getAttributes().getDexterity() + god.getAttributes().getDexterity() ) );
+			getCurrentAttributes().setIntelligence( Math.max(0, job.getAttributes().getIntelligence() + god.getAttributes().getIntelligence() ) );
+			getCurrentAttributes().setSpeed( Math.max(0, job.getAttributes().getSpeed() + god.getAttributes().getSpeed() ) );
+		}
+	}
+	
 	
 	//GETTERS SETTERS
 	public Attributes getCurrentAttributes() {
