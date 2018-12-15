@@ -1,8 +1,12 @@
 package monoko.ui;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 import javafx.animation.AnimationTimer;
@@ -81,7 +85,9 @@ public class GameController extends GameBase{
         					gc.drawImage(AssetManager.blocade, coordISO[0], coordISO[1], AssetManager.TILE_WIDTH, AssetManager.TILE_HEIGHT);
         				}
 		        		
+		        		//
 		        		//Where the mouse is pointing
+		        		//
 		        		if(coordMouse[0] != -1 && i == coordMouse[0] && j == coordMouse[1]) {
 		        			gc.setFill(Color.BLUE);
         					gc.setGlobalAlpha(0.5);
@@ -91,8 +97,10 @@ public class GameController extends GameBase{
         				gc.setFill(null);
         				gc.setGlobalAlpha(1.0);
 		        		
+        				//
 		        		//The tile selected
-		        		if(currentTile.isSelected()) {
+		        		//
+        				if(currentTile.isSelected()) {
         					gc.setFill(Color.GREEN);
         					gc.setGlobalAlpha(0.5);
             		        gc.fillPolygon(new double[]{p1[0], p2[0], p3[0], p4[0]},
@@ -101,7 +109,9 @@ public class GameController extends GameBase{
         				gc.setFill(null);
         				gc.setGlobalAlpha(1.0);
         				
+        				//
         				//The tile where the character can move
+        				//
         				if(currentTile.isMvmnt()) {
         					gc.setFill(Color.BLUE);
         					gc.setGlobalAlpha(0.5);
@@ -111,10 +121,21 @@ public class GameController extends GameBase{
         				gc.setFill(null);
         				gc.setGlobalAlpha(1.0);
         				
+        				//
         				//Add health bar for each and every character on the map
-        		        
-        				
+        				//
         				if(currentTile.haveCharacter()) {
+        					
+        					Properties jobProperties = new Properties();
+        		            try {
+								jobProperties.load( new FileInputStream( new File("./res/data/jobAndGodAttributes.properties").getAbsolutePath() ) );
+								int rangeSword = Integer.parseInt( jobProperties.getProperty( new StringBuilder("sword").append(".").append("range").toString() ) );
+								System.out.println("Range du skill sword : "+rangeSword);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+        		            
         					int [] bar = AssetManager.toIsoBar(i,j);
         					gc.setFill(Color.RED);
         					gc.setStroke(Color.BLACK);
@@ -122,6 +143,7 @@ public class GameController extends GameBase{
         					int charahp = currentTile.getCharacter().getAttributes().getHp();
         					gc.fillRect(bar[0], bar[1], AssetManager.BAR_WIDTH, AssetManager.BAR_HEIGHT*(charahp/charahp));
         					gc.strokeRect(bar[0], bar[1], AssetManager.BAR_WIDTH, AssetManager.BAR_HEIGHT);
+        					
     					}
         				gc.setFill(null);
         				gc.setStroke(null);
@@ -163,7 +185,6 @@ public class GameController extends GameBase{
             		if(board.getCurrentTileSelected().haveCharacter()){
             			board.resetMvmnt();
             			board.setTabMvmnt();
-            			
             			reloadSkillBar(board.getCurrentTileSelected().getCharacter());
     				}else {
     					board.resetMvmnt();
