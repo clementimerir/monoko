@@ -68,15 +68,14 @@ public class GameController extends GameBase{
 
         				Tile currentTile = board.getTile(i, j);
         				int [] coordISO = AssetManager.toIso(i,j);
-        				//Create tile in fonction on the selected and type attribute
         				
-        		        
+        				
         		        int [] p1 = AssetManager.toIsoPoly(i,j);
         		        int [] p2 = AssetManager.toIsoPoly(i,j+1);
         		        int [] p3 = AssetManager.toIsoPoly(i+1,j+1);
         		        int [] p4 = AssetManager.toIsoPoly(i+1,j);
         		        
-
+        		        //Create tile in fonction of the type attribute
 		        		if (currentTile.getType() == 0) {
         					gc.drawImage(AssetManager.stones, coordISO[0], coordISO[1], AssetManager.TILE_WIDTH, AssetManager.TILE_HEIGHT);
         				}else if (currentTile.getType() == 1) {
@@ -122,20 +121,21 @@ public class GameController extends GameBase{
         				gc.setGlobalAlpha(1.0);
         				
         				//
+        				//The tile where the character can attack
+        				//
+        				if(currentTile.isAction()) {
+        					gc.setFill(Color.RED);
+        					gc.setGlobalAlpha(0.5);
+            		        gc.fillPolygon(new double[]{p1[0], p2[0], p3[0], p4[0]},
+            		                       new double[]{p1[1], p2[1], p3[1], p4[1]}, 4);
+    					}
+        				gc.setFill(null);
+        				gc.setGlobalAlpha(1.0);
+        				
+        				//
         				//Add health bar for each and every character on the map
         				//
         				if(currentTile.haveCharacter()) {
-        					
-        					Properties jobProperties = new Properties();
-        		            try {
-								jobProperties.load( new FileInputStream( new File("./res/data/jobAndGodAttributes.properties").getAbsolutePath() ) );
-								int rangeSword = Integer.parseInt( jobProperties.getProperty( new StringBuilder("sword").append(".").append("range").toString() ) );
-								System.out.println("Range du skill sword : "+rangeSword);
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-        		            
         					int [] bar = AssetManager.toIsoBar(i,j);
         					gc.setFill(Color.RED);
         					gc.setStroke(Color.BLACK);
@@ -178,16 +178,17 @@ public class GameController extends GameBase{
             		board.getTile(coordSelected).setCharacter(board.getTile(board.getCurrentlySelected()).getCharacter());
             		board.getTile(board.getCurrentlySelected()).setCharacter(null);
             		board.changeSelected(-1, -1);
-            		board.resetMvmnt();
+            		board.resetAction_Mouvmnnt();
             		clearSkillBar();
             	}else if(board.getTile(coordSelected).getType() == 0) {
             		board.changeSelected(coordSelected);
             		if(board.getCurrentTileSelected().haveCharacter()){
-            			board.resetMvmnt();
+            			board.resetAction_Mouvmnnt();
             			board.setTabMvmnt();
             			reloadSkillBar(board.getCurrentTileSelected().getCharacter());
+            			board.setAction();
     				}else {
-    					board.resetMvmnt();
+    					board.resetAction_Mouvmnnt();
     					clearSkillBar();
     				}
             		

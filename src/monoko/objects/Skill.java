@@ -1,5 +1,10 @@
 package monoko.objects;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 /**
  * A weapon, a healing ability, a push/attract ability...etc.
  * @author Bourdarie
@@ -19,6 +24,13 @@ public class Skill extends Nameable{
 		setId(id);
 		setName(name);
 		setEffect(effect);
+		setPrice();
+		setRange();
+		setIsPredilection(false);
+		
+		
+		
+		
 	}
 	
 	public Skill(int id, String name, SkillTypeEnum type, EffectTypeEnum effect, int price, boolean isPredilection) {
@@ -26,7 +38,10 @@ public class Skill extends Nameable{
 		setName(name);
 		setEffect(effect);
 		setPrice(price);
+		setRange();
 		setIsPredilection(isPredilection);
+		
+		
 	}
 	
 	//GETTERS SETTERS
@@ -53,6 +68,19 @@ public class Skill extends Nameable{
 		this.price = price;
 	}
 	
+	public void setPrice() {
+		Properties jobProperties = new Properties();
+		try {
+			jobProperties.load( new FileInputStream( new File("./res/data/jobAndGodAttributes.properties").getAbsolutePath() ) );
+			int priceSkill = Integer.parseInt( jobProperties.getProperty( new StringBuilder(this.getName()).append(".").append("price").toString()));
+			this.price = priceSkill;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			this.price = 0;
+		}
+		
+	}
+	
 	public boolean isPredilection() {
 		return isPredilection;
 	}
@@ -68,6 +96,23 @@ public class Skill extends Nameable{
 	public void setRange(int range) {
 		this.range = range;
 	}
+	
+	//Set Range using the properties file
+	public void setRange() {
+		Properties jobProperties = new Properties();
+		try {
+			jobProperties.load( new FileInputStream( new File("./res/data/jobAndGodAttributes.properties").getAbsolutePath() ) );
+			int rangeSkill = Integer.parseInt( jobProperties.getProperty( new StringBuilder(this.getName()).append(".").append("range").toString()));
+			this.range = rangeSkill;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			this.range = 0;
+		}
+	}
+	
+	
+	
+	
 	
 	public int getArea() {
 		return area;

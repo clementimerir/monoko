@@ -38,12 +38,12 @@ public class Gameboard extends Nameable{
 				if(mod <= 20) {
 					if (mod2 == 1) {
 						Character c = new Character(0, "", new Soul(404, "None", new Attributes(1, 1, 1, 1, 3) ), new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ),"charaup", "cara29x58.png");
-						c.getSkills().add( new Skill(0, "Sword", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10, false) );
+						c.getSkills().add( new Skill(0, "Sword", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE) );
 						c.setTeam(team1);
 						this.board[i][j] = new Tile(0,c);
 					}else if(mod2 == 2) {
 						Character c = new Character(0, "", new Soul(404, "None", new Attributes(1, 1, 1, 1, 2) ), new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ),"charadown", "cara29x58.png");
-						c.getSkills().add(new Skill(0, "Bow", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 0, false));
+						c.getSkills().add(new Skill(0, "Bow", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE));
 						c.setTeam(team2);
 						this.board[i][j] = new Tile(0,c);
 					}else {
@@ -177,6 +177,86 @@ public class Gameboard extends Nameable{
 		for (int i=0; i<board.length; i++) {
 			for(int j=0; j<board[i].length; j++) {
 				board[i][j].setMvmnt(false);
+			}
+		}
+	}
+	
+	
+	public void setAction() {
+		
+		Character c = this.getCurrentTileSelected().getCharacter();
+		String nomSkill = c.getSkills().get(0).getName();
+		int range = c.getSkills().get(0).getRange();
+		
+		boolean[] stop = new boolean[4];
+		
+		for (int i = 1; i<=range; i++) {
+			
+			if(!stop[0]) {
+				if(this.getCurrentlySelected()[0]+i < board.length) {
+					if(this.board[this.getCurrentlySelected()[0]+i][this.getCurrentlySelected()[1]].getType() == 2) {
+						stop[0] = true;
+					}else if(this.board[this.getCurrentlySelected()[0]+i][this.getCurrentlySelected()[1]].getType() != 1){
+						this.board[this.getCurrentlySelected()[0]+i][this.getCurrentlySelected()[1]].setAction(true);
+					}
+					
+				}else {
+					stop[0] = true;
+				}
+			}
+			
+			if(!stop[1]) {
+				if(this.getCurrentlySelected()[0]-i >= 0) {
+					if(this.board[this.getCurrentlySelected()[0]-i][this.getCurrentlySelected()[1]].getType() == 2) {
+						stop[1] = true;
+					}else if(this.board[this.getCurrentlySelected()[0]-i][this.getCurrentlySelected()[1]].getType() != 1){
+						this.board[this.getCurrentlySelected()[0]-i][this.getCurrentlySelected()[1]].setAction(true);
+					}
+				}else {
+					stop[1] = true;
+				}
+			}
+			
+			if(!stop[2]) {
+				if(this.getCurrentlySelected()[1]+i < board[0].length) {
+					if(this.board[this.getCurrentlySelected()[0]][this.getCurrentlySelected()[1]+i].getType() == 2) {
+						stop[2] = true;
+					}else if(this.board[this.getCurrentlySelected()[0]][this.getCurrentlySelected()[1]+i].getType() != 1){
+						this.board[this.getCurrentlySelected()[0]][this.getCurrentlySelected()[1]+i].setAction(true);
+					}
+				}else {
+					stop[2] = true;
+				}
+			}
+			
+			if(!stop[3]) {
+				if(this.getCurrentlySelected()[1]-i >= 0) {
+					if(this.board[this.getCurrentlySelected()[0]][this.getCurrentlySelected()[1]-i].getType() == 2) {
+						stop[3] = true;
+					}else if(this.board[this.getCurrentlySelected()[0]][this.getCurrentlySelected()[1]-i].getType() != 1){
+						this.board[this.getCurrentlySelected()[0]][this.getCurrentlySelected()[1]-i].setAction(true);
+					}
+				}else {
+					stop[3] = true;
+				}
+			}
+		}
+	}
+	
+	public void resetAction() {
+		for (int i=0; i<board.length; i++) {
+			for(int j=0; j<board[i].length; j++) {
+				board[i][j].setAction(false);
+			}
+		}
+	}
+	
+	
+	public void resetAction_Mouvmnnt() {
+		for (int i=0; i<board.length; i++) {
+			for(int j=0; j<board[i].length; j++) {
+				board[i][j].setMvmnt(false);
+				board[i][j].setAction(false);
 			}
 		}
 	}

@@ -6,6 +6,7 @@ public class Tile{
 	private Character c;
 	private boolean selected;
 	private boolean mvmnt;//boolean to check if a coloration for mouvement is needed
+	private boolean action;//boolean to check if a coloration for mouvement is needed
 
 	public Tile(int type, Character c) {
 		setType(type);
@@ -80,5 +81,14 @@ public class Tile{
 		return this.getCharacter().getAttributes().getSpeed();
 	}
 
+	
+	public boolean isAction() {
+		return action;
+	}
+
+	public void setAction(boolean action) {
+		this.action = action;
+	}
+	
 	
 }
