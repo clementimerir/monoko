@@ -2,6 +2,8 @@ package monoko.objects;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class Character extends Nameable{
@@ -115,6 +117,7 @@ public class Character extends Nameable{
 	@SuppressWarnings("unchecked")
 	public JSONObject toJson() {
 		JSONObject characterJSON = new JSONObject();
+		JSONArray skillsJSON = new JSONArray();
 		characterJSON.put("ref", getId());
 		characterJSON.put("name", getName());
 		if (job!=null)
@@ -125,6 +128,12 @@ public class Character extends Nameable{
 			characterJSON.put("god", god.getName());
 		else
 			characterJSON.put("god", "none");
+		if (skills!=null) {
+			for(int i=0; i<skills.size(); i++) {
+				skillsJSON.add(skills.get(i).getName());
+			}
+		}
+		characterJSON.put("skills", skillsJSON);
 		return characterJSON;
 	}
 	
