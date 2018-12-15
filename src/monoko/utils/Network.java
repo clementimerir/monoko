@@ -3,11 +3,12 @@ package monoko.utils;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
+import javax.json.*;
 import org.json.simple.*;
-import org.json.simple.parser.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,22 +98,12 @@ public class Network {
 			user = new User();
 			user.setUsername(username);
 			user.setPassword(password);
-			JSONParser parser = new JSONParser();
-			JSONObject userJSON = (JSONObject) parser.parse(response.toString());.
-			JSONArray characters = (JSONArray)userJSON.get("characters");
-			for(int i=0; i<characters.size(); i++) {
-				JSONObject c = (JSONObject)characters.get(i);
-				System.out.println(c);
-				Character character = new Character(c.get("ref"),(String)c.get("name"),null,null,"","");
-				if(c.get("job")!= "none")
-					character.setJob(new Soul((String)c.get("job")));
-				if(c.get("god")!= "none")
-					character.setJob(new Soul((String)c.get("god")));
-				System.out.println(character.toJson());
-			}
+			JsonReader reader = Json.createReader(new StringReader(response.toString()));
+			JsonObject userJson = reader.readObject();
+			System.out.println(userJson);
 			return user;
 		}
-		else return user;
+		else return null;
 	}
 
 	public void register(String _username, String _password) throws Exception {

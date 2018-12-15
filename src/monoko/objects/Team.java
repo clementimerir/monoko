@@ -3,7 +3,7 @@ package monoko.objects;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.cliftonlabs.json_simple.*;
+import org.json.simple.*;
 
 public class Team extends Nameable{
 	private List<Character> characters;
@@ -13,10 +13,11 @@ public class Team extends Nameable{
 		setName(name);
 		setCharacters(characters);
 	}
-	
-	public JsonObject toJson() {
-		JsonArray charactersRefs = new JsonArray();
-		JsonObject teamJSON = new JsonObject();
+
+	@SuppressWarnings("unchecked")
+	public JSONObject toJson() {
+		JSONArray charactersRefs = new JSONArray();
+		JSONObject teamJSON = new JSONObject();
 		teamJSON.put("ref", getId());
 		teamJSON.put("name", getName());
 		for(int i=0; i<characters.size(); i++) {

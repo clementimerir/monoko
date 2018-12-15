@@ -3,7 +3,7 @@ package monoko.objects;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.cliftonlabs.json_simple.*;
+import org.json.simple.*;
 
 public class Character extends Nameable{
 	private Attributes currentAttributes;
@@ -113,9 +113,10 @@ public class Character extends Nameable{
 		setLookSouth(lookSouth);
 	}
 	
-	public JsonObject toJson() {
-		JsonObject characterJSON = new JsonObject();
-		JsonArray skillsJSON = new JsonArray();
+	@SuppressWarnings("unchecked")
+	public JSONObject toJson() {
+		JSONObject characterJSON = new JSONObject();
+		JSONArray skillsJSON = new JSONArray();
 		characterJSON.put("ref", getId());
 		characterJSON.put("name", getName());
 		if (job!=null)
