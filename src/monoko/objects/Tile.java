@@ -78,7 +78,7 @@ public class Tile{
 
 	
 	public int getCharaMvmnt() {
-		return this.getCharacter().getAttributes().getSpeed();
+		return this.getCharacter().getCurrentAttributes().getSpeed();
 	}
 
 	

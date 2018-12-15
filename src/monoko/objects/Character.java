@@ -5,7 +5,8 @@ import java.util.List;
 import org.json.simple.JSONObject;
 
 public class Character extends Nameable{
-	private Attributes attributes;
+	private Attributes currentAttributes;
+	private Attributes baseAttributes;
 	private Soul job;
 	private Soul god;
 	private List<Skill> skills;
@@ -22,13 +23,12 @@ public class Character extends Nameable{
 		setName(name);
 		setJob(job);
 		setGod(god);
-		setAttributes( new Attributes(0, 0, 0, 0, 0) );
+		setBaseAttributes( new Attributes(0, 0, 0, 0, 0) );
 		buildAttributes(job,god);
+		setCurrentAttributes(getBaseAttributes());
 		setInGameSprite(inGameSprite);
 		setInMenuSprite(inMenuSprite);
-		posX=0;
-		posY=0;
-		lookSouth=true;
+		setPosition(0, 0, true);
 	}
 
 	public Team getTeam() {
@@ -71,13 +71,13 @@ public class Character extends Nameable{
 		int modificator=0;
 		switch(s.getAttributeConcerned()) {
 		case STRENGTH:
-			modificator=getAttributes().getStrength()/2;
+			modificator=getCurrentAttributes().getStrength()/2;
 			break;
 		case DEXTERITY:
-			modificator=getAttributes().getDexterity()/2;
+			modificator=getCurrentAttributes().getDexterity()/2;
 			break;
 		case INTELLIGENCE:
-			modificator=getAttributes().getDexterity()/2;
+			modificator=getCurrentAttributes().getDexterity()/2;
 			break;
 		default:
 			break;
@@ -89,7 +89,7 @@ public class Character extends Nameable{
 		int modificator=0;
 		switch(s.getAttributeConcerned()) {
 		case INTELLIGENCE:
-			modificator=getAttributes().getDexterity()/2;
+			modificator=getCurrentAttributes().getDexterity()/2;
 			break;
 		default:
 			break;
@@ -98,11 +98,11 @@ public class Character extends Nameable{
 	}
 	
 	public void takeDamage(int damage) {
-		getAttributes().setHp(getAttributes().getHp()-damage);
+		getCurrentAttributes().setHp(getCurrentAttributes().getHp()-damage);
 	}
 	
 	public void getHealed(int heal) {
-		getAttributes().setHp(getAttributes().getHp()+heal);
+		getCurrentAttributes().setHp(Math.min(getCurrentAttributes().getHp()+heal, getBaseAttributes().getHp()));
 	}
 	
 	public void setPosition(int posX, int posY, boolean lookSouth) {
@@ -134,21 +134,31 @@ public class Character extends Nameable{
 	 */
 	public void buildAttributes(Soul job, Soul god) {
 		if(job != null) {
-			getAttributes().setHp( Math.max(0, job.getAttributes().getHp() + god.getAttributes().getHp() ) );
-			getAttributes().setStrength( Math.max(0, job.getAttributes().getStrength() + god.getAttributes().getStrength() ) );
-			getAttributes().setDexterity( Math.max(0, job.getAttributes().getDexterity() + god.getAttributes().getDexterity() ) );
-			getAttributes().setIntelligence( Math.max(0, job.getAttributes().getIntelligence() + god.getAttributes().getIntelligence() ) );
-			getAttributes().setSpeed( Math.max(0, job.getAttributes().getSpeed() + god.getAttributes().getSpeed() ) );
+			getBaseAttributes().setHp( Math.max(0, job.getAttributes().getHp() + god.getAttributes().getHp() ) );
+			getBaseAttributes().setStrength( Math.max(0, job.getAttributes().getStrength() + god.getAttributes().getStrength() ) );
+			getBaseAttributes().setDexterity( Math.max(0, job.getAttributes().getDexterity() + god.getAttributes().getDexterity() ) );
+			getBaseAttributes().setIntelligence( Math.max(0, job.getAttributes().getIntelligence() + god.getAttributes().getIntelligence() ) );
+			getBaseAttributes().setSpeed( Math.max(0, job.getAttributes().getSpeed() + god.getAttributes().getSpeed() ) );
 		}
 	}
 	
 	//GETTERS SETTERS
-	public Attributes getAttributes() {
-		return attributes;
+	public Attributes getCurrentAttributes() {
+		return currentAttributes;
 	}
-	public void setAttributes(Attributes attributes) {
-        this.attributes = attributes;
+	
+	public void setCurrentAttributes(Attributes attributes) {
+        this.currentAttributes = attributes;
     }
+	
+	public Attributes getBaseAttributes() {
+		return baseAttributes;
+	}
+	
+	public void setBaseAttributes(Attributes attributes) {
+        this.baseAttributes = attributes;
+    }
+	
 	public Soul getJob() {
 		return job;
 	}
