@@ -22,6 +22,7 @@ import monoko.utils.FxmlManager;
 import monoko.utils.SkillManager;
 
 public class CharacterEditorController extends CharacterEditorBase{
+	private MonokoController _root;
 	private Soul _job;
 	private Soul _god;
 	private Attributes _attributes;
@@ -34,7 +35,7 @@ public class CharacterEditorController extends CharacterEditorBase{
 	/**
 	 * Basic constructor used for character CREATION
 	 */
-	public CharacterEditorController() {
+	public CharacterEditorController(MonokoController root) {
 		init();
 		
 		_attributes = new Attributes(0, 0, 0, 0, 0);
@@ -46,10 +47,10 @@ public class CharacterEditorController extends CharacterEditorBase{
 	 * Constructor used for EDITION instead of CREATION
 	 * @param character The character to edit
 	 */
-	public CharacterEditorController(monoko.objects.Character character) {
+	public CharacterEditorController(MonokoController root, monoko.objects.Character character) {
 		init();
 		
-		_attributes = character.getAttributes() == null ? new Attributes(0, 0, 0, 0, 0) : character.getAttributes();
+		_attributes = character.getBaseAttributes() == null ? new Attributes(0, 0, 0, 0, 0) : character.getBaseAttributes();
 		_job = character.getJob() == null ? new Soul(404, "None", new Attributes(0, 0, 0, 0, 0) ) : character.getJob();
 		_god = character.getJob() == null ? new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ) : character.getGod();
 		
@@ -73,6 +74,7 @@ public class CharacterEditorController extends CharacterEditorBase{
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		new FxmlManager().fitToParent(_rootVBox, 0.0);
 		populateComboBoxes();
 		loadAttributes();
 
@@ -271,7 +273,10 @@ public class CharacterEditorController extends CharacterEditorBase{
 		Soul job = new Soul(_jobComboBox.getSelectionModel().getSelectedItem());
 		Soul god = new Soul(_godComboBox.getSelectionModel().getSelectedItem());
 		Character character = new Character(0, _nameTextfield.getText(), job, god, "", "");
-		System.out.println(character);
+
+		_root.getUser().getCharacters().add(character);
+		
+		_root.getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/teamEditor.fxml", new TeamEditorController(_root)).load());
 	}
 	
 	//GETTERS SETTERS

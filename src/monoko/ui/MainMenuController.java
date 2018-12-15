@@ -26,7 +26,7 @@ public class MainMenuController extends MainMenuBase{
 
 	@Override
 	void onTeamEditorButtonClicked() {
-		_parent.getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/characterCreation.fxml", new CharacterEditorController()).load());
+		_parent.getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/teamEditor.fxml", new TeamEditorController(_parent)).load());
 	}
 
 	@Override

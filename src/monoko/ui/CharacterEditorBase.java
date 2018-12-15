@@ -12,6 +12,8 @@ import javafx.scene.layout.VBox;
 
 public abstract class CharacterEditorBase implements Initializable{
 
+	@FXML VBox _rootVBox;
+	
 	@FXML ComboBox<String> _jobComboBox;
 	@FXML ComboBox<String> _godComboBox;
 	@FXML ComboBox<String> _itemsComboBox;
