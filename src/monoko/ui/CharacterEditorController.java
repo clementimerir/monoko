@@ -31,6 +31,7 @@ public class CharacterEditorController extends CharacterEditorBase{
 	private int totalPrice;
 	private boolean _addingPredilectionWeapon;
 	private Skill _predilectionWeapon;
+	private boolean editionMode;
 	
 	/**
 	 * Basic constructor used for character CREATION
@@ -274,7 +275,11 @@ public class CharacterEditorController extends CharacterEditorBase{
 		Soul god = new Soul(_godComboBox.getSelectionModel().getSelectedItem());
 		Character character = new Character(0, _nameTextfield.getText(), job, god, "", "");
 
-		_root.getUser().getCharacters().add(character);
+		if(editionMode) {
+			//TODO change instead of add
+		}else {
+			_root.getUser().getCharacters().add(character);
+		}
 		
 		_root.getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/teamEditor.fxml", new TeamEditorController(_root)).load());
 	}
