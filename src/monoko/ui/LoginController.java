@@ -4,12 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
-import javafx.scene.Scene;
-import javafx.scene.control.ProgressBar;
-import javafx.stage.Stage;
-import monoko.objects.Player;
 import monoko.utils.FxmlManager;
-import monoko.utils.Network;
 
 public class LoginController extends LoginBase{
 

@@ -1,12 +1,8 @@
 package monoko.ui;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 import javafx.animation.AnimationTimer;
@@ -140,8 +136,9 @@ public class GameController extends GameBase{
         					gc.setFill(Color.RED);
         					gc.setStroke(Color.BLACK);
         					gc.setGlobalAlpha(0.5);
-        					int charahp = currentTile.getCharacter().getAttributes().getHp();
-        					gc.fillRect(bar[0], bar[1], AssetManager.BAR_WIDTH, AssetManager.BAR_HEIGHT*(charahp/charahp));
+        					int charaHp = currentTile.getCharacter().getCurrentAttributes().getHp();
+        					int maxHp = currentTile.getCharacter().getBaseAttributes().getHp();
+        					gc.fillRect(bar[0], bar[1], AssetManager.BAR_WIDTH, AssetManager.BAR_HEIGHT*(charaHp/maxHp));
         					gc.strokeRect(bar[0], bar[1], AssetManager.BAR_WIDTH, AssetManager.BAR_HEIGHT);
         					
     					}
