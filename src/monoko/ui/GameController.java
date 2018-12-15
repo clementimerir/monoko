@@ -110,6 +110,24 @@ public class GameController extends GameBase{
     					}
         				gc.setFill(null);
         				gc.setGlobalAlpha(1.0);
+        				
+        				//Add health bar for each and every character on the map
+        		        
+        				
+        				if(currentTile.haveCharacter()) {
+        					int [] bar = AssetManager.toIsoBar(i,j);
+        					gc.setFill(Color.RED);
+        					gc.setStroke(Color.BLACK);
+        					gc.setGlobalAlpha(0.5);
+        					int charahp = currentTile.getCharacter().getAttributes().getHp();
+        					gc.fillRect(bar[0], bar[1], AssetManager.BAR_WIDTH, AssetManager.BAR_HEIGHT*(charahp/charahp));
+        					gc.strokeRect(bar[0], bar[1], AssetManager.BAR_WIDTH, AssetManager.BAR_HEIGHT);
+    					}
+        				gc.setFill(null);
+        				gc.setStroke(null);
+        				gc.setGlobalAlpha(1.0);
+        				
+        				
     					
     					//Add the character if one is on the tile
     					if(currentTile.getCharacter() != null) {

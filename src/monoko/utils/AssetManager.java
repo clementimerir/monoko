@@ -23,6 +23,10 @@ public class AssetManager {
 	public static final int TILE_WIDTH_QUARTER = TILE_WIDTH / 4;
 	public static final int TILE_HEIGHT_QUARTER = TILE_HEIGHT / 4;
 	public static final int TILE_HEIGHT_8 = TILE_HEIGHT / 8;
+	public static final int BAR_WIDTH = TILE_WIDTH_HALF+TILE_WIDTH_QUARTER;
+	public static final int BAR_HEIGHT = TILE_HEIGHT/10;
+	public static final int BAR_WIDTH_HALF = BAR_WIDTH/2;
+	public static final int BAR_HEIGHT_HALF = BAR_HEIGHT/2;
 	public static final int GAME_WIDTH = 1920; //Width of the game
 	public static final int GAME_HEIGHT = 1015; //Height of the game
 	public static final int XOFFSET = (GAME_WIDTH/2)+((TILES_H-TILES_W)*(TILE_WIDTH_HALF-TILE_HEIGHT_QUARTER)); //Width of the game
@@ -84,7 +88,22 @@ public class AssetManager {
 
         return new int[]{i,j};
     }
+    
+    
+  //On donne des coordonnées dans la grille
+    //Sort les coordonnées isometrique des barres de vies
+    public static int[] toIsoBar(int x, int y){
+    	
 
+    	int i = (x - y) * TILE_WIDTH_HALF;
+        int j = (x + y) * TILE_HEIGHT_QUARTER;
+        
+        i += XOFFSET+(TILE_WIDTH-BAR_WIDTH)/2;
+        j += YOFFSET-TILE_HEIGHT_HALF;
+
+    	return new int[]{i,j};
+    }
+    
     //On donne des coordonées isometrique
     //Sort les coordonnées dans la grille
     public static int[] toGrid(double x, double y){
