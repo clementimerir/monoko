@@ -9,7 +9,12 @@
 
 <HBox minHeight="150.0" minWidth="200.0" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <children>
-    <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
+    <VBox fx:id="_" alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+      <children>
+        <Label fx:id="_nameLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Name" />
+        <Pane minHeight="10.0" prefHeight="-1.0" prefWidth="-1.0" />
+      </children>
+    </VBox>
     <VBox alignment="CENTER" minWidth="50.0" prefHeight="-1.0" prefWidth="-1.0" spacing="10.0">
       <children>
         <Button fx:id="_editButton" maxHeight="-1.0" maxWidth="-1.0" mnemonicParsing="false" onAction="#onEditClicked" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/textures/edit.png');" text="" />
