@@ -166,13 +166,11 @@ public class Character extends Nameable{
 	}
 	
 	public void buildCurrentAttributes(Soul job, Soul god) {
-		if(job != null) {
-			getCurrentAttributes().setHp( Math.max(0, job.getAttributes().getHp() + god.getAttributes().getHp() ) );
-			getCurrentAttributes().setStrength( Math.max(0, job.getAttributes().getStrength() + god.getAttributes().getStrength() ) );
-			getCurrentAttributes().setDexterity( Math.max(0, job.getAttributes().getDexterity() + god.getAttributes().getDexterity() ) );
-			getCurrentAttributes().setIntelligence( Math.max(0, job.getAttributes().getIntelligence() + god.getAttributes().getIntelligence() ) );
-			getCurrentAttributes().setSpeed( Math.max(0, job.getAttributes().getSpeed() + god.getAttributes().getSpeed() ) );
-		}
+		getCurrentAttributes().setHp(getBaseAttributes().getHp());
+		getCurrentAttributes().setStrength(getBaseAttributes().getStrength());
+		getCurrentAttributes().setDexterity(getBaseAttributes().getDexterity());
+		getCurrentAttributes().setIntelligence(getBaseAttributes().getIntelligence());
+		getCurrentAttributes().setSpeed(getBaseAttributes().getSpeed());
 	}
 	
 	
