@@ -142,12 +142,26 @@ public class Character extends Nameable{
 	 * @param god the chosen god
 	 */
 	public void buildAttributes(Soul job, Soul god) {
-		if(job != null) {
+		if(job != null && god != null) {
 			getBaseAttributes().setHp( Math.max(0, job.getAttributes().getHp() + god.getAttributes().getHp() ) );
 			getBaseAttributes().setStrength( Math.max(0, job.getAttributes().getStrength() + god.getAttributes().getStrength() ) );
 			getBaseAttributes().setDexterity( Math.max(0, job.getAttributes().getDexterity() + god.getAttributes().getDexterity() ) );
 			getBaseAttributes().setIntelligence( Math.max(0, job.getAttributes().getIntelligence() + god.getAttributes().getIntelligence() ) );
 			getBaseAttributes().setSpeed( Math.max(0, job.getAttributes().getSpeed() + god.getAttributes().getSpeed() ) );
+		}
+		else if(job != null) {
+			getBaseAttributes().setHp( Math.max(0, job.getAttributes().getHp()) );
+			getBaseAttributes().setStrength( Math.max(0, job.getAttributes().getStrength()) );
+			getBaseAttributes().setDexterity( Math.max(0, job.getAttributes().getDexterity()) );
+			getBaseAttributes().setIntelligence( Math.max(0, job.getAttributes().getIntelligence()) );
+			getBaseAttributes().setSpeed( Math.max(0, job.getAttributes().getSpeed()) );
+		}
+		else {
+			getBaseAttributes().setHp(0);
+			getBaseAttributes().setStrength(0);
+			getBaseAttributes().setDexterity(0);
+			getBaseAttributes().setIntelligence(0);
+			getBaseAttributes().setSpeed(0);
 		}
 	}
 	
