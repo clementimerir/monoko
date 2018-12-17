@@ -25,14 +25,17 @@ public class Network {
 	public static void main(String[] args) throws Exception {
 		Network http = new Network();
 		List<Character> l = new ArrayList<Character>();
-		Character c1 = new Character(0, "Escanor", null, null, "unSprite", "unAutreSprite");
-		Character c2 = new Character(1, "Phillipe", null, null, "unSprite", "unAutreSprite");
-		Character c3 = new Character(2, "Jean", null, null, "unSprite", "unAutreSprite");
+		Character c1 = new Character(0, "Escanor", new Soul("Fighter"), new Soul("Ross'Fert"), "unSprite", "unAutreSprite");
+		Character c2 = new Character(1, "Phillipe", new Soul("Hunter"), new Soul("Simmenoid"), "unSprite", "unAutreSprite");
+		Character c3 = new Character(2, "Jean", new Soul("Cleric"), null, "unSprite", "unAutreSprite");
 		l.add(c1);
 		l.add(c2);
 		l.add(c3);
 		Team t = new Team(0, "Team O", l);
 		http.login("Mambab", "azerty");
+		http.saveCharacter(c1);
+		http.saveCharacter(c2);
+		http.saveCharacter(c3);
 	}
 	
 	private int sendPost(String url, String urlParameters) throws Exception {
@@ -101,6 +104,21 @@ public class Network {
 			JsonReader reader = Json.createReader(new StringReader(response.toString()));
 			JsonObject userJson = reader.readObject();
 			System.out.println(userJson);
+			JsonArray characters = userJson.getJsonArray("characters");
+			for(int i=0; i<characters.size(); i++) {
+				JsonObject c = characters.getJsonObject(i);
+				Character character = new Character(c.getInt("ref"), c.getString("name"), null, null, "", "");
+				System.out.println(c.getString("job"));
+				System.out.println(c.getString("god"));
+				String job = c.getString("job");
+				String god = c.getString("god");
+				if(!job.equals("none"))
+					character.setJob(new Soul(job));
+				if(!god.equals("none"))
+					character.setJob(new Soul(god));
+				
+				System.out.println(character.toJson());
+			}
 			return user;
 		}
 		else return null;
