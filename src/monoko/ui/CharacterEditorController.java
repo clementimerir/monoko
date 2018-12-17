@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -33,6 +36,7 @@ public class CharacterEditorController extends CharacterEditorBase{
 	private Skill _predilectionWeapon;
 	private boolean editionMode;
 	private String _name;
+	private int _id;
 	
 	/**
 	 * Basic constructor used for character CREATION
@@ -62,6 +66,7 @@ public class CharacterEditorController extends CharacterEditorBase{
 		_god = character.getJob() == null ? new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ) : character.getGod();
 		_itemList = new ArrayList<Skill>(character.getSkills());
 		_name = character.getName();
+		_id = character.getId();
 	}
 	
 	/**
@@ -291,10 +296,20 @@ public class CharacterEditorController extends CharacterEditorBase{
 		
 		Soul job = new Soul(_jobComboBox.getSelectionModel().getSelectedItem());
 		Soul god = new Soul(_godComboBox.getSelectionModel().getSelectedItem());
-		Character character = new Character(0, _nameTextfield.getText(), job, god, "", "");
+		Character character = new Character(ThreadLocalRandom.current().nextInt( 0 , 999999 + 1 ), _nameTextfield.getText(), job, god, "", "");
+		character.setSkills(_itemList);
 
 		if(editionMode) {
-			//TODO
+			character.setId(_id);
+			
+			int i = 0;
+			for(Character currentChar : _root.getUser().getCharacters()) {
+				if(currentChar.getId() == _id) {
+					_root.getUser().getCharacters().set(i, character);					
+				}
+				i++;
+			}
+			
 		}else {
 			_root.getUser().getCharacters().add(character);
 		}
