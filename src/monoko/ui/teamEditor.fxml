@@ -2,6 +2,7 @@
 
 <?import java.lang.*?>
 <?import java.util.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
@@ -17,7 +18,16 @@
           </font>
         </Label>
         <Separator prefWidth="-1.0" />
-        <FlowPane fx:id="_charactersFlowpane" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS" />
+        <HBox id="HBox" alignment="TOP_LEFT" spacing="5.0" VBox.vgrow="ALWAYS">
+          <children>
+            <Pane minWidth="5.0" prefHeight="-1.0" prefWidth="-1.0" />
+            <FlowPane fx:id="_charactersFlowpane" hgap="10.0" maxHeight="540.0" maxWidth="540.0" orientation="HORIZONTAL" prefHeight="-1.0" prefWidth="-1.0" vgap="10.0" />
+            <Pane minWidth="5.0" prefHeight="-1.0" prefWidth="-1.0" />
+          </children>
+          <VBox.margin>
+            <Insets />
+          </VBox.margin>
+        </HBox>
         <Separator prefWidth="-1.0" />
         <Button fx:id="_createCharacterButton" font="$x1" minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#onCreateCharacterClicked" text="Create Character" />
         <Pane minHeight="10.0" prefHeight="-1.0" prefWidth="-1.0" />

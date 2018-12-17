@@ -32,12 +32,15 @@ public class CharacterEditorController extends CharacterEditorBase{
 	private boolean _addingPredilectionWeapon;
 	private Skill _predilectionWeapon;
 	private boolean editionMode;
+	private String _name;
 	
 	/**
 	 * Basic constructor used for character CREATION
 	 */
 	public CharacterEditorController(MonokoController root) {
 		init();
+
+		_root = root;
 		
 		_attributes = new Attributes(0, 0, 0, 0, 0);
 		_job = new Soul(404, "None", new Attributes(0, 0, 0, 0, 0) );
@@ -51,12 +54,14 @@ public class CharacterEditorController extends CharacterEditorBase{
 	public CharacterEditorController(MonokoController root, monoko.objects.Character character) {
 		init();
 		
+		_root = root;
+		editionMode = true;
+		
 		_attributes = character.getBaseAttributes() == null ? new Attributes(0, 0, 0, 0, 0) : character.getBaseAttributes();
 		_job = character.getJob() == null ? new Soul(404, "None", new Attributes(0, 0, 0, 0, 0) ) : character.getJob();
 		_god = character.getJob() == null ? new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ) : character.getGod();
-		
-		_jobComboBox.getSelectionModel().select(_job.getName());
-		_godComboBox.getSelectionModel().select(_god.getName());
+		_itemList = new ArrayList<Skill>(character.getSkills());
+		_name = character.getName();
 	}
 	
 	/**
@@ -89,6 +94,19 @@ public class CharacterEditorController extends CharacterEditorBase{
 //		_godImageView.setX(-125);
 //		_godImageView.setY( 125 );
 
+		
+		if(editionMode) {
+			_titleLabel.setText("Character Edition");
+			_createCharacterButton.setText("Apply Changes");
+			
+			_jobComboBox.getSelectionModel().select(_job.getName());
+			_godComboBox.getSelectionModel().select(_god.getName());
+			_nameTextfield.setText(_name);
+			
+			for(Skill skill : _itemList) {
+				addItem(skill.getName());
+			}
+		}
 	}
 	
 	/**
@@ -97,7 +115,7 @@ public class CharacterEditorController extends CharacterEditorBase{
 	private void populateComboBoxes() {
 		_jobComboBox.getItems().addAll("Fighter", "Guardian", "Hunter", "Sage", "Cleric");
 		_godComboBox.getItems().addAll("Ross'Fert", "Simmenoid", "Rey'Varb", "Rey'Telic", "Raeleh", "Prash", "Catarily", "Kreserber", "Rhena'Cen", "Sir'Aloe");
-		_itemsComboBox.getItems().addAll("Sword", "Bow", "Tome:Pyromancy", "Scepter");
+		_itemsComboBox.getItems().addAll("Sword", "Bow", "Pyromancy Tome", "Scepter");
 		
 		_jobComboBox.valueProperty().addListener(new ChangeListener<String>() {
 	        @SuppressWarnings("rawtypes")
@@ -276,7 +294,7 @@ public class CharacterEditorController extends CharacterEditorBase{
 		Character character = new Character(0, _nameTextfield.getText(), job, god, "", "");
 
 		if(editionMode) {
-			//TODO change instead of add
+			//TODO
 		}else {
 			_root.getUser().getCharacters().add(character);
 		}

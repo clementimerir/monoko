@@ -22,6 +22,7 @@ public abstract class CharacterEditorBase implements Initializable{
 	@FXML Button _godInfoButton;
 	@FXML Button _createCharacterButton;
 	
+	@FXML Label _titleLabel;
 	@FXML Label _hpValueLabel;
 	@FXML Label _strValueLabel;
 	@FXML Label _dexValueLabel;
