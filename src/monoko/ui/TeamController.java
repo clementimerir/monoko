@@ -26,6 +26,8 @@ public class TeamController extends TeamBase{
 	public void initialize(URL url, ResourceBundle bundle) {
 		_teamTitledPane.setText(getTeam().getName());
 		
+		loadCharacters();
+		
 		_teamsHBox.setOnDragOver(new EventHandler<DragEvent>() {
 		    public void handle(DragEvent event) {
 		        if (event.getGestureSource() != _teamsHBox && event.getDragboard().hasString()) {
@@ -60,10 +62,11 @@ public class TeamController extends TeamBase{
 		        if (db.hasString()) {
 		        	for(Character currentCharacter : _root.getRoot().getUser().getCharacters()) {
 		        		if(currentCharacter.getId() == Integer.valueOf(db.getString())) {
-		        			
-		        			_teamsHBox.getChildren().add(new FxmlManager("./ui/character.fxml", new CharacterController(_root, currentCharacter)).load());
-		        			
+
+//		        			_teamsHBox.getChildren().add(new FxmlManager("./ui/character.fxml", new CharacterController(_root, currentCharacter)).load());
+
 		        			getTeam().getCharacters().add(currentCharacter);
+		        			loadCharacters();
 		        			
 		        			try {
 								new Network(_root.getRoot().getUser()).saveTeam(getTeam());
@@ -93,6 +96,19 @@ public class TeamController extends TeamBase{
 		    }
 		});
 		
+	}
+
+	private void loadCharacters() {
+//		try {
+//			new Network(_root.getRoot().getUser()).deleteTeam(getTeam());
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		for(Character character : getTeam().getCharacters()) {
+			_teamsHBox.getChildren().add(new FxmlManager("./ui/character.fxml", new CharacterController(_root, character)).load());
+		}
 	}
 
 	//GETTERS SETTERS
