@@ -49,8 +49,8 @@ public class Character extends Nameable{
 		setCurrentAttributes( new Attributes(0, 0, 0, 0, 0) );
 		buildAttributes(job,god);
 		buildCurrentAttributes(job, god);
-		setInGameSprite();
 		setInMenuSprite();
+		setInGameSprite();
 		setPosition(0, 0, true);
 		setInUse(false);
 		skills = new ArrayList<Skill>();
@@ -306,7 +306,7 @@ public class Character extends Nameable{
 		Properties jobProperties = new Properties();
 		try {
 			jobProperties.load( new FileInputStream( new File("./res/data/jobAndGodAttributes.properties").getAbsolutePath() ) );
-			this.inGameSprite = jobProperties.getProperty( new StringBuilder(this.getJob().getName()).append(".").append("sprt").toString());
+			this.inMenuSprite = jobProperties.getProperty( new StringBuilder(this.getJob().getName()).append(".").append("sprt").toString());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
