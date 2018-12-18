@@ -22,6 +22,7 @@ import monoko.objects.Character;
 import monoko.objects.Skill;
 import monoko.objects.Soul;
 import monoko.utils.FxmlManager;
+import monoko.utils.Network;
 import monoko.utils.SkillManager;
 
 public class CharacterEditorController extends CharacterEditorBase{
@@ -305,7 +306,7 @@ public class CharacterEditorController extends CharacterEditorBase{
 			int i = 0;
 			for(Character currentChar : _root.getUser().getCharacters()) {
 				if(currentChar.getId() == _id) {
-					_root.getUser().getCharacters().set(i, character);					
+					_root.getUser().getCharacters().set(i, character);
 				}
 				i++;
 			}
