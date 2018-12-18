@@ -16,6 +16,7 @@ public class Character extends Nameable{
 	private int posX;
 	private int posY;
 	private boolean lookSouth;
+	private boolean inUse;
 	private Team team;
 
 
@@ -31,6 +32,7 @@ public class Character extends Nameable{
 		setInGameSprite(inGameSprite);
 		setInMenuSprite(inMenuSprite);
 		setPosition(0, 0, true);
+		setInUse(false);
 	}
 
 	public Team getTeam() {
@@ -265,6 +267,14 @@ public class Character extends Nameable{
 
 	public void setLookSouth(boolean lookSouth) {
 		this.lookSouth = lookSouth;
+	}
+
+	public boolean isInUse() {
+		return inUse;
+	}
+
+	public void setInUse(boolean inUse) {
+		this.inUse = inUse;
 	}
 
 
