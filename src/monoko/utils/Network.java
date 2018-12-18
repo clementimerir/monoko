@@ -119,7 +119,7 @@ public class Network {
 					character.setGod(new Soul(god));
 				JsonArray skills = c.getJsonArray("skills");
 				for(int j=0; j<skills.size(); j++) {
-					
+					character.addSkill(new Skill(skills.getString(i)));
 				}
 				user.addCharacter(character);
 			}

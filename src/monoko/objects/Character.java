@@ -33,6 +33,18 @@ public class Character extends Nameable{
 		setInMenuSprite(inMenuSprite);
 		setPosition(0, 0, true);
 		setInUse(false);
+		skills = new ArrayList<Skill>();
+	}
+	
+	public void addSkill(Skill s) {
+		skills.add(s);
+	}
+
+	public void removeSkill(String skillName) {
+		for(Skill s : skills) {
+			if(s.getName() == skillName)
+				skills.remove(s);
+		}
 	}
 
 	public Team getTeam() {
@@ -84,13 +96,13 @@ public class Character extends Nameable{
 		int modificator=0;
 		switch(s.getAttributeConcerned()) {
 		case STRENGTH:
-			modificator=getCurrentAttributes().getStrength()/2;
+			modificator=getCurrentAttributes().getStrength()*s.getScaling()/100;
 			break;
 		case DEXTERITY:
-			modificator=getCurrentAttributes().getDexterity()/2;
+			modificator=getCurrentAttributes().getDexterity()*s.getScaling()/100;
 			break;
 		case INTELLIGENCE:
-			modificator=getCurrentAttributes().getDexterity()/2;
+			modificator=getCurrentAttributes().getDexterity()*s.getScaling()/100;
 			break;
 		default:
 			break;
@@ -102,7 +114,7 @@ public class Character extends Nameable{
 		int modificator=0;
 		switch(s.getAttributeConcerned()) {
 		case INTELLIGENCE:
-			modificator=getCurrentAttributes().getDexterity()/2;
+			modificator=getCurrentAttributes().getDexterity()*s.getScaling()/100;
 			break;
 		default:
 			break;
