@@ -5,8 +5,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.AttributeType;
-
 /**
  * A weapon, a healing ability, a push/attract ability...etc.
  * @author Bourdarie
