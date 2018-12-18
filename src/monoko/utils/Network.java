@@ -34,9 +34,11 @@ public class Network {
 		c1.addSkill(new Skill("Sword"));
 		c3.addSkill(new Skill("Scepter"));
 		http.login("Mambab", "azerty");
+		/*
 		http.saveCharacter(c1);
 		http.saveCharacter(c2);
 		http.saveCharacter(c3);
+		*/
 	}
 	
 	private int sendPost(String url, String urlParameters) throws Exception {
@@ -108,8 +110,6 @@ public class Network {
 			for(int i=0; i<characters.size(); i++) {
 				JsonObject c = characters.getJsonObject(i);
 				Character character = new Character(c.getInt("ref"), c.getString("name"), null, null, "", "");
-				System.out.println(c.getString("job"));
-				System.out.println(c.getString("god"));
 				String job = c.getString("job");
 				String god = c.getString("god");
 				if(!job.equals("none"))
@@ -118,9 +118,19 @@ public class Network {
 					character.setGod(new Soul(god));
 				JsonArray skills = c.getJsonArray("skills");
 				for(int j=0; j<skills.size(); j++) {
-					character.addSkill(new Skill(skills.getString(i)));
+					character.addSkill(new Skill(skills.getString(j)));
 				}
 				user.addCharacter(character);
+			}
+			JsonArray teams = userJson.getJsonArray("teams");
+			for(int i=0; i<teams.size(); i++) {
+				JsonObject t = teams.getJsonObject(i);
+				List<Character> teamCharacters = new ArrayList<Character>();
+				JsonArray charactersRefs = t.getJsonArray("charactersRefs");
+				for(int j=0; j<charactersRefs.size(); j++) {
+					teamCharacters.add(user.findCharacter(charactersRefs.getInt(j)));
+				}
+				user.addTeam(new Team(t.getInt("ref"), t.getString("name"), teamCharacters));
 			}
 			return user;
 		}
