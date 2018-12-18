@@ -3,12 +3,15 @@ package monoko.ui;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import monoko.objects.Character;
 import monoko.utils.FxmlManager;
 
 public class TeamEditorController extends TeamEditorBase{
 
 	private MonokoController _root;
+	public Stage _teamCreator;
 	
 	public TeamEditorController(MonokoController root) {
 		setRoot(root);
@@ -27,7 +30,12 @@ public class TeamEditorController extends TeamEditorBase{
 
 	@Override
 	public void onCreateTeamClicked() {
-		
+		Stage dialog = new Stage();
+		Scene dialogScene = new Scene(new FxmlManager("./ui/teamCreator.fxml", new TeamCreatorController(this)).load(), 280, 50);
+		dialog.setTitle("Team Creation");
+        dialog.setScene(dialogScene);
+        dialog.show();
+        _teamCreator = dialog;
 	}
 
 	public void loadCharacters() {
