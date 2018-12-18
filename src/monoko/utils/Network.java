@@ -123,6 +123,7 @@ public class Network {
 				for(int j=0; j<skills.size(); j++) {
 					
 				}
+				user.addCharacter(character);
 				System.out.println(character.toJson());
 			}
 			return user;
