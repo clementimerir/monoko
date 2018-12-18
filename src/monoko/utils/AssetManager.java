@@ -1,7 +1,6 @@
 package monoko.utils;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 
 public class AssetManager {
@@ -51,7 +50,7 @@ public class AssetManager {
     	
     	Image tiles1 = new Image("/textures/tiles3d.png");
     	Image tiles2 = new Image("/textures/sheet.png");
-    	Image chara = new Image("/textures/cara32x64.png");
+    	Image chara = new Image("/textures/test_sprite32x64.png");
     	grass = new WritableImage(tiles1.getPixelReader(), 681, 164, 137, 86);
     	stones = new WritableImage(tiles2.getPixelReader(),  0, TILE_HEIGHT*3, TILE_WIDTH, TILE_HEIGHT);
     	water = new WritableImage(tiles2.getPixelReader(), TILE_WIDTH*9, TILE_HEIGHT*5, TILE_WIDTH, TILE_HEIGHT);
