@@ -34,7 +34,9 @@ public class CharacterController extends CharacterBase{
 		_root.deleteCharacter(_character);
 		
 		try {
-			new Network().deleteCharacter(_character);
+			Network net = new Network();
+			net.setUser(_root.getRoot().getUser());
+			net.deleteCharacter(_character);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
