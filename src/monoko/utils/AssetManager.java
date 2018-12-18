@@ -1,5 +1,7 @@
 package monoko.utils;
 
+import javafx.scene.canvas.GraphicsContext;
+import monoko.objects.Character;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 
@@ -44,6 +46,16 @@ public class AssetManager {
 	public static WritableImage blocade;
 	public static WritableImage charadown;
 	public static WritableImage charaup;
+	public static WritableImage figtdown;
+	public static WritableImage figtup;
+	public static WritableImage guardown;
+	public static WritableImage guarup;
+	public static WritableImage sagedown;
+	public static WritableImage sageup;
+	public static WritableImage huntdown;
+	public static WritableImage huntup;
+	public static WritableImage clerdown;
+	public static WritableImage clerup;
 	
 	//Initialisation of every tiles of the game
     public static void init(){
@@ -51,12 +63,27 @@ public class AssetManager {
     	Image tiles1 = new Image("/textures/tiles3d.png");
     	Image tiles2 = new Image("/textures/sheet.png");
     	Image chara = new Image("/textures/test_sprite32x64.png");
+    	Image figt = new Image("/textures/sprite_fighter32x64.png");
+    	Image guar = new Image("/textures/sprite_guardian32x64.png");
+    	Image sage = new Image("/textures/sprite_sage32x64.png");
+    	Image hunt = new Image("/textures/sprite_hunter32x64.png");
+    	Image cler = new Image("/textures/sprite_cleric32x64.png");
     	grass = new WritableImage(tiles1.getPixelReader(), 681, 164, 137, 86);
     	stones = new WritableImage(tiles2.getPixelReader(),  0, TILE_HEIGHT*3, TILE_WIDTH, TILE_HEIGHT);
     	water = new WritableImage(tiles2.getPixelReader(), TILE_WIDTH*9, TILE_HEIGHT*5, TILE_WIDTH, TILE_HEIGHT);
     	blocade = new WritableImage(tiles2.getPixelReader(), 0, 0, TILE_WIDTH, TILE_HEIGHT);
     	charadown = new WritableImage(chara.getPixelReader(), 0, 0, CHARA_WIDTH, CHARA_HEIGHT);
     	charaup = new WritableImage(chara.getPixelReader(), CHARA_WIDTH, 0, CHARA_WIDTH, CHARA_HEIGHT);
+    	figtdown = new WritableImage(figt.getPixelReader(), 0, 0, CHARA_WIDTH, CHARA_HEIGHT);
+    	figtup = new WritableImage(figt.getPixelReader(), CHARA_WIDTH, 0, CHARA_WIDTH, CHARA_HEIGHT);
+    	guardown = new WritableImage(guar.getPixelReader(), 0, 0, CHARA_WIDTH, CHARA_HEIGHT);
+    	guarup = new WritableImage(guar.getPixelReader(), CHARA_WIDTH, 0, CHARA_WIDTH, CHARA_HEIGHT);
+    	sagedown = new WritableImage(sage.getPixelReader(), 0, 0, CHARA_WIDTH, CHARA_HEIGHT);
+    	sageup = new WritableImage(sage.getPixelReader(), CHARA_WIDTH, 0, CHARA_WIDTH, CHARA_HEIGHT);
+    	huntdown = new WritableImage(hunt.getPixelReader(), 0, 0, CHARA_WIDTH, CHARA_HEIGHT);
+    	huntup = new WritableImage(hunt.getPixelReader(), CHARA_WIDTH, 0, CHARA_WIDTH, CHARA_HEIGHT);
+    	clerdown = new WritableImage(cler.getPixelReader(), 0, 0, CHARA_WIDTH, CHARA_HEIGHT);
+    	clerup = new WritableImage(cler.getPixelReader(), CHARA_WIDTH, 0, CHARA_WIDTH, CHARA_HEIGHT);
     	
     	
     }
@@ -175,6 +202,46 @@ public class AssetManager {
         return new int[]{i,j};
         
     }
+    
+    public static void drawChara(GraphicsContext gc, Character c, int x, int y) {
+    	String imageName = c.getInGameSprite();
+    	switch(imageName.toLowerCase()) {
+    	case "figtup":
+    		gc.drawImage(AssetManager.figtup, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
+    		break;
+    	case "figtdown":
+    		gc.drawImage(AssetManager.figtdown, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
+    		break;
+    	case "guarup":
+    		gc.drawImage(AssetManager.guarup, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
+    		break;
+    	case "guardown":
+    		gc.drawImage(AssetManager.guardown, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
+    		break;
+    	case "sageup":
+    		gc.drawImage(AssetManager.sageup, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
+    		break;
+    	case "sagedown":
+    		gc.drawImage(AssetManager.sagedown, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
+    		break;
+    	case "huntup":
+    		gc.drawImage(AssetManager.huntup, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
+    		break;
+    	case "huntdown":
+    		gc.drawImage(AssetManager.huntdown, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
+    		break;
+    	case "clerup":
+    		gc.drawImage(AssetManager.clerup, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
+    		break;
+    	case "clerdown":
+    		gc.drawImage(AssetManager.clerup, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
+    		break;
+    	default: 
+    		gc.drawImage(AssetManager.charaup, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
+            break;
+    	}
+    }
+    
     
     
     

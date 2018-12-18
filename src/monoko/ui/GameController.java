@@ -24,6 +24,8 @@ public class GameController extends GameBase{
 	public int[] coordMouse = new int[] {-1,-1};
 	SkillBarController skillBar = new SkillBarController(this);
 	boolean haveCharacter = false;
+	Gameboard board;
+	
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -47,7 +49,7 @@ public class GameController extends GameBase{
     	
 		AssetManager.init();
 		
-    	Gameboard board = new Gameboard(0, "map1", AssetManager.TILES_W, AssetManager.TILES_H);
+    	board = new Gameboard(0, "map1", AssetManager.TILES_W, AssetManager.TILES_H);
     	
         final Canvas canvas = new Canvas(AssetManager.GAME_WIDTH, AssetManager.GAME_HEIGHT);
         final GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -133,14 +135,18 @@ public class GameController extends GameBase{
         					}
             				gc.setFill(null);
             				gc.setGlobalAlpha(1.0);
+            				
+            				
         				}
+
         				
-        				
-        				//
-        				//Add health bar for each and every character on the map
-        				//
-        				if(currentTile.haveCharacter()) {
-        					int [] bar = AssetManager.toIsoBar(i,j);
+    					
+    					
+    					if(currentTile.getCharacter() != null) {
+    						//
+            				//Add health bar for each and every character on the map
+            				//
+            				int [] bar = AssetManager.toIsoBar(i,j);
         					gc.setFill(Color.RED);
         					gc.setStroke(Color.BLACK);
         					gc.setGlobalAlpha(0.5);
@@ -149,23 +155,14 @@ public class GameController extends GameBase{
         					double percentage = charaHp/maxHp;
         					gc.fillRect(bar[0], bar[1], AssetManager.BAR_WIDTH*percentage, AssetManager.BAR_HEIGHT);
         					gc.strokeRect(bar[0], bar[1], AssetManager.BAR_WIDTH, AssetManager.BAR_HEIGHT);
-        					
-    					}
-        				gc.setFill(null);
-        				gc.setStroke(null);
-        				gc.setGlobalAlpha(1.0);
-        				
-        				
-    					
-    					//Add the character if one is on the tile
-    					if(currentTile.getCharacter() != null) {
-    						coordISO = AssetManager.toIsoChara(i,j);
-    						if(currentTile.getCharacter().getInGameSprite() == "charaup") {
-    							gc.drawImage(AssetManager.charaup, coordISO[0], coordISO[1], AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
-    						}else {
-    							gc.drawImage(AssetManager.charadown, coordISO[0], coordISO[1], AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
-    						}
-    						
+        					gc.setFill(null);
+            				gc.setStroke(null);
+            				gc.setGlobalAlpha(1.0);
+            				//
+            				//Add the character if one is on the tile
+    						//
+            				coordISO = AssetManager.toIsoChara(i,j);
+							AssetManager.drawChara(gc,currentTile.getCharacter(), coordISO[0], coordISO[1]);
     					}
         			}
         		}
@@ -241,6 +238,7 @@ public class GameController extends GameBase{
     
 	public void setSelectedSkill(Skill skill) {
 		System.out.println("selected : " + skill.getName());
+		this.board.getCurrentTileSelected().getCharacter().setUsedSkill(skill);
 	}
 	
 }

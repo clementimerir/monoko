@@ -37,12 +37,12 @@ public class Gameboard extends Nameable{
 				mod2 = (int) rand2;
 				if(mod <= 20) {
 					if (mod2 == 1) {
-						Character c = new Character(0, "", new Soul(404, "None", new Attributes(5, 2, 1, 5, 3) ), new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ),"charaup", "cara29x58.png");
+						Character c = new Character(0, "", new Soul(404, "None", new Attributes(5, 2, 1, 5, 3) ), new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ),"figtup", "sprite_fighter32x64.png");
 						c.getSkills().add( new Skill(0, "Sword", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE) );
 						c.setTeam(team1);
 						this.board[i][j] = new Tile(0,c);
 					}else if(mod2 == 2) {
-						Character c = new Character(0, "", new Soul(404, "None", new Attributes(10, 1, 2, 1, 2) ), new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ),"charadown", "cara29x58.png");
+						Character c = new Character(0, "", new Soul(404, "None", new Attributes(10, 1, 2, 1, 2) ), new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ),"figtdown", "sprite_fighter32x64.png");
 						c.getSkills().add(new Skill(0, "Bow", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE));
 						c.setTeam(team2);
 						this.board[i][j] = new Tile(0,c);

@@ -65,20 +65,20 @@ public class Character extends Nameable{
 	}
 	
 	public boolean setUsedSkill(Skill skill) {
-        for (int i = 0; i<this.getSkills().size(); i++) {
-            if (this.getSkills().get(i).getName().equals(skill.getName())) {
-                if(this.getSkills().get(i).isInUse()) {
-                    this.getSkills().get(i).setInUse(false);
-                    return false;
-                }else {
-                    this.getSkills().get(i).setInUse(true);
-                    return true;
-                }
-            }
-        }
-        return false;
+		for (int i = 0; i<this.getSkills().size(); i++) {
+			if (this.getSkills().get(i).getName().equals(skill.getName())) {
+				if(this.getSkills().get(i).isInUse()) {
+					this.getSkills().get(i).setInUse(false);
+					return false;
+				}else {
+					this.getSkills().get(i).setInUse(true);
+					return true;
+				}
+			}
+		}
+		return false;
     }
-	
+
 	public void useSkill(Character target, Skill s, int posX, int posY) {
 		switch(s.getEffect()) {
 		case DAMAGE :
