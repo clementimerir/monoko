@@ -48,14 +48,24 @@ public class AssetManager {
 	public static WritableImage charaup;
 	public static WritableImage figtdown;
 	public static WritableImage figtup;
+	public static WritableImage figtleft;
+	public static WritableImage figtright;
 	public static WritableImage guardown;
 	public static WritableImage guarup;
+	public static WritableImage guarleft;
+	public static WritableImage guarright;
 	public static WritableImage sagedown;
 	public static WritableImage sageup;
+	public static WritableImage sageleft;
+	public static WritableImage sageright;
 	public static WritableImage huntdown;
 	public static WritableImage huntup;
+	public static WritableImage huntleft;
+	public static WritableImage huntright;
 	public static WritableImage clerdown;
 	public static WritableImage clerup;
+	public static WritableImage clerleft;
+	public static WritableImage clerright;
 	
 	//Initialisation of every tiles of the game
     public static void init(){
@@ -76,14 +86,24 @@ public class AssetManager {
     	charaup = new WritableImage(chara.getPixelReader(), CHARA_WIDTH, 0, CHARA_WIDTH, CHARA_HEIGHT);
     	figtdown = new WritableImage(figt.getPixelReader(), 0, 0, CHARA_WIDTH, CHARA_HEIGHT);
     	figtup = new WritableImage(figt.getPixelReader(), CHARA_WIDTH, 0, CHARA_WIDTH, CHARA_HEIGHT);
+    	figtleft = new WritableImage(figt.getPixelReader(), CHARA_WIDTH*2, 0, CHARA_WIDTH, CHARA_HEIGHT);
+    	figtright = new WritableImage(figt.getPixelReader(), CHARA_WIDTH*3, 0, CHARA_WIDTH, CHARA_HEIGHT);
     	guardown = new WritableImage(guar.getPixelReader(), 0, 0, CHARA_WIDTH, CHARA_HEIGHT);
     	guarup = new WritableImage(guar.getPixelReader(), CHARA_WIDTH, 0, CHARA_WIDTH, CHARA_HEIGHT);
+    	guarleft = new WritableImage(guar.getPixelReader(), CHARA_WIDTH*2, 0, CHARA_WIDTH, CHARA_HEIGHT);
+    	guarright = new WritableImage(guar.getPixelReader(), CHARA_WIDTH*3, 0, CHARA_WIDTH, CHARA_HEIGHT);
     	sagedown = new WritableImage(sage.getPixelReader(), 0, 0, CHARA_WIDTH, CHARA_HEIGHT);
     	sageup = new WritableImage(sage.getPixelReader(), CHARA_WIDTH, 0, CHARA_WIDTH, CHARA_HEIGHT);
+    	sageleft = new WritableImage(sage.getPixelReader(), CHARA_WIDTH*2, 0, CHARA_WIDTH, CHARA_HEIGHT);
+    	sageright = new WritableImage(sage.getPixelReader(), CHARA_WIDTH*3, 0, CHARA_WIDTH, CHARA_HEIGHT);
     	huntdown = new WritableImage(hunt.getPixelReader(), 0, 0, CHARA_WIDTH, CHARA_HEIGHT);
     	huntup = new WritableImage(hunt.getPixelReader(), CHARA_WIDTH, 0, CHARA_WIDTH, CHARA_HEIGHT);
+    	huntleft = new WritableImage(hunt.getPixelReader(), CHARA_WIDTH*2, 0, CHARA_WIDTH, CHARA_HEIGHT);
+    	huntright = new WritableImage(hunt.getPixelReader(), CHARA_WIDTH*3, 0, CHARA_WIDTH, CHARA_HEIGHT);
     	clerdown = new WritableImage(cler.getPixelReader(), 0, 0, CHARA_WIDTH, CHARA_HEIGHT);
     	clerup = new WritableImage(cler.getPixelReader(), CHARA_WIDTH, 0, CHARA_WIDTH, CHARA_HEIGHT);
+    	clerleft = new WritableImage(cler.getPixelReader(), CHARA_WIDTH*2, 0, CHARA_WIDTH, CHARA_HEIGHT);
+    	clerright = new WritableImage(cler.getPixelReader(), CHARA_WIDTH*3, 0, CHARA_WIDTH, CHARA_HEIGHT);
     	
     	
     }
@@ -212,11 +232,23 @@ public class AssetManager {
     	case "figtdown":
     		gc.drawImage(AssetManager.figtdown, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
     		break;
+    	case "figtleft":
+    		gc.drawImage(AssetManager.figtleft, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
+    		break;
+    	case "figtright":
+    		gc.drawImage(AssetManager.figtright, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
+    		break;
     	case "guarup":
     		gc.drawImage(AssetManager.guarup, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
     		break;
     	case "guardown":
     		gc.drawImage(AssetManager.guardown, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
+    		break;
+    	case "guarleft":
+    		gc.drawImage(AssetManager.guarleft, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
+    		break;
+    	case "guarright":
+    		gc.drawImage(AssetManager.guarright, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
     		break;
     	case "sageup":
     		gc.drawImage(AssetManager.sageup, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
@@ -224,17 +256,35 @@ public class AssetManager {
     	case "sagedown":
     		gc.drawImage(AssetManager.sagedown, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
     		break;
+    	case "sageleft":
+    		gc.drawImage(AssetManager.sageleft, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
+    		break;
+    	case "sageright":
+    		gc.drawImage(AssetManager.sageright, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
+    		break;
     	case "huntup":
     		gc.drawImage(AssetManager.huntup, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
     		break;
     	case "huntdown":
     		gc.drawImage(AssetManager.huntdown, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
     		break;
+    	case "huntleft":
+    		gc.drawImage(AssetManager.huntleft, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
+    		break;
+    	case "huntright":
+    		gc.drawImage(AssetManager.huntright, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
+    		break;
     	case "clerup":
     		gc.drawImage(AssetManager.clerup, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
     		break;
     	case "clerdown":
-    		gc.drawImage(AssetManager.clerup, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
+    		gc.drawImage(AssetManager.clerdown, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
+    		break;
+    	case "clerleft":
+    		gc.drawImage(AssetManager.clerleft, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
+    		break;
+    	case "clerright":
+    		gc.drawImage(AssetManager.clerright, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
     		break;
     	default: 
     		gc.drawImage(AssetManager.charaup, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);

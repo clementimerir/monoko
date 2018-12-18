@@ -19,7 +19,7 @@ public class Character extends Nameable{
 	private String inMenuSprite;
 	private int posX;
 	private int posY;
-	private boolean lookSouth;
+	private int vision = 0; // 0 = up || 1 = right || 2 = bas || 3 = left
 	private boolean inUse;
 	private Team team;
 
@@ -33,9 +33,9 @@ public class Character extends Nameable{
 		setCurrentAttributes( new Attributes(0, 0, 0, 0, 0) );
 		buildAttributes(job,god);
 		buildCurrentAttributes(job, god);
+		setPosition(0, 0, 0);
 		setInGameSprite(inGame);
 		setInMenuSprite(inMenu);
-		setPosition(0, 0, true);
 		setInUse(false);
 		skills = new ArrayList<Skill>();
 	}
@@ -49,13 +49,21 @@ public class Character extends Nameable{
 		setCurrentAttributes( new Attributes(0, 0, 0, 0, 0) );
 		buildAttributes(job,god);
 		buildCurrentAttributes(job, god);
+		setPosition(0, 0, 0);
 		setInMenuSprite();
 		setInGameSprite();
-		setPosition(0, 0, true);
 		setInUse(false);
 		skills = new ArrayList<Skill>();
 	}
 	
+	public int getVision() {
+		return vision;
+	}
+
+	public void setVision(int vision) {
+		this.vision = vision;
+	}
+
 	public void addSkill(Skill s) {
 		skills.add(s);
 	}
@@ -99,7 +107,33 @@ public class Character extends Nameable{
 		return false;
     }
 
+	public int setDirection(int newX, int newY) {
+		int oldPosX = this.getPosX();
+		int oldPosY = this.getPosY();
+		int newVision = 0;
+		int i = oldPosX-newX;
+		int j = oldPosY-newY;
+		// 0 = up || 1 = right || 2 = bas || 3 = left
+		if(j > 0) {
+			//up
+			newVision = 0;
+		}else if(j < 0){
+			//down
+			newVision = 2;
+		}else if(i > 0) {
+			//left
+			newVision = 3;
+		}else if(i < 0){
+			//right
+			newVision = 1;
+		}
+		setVision(newVision);
+		return newVision;
+	}
+	
+	
 	public void useSkill(Character target, Skill s, int posX, int posY) {
+		
 		switch(s.getEffect()) {
 		case DAMAGE :
 			dealDamage(target, s);
@@ -108,7 +142,7 @@ public class Character extends Nameable{
 			heal(target, s);
 			break;
 		case DASH :
-			setPosition(posX, posY, getPosY()>posY);
+			setPosition(posX, posY, setDirection(posX,posY));
 			break;
 		case PUSH :
 			int newPosX;
@@ -119,7 +153,7 @@ public class Character extends Nameable{
 			newPosX = posX+s.getBaseValue()*directionX;
 			directionY = (target.getPosY()>getPosY())?1:-1;
 			newPosY = posY+s.getBaseValue()*directionY;
-			target.setPosition(newPosX, newPosY, target.getLookSouth());
+			setPosition(newPosX, newPosY, target.getVision());
 			break;
 		default:
 			break;
@@ -164,10 +198,13 @@ public class Character extends Nameable{
 		getCurrentAttributes().setHp(Math.min(getCurrentAttributes().getHp()+heal, getBaseAttributes().getHp()));
 	}
 	
-	public void setPosition(int posX, int posY, boolean lookSouth) {
+	public void setPosition(int posX, int posY, int position) {
 		setPosX(posX);
 		setPosY(posY);
-		setLookSouth(lookSouth);
+		if(position >= 0) {
+			setVision(position);
+		}
+		
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -286,8 +323,22 @@ public class Character extends Nameable{
 	public void setInGameSprite() {
 		Properties jobProperties = new Properties();
 		try {
-			jobProperties.load( new FileInputStream( new File("./res/data/jobAndGodAttributes.properties").getAbsolutePath() ) );
-			this.inGameSprite = jobProperties.getProperty( new StringBuilder(this.getJob().getName()).append(".").append("up").toString());
+			if(vision == 0) {
+				jobProperties.load( new FileInputStream( new File("./res/data/jobAndGodAttributes.properties").getAbsolutePath() ) );
+				this.inGameSprite = jobProperties.getProperty( new StringBuilder(this.getJob().getName()).append(".").append("up").toString());
+			}else if(vision == 1) {
+				jobProperties.load( new FileInputStream( new File("./res/data/jobAndGodAttributes.properties").getAbsolutePath() ) );
+				this.inGameSprite = jobProperties.getProperty( new StringBuilder(this.getJob().getName()).append(".").append("right").toString());
+			}else if(vision == 2) {
+				jobProperties.load( new FileInputStream( new File("./res/data/jobAndGodAttributes.properties").getAbsolutePath() ) );
+				this.inGameSprite = jobProperties.getProperty( new StringBuilder(this.getJob().getName()).append(".").append("down").toString());
+			}else if(vision == 3) {
+				jobProperties.load( new FileInputStream( new File("./res/data/jobAndGodAttributes.properties").getAbsolutePath() ) );
+				this.inGameSprite = jobProperties.getProperty( new StringBuilder(this.getJob().getName()).append(".").append("left").toString());
+			}else {
+				jobProperties.load( new FileInputStream( new File("./res/data/jobAndGodAttributes.properties").getAbsolutePath() ) );
+				this.inGameSprite = jobProperties.getProperty( new StringBuilder(this.getJob().getName()).append(".").append("up").toString());
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -326,14 +377,6 @@ public class Character extends Nameable{
 
 	public void setPosY(int posY) {
 		this.posY = posY;
-	}
-
-	public boolean getLookSouth() {
-		return lookSouth;
-	}
-
-	public void setLookSouth(boolean lookSouth) {
-		this.lookSouth = lookSouth;
 	}
 
 	public boolean isInUse() {

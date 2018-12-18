@@ -163,6 +163,7 @@ public class GameController extends GameBase{
     						//
             				coordISO = AssetManager.toIsoChara(i,j);
 							AssetManager.drawChara(gc,currentTile.getCharacter(), coordISO[0], coordISO[1]);
+							currentTile.getCharacter().setPosition(i, j, -1);
     					}
         			}
         		}
@@ -178,7 +179,10 @@ public class GameController extends GameBase{
             	//We check if a character is present on the selected tile
 
             	if(board.haveSelected() && board.getCurrentTileSelected().haveCharacter() && board.getTile(coordSelected).isMvmnt()) {
+            		int integ = board.getCurrentTileSelected().getCharacter().setDirection(coordSelected[0],coordSelected[1]);
+            		System.out.println("New vision = " + integ);
             		board.getTile(coordSelected).setCharacter(board.getTile(board.getCurrentlySelected()).getCharacter());
+            		board.getCurrentTileSelected().getCharacter().setInGameSprite();
             		board.getTile(board.getCurrentlySelected()).setCharacter(null);
             		board.changeSelected(-1, -1);
             		board.resetAction_Mouvmnnt();

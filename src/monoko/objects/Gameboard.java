@@ -1,7 +1,11 @@
 package monoko.objects;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class Gameboard extends Nameable{
 
@@ -9,7 +13,9 @@ public class Gameboard extends Nameable{
 	private Tile[][] board;
 	private int[] currentlySelected;
 	String items[] = {"Sword", "Bow", "Pyromancy Tome" , "Scepter"};
-
+	Team team1;
+	Team team2;
+	
 
 	public Gameboard(int id, String name, int width, int height) {
 		setId(id);
@@ -26,8 +32,8 @@ public class Gameboard extends Nameable{
         double rand2 = 0;
         int mod = 0;
         int mod2 = 0;
-        Team team1 = new Team(1,"Team1",null);
-        Team team2 = new Team(2,"Team2",null);
+        team1 = new Team(1,"Team1",null);
+        team2 = new Team(2,"Team2",null);
         for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
 				//Creation de la tile
@@ -40,11 +46,21 @@ public class Gameboard extends Nameable{
 						Character c = new Character(0, "", new Soul(404, "Fighter", new Attributes(5, 2, 1, 5, 3) ), new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ));
 						c.getSkills().add( new Skill(0, "Sword", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE) );
 						c.setTeam(team1);
+						team1.getCharacters().add(c);
 						this.board[i][j] = new Tile(0,c);
 					}else if(mod2 == 2) {
 						Character c = new Character(0, "", new Soul(404, "Cleric", new Attributes(10, 1, 2, 1, 2) ), new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ));
 						c.getSkills().add(new Skill(0, "Bow", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE));
 						c.setTeam(team2);
+						team2.getCharacters().add(c);
+						Properties jobProperties = new Properties();
+						try {
+							jobProperties.load( new FileInputStream( new File("./res/data/jobAndGodAttributes.properties").getAbsolutePath() ) );
+							c.setInGameSprite(jobProperties.getProperty( new StringBuilder(c.getJob().getName()).append(".").append("down").toString()));
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						
 						this.board[i][j] = new Tile(0,c);
 					}else {
 						this.board[i][j] = new Tile(0,null);
