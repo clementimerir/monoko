@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.AttributeType;
+
 /**
  * A weapon, a healing ability, a push/attract ability...etc.
  * @author Bourdarie
@@ -18,7 +20,7 @@ public class Skill extends Nameable{
 	private int range;
 	private int area;
 	private int baseValue;
-	private float scaling;
+	private int scaling;
 	private AttributesEnumType attributeConcerned;
 	private boolean inUse = false;
 
@@ -40,12 +42,33 @@ public class Skill extends Nameable{
 		setIsPredilection(isPredilection);
 	}
 	
+	public Skill(int id, String name, SkillTypeEnum type, EffectTypeEnum effect, int price, boolean isPredilection, int range, int area, int baseValue, int scaling, AttributesEnumType attributeConcerned) {
+		setId(id);
+		setName(name);
+		setType(type);
+		setEffect(effect);
+		setPrice(price);
+		setIsPredilection(isPredilection);
+		setRange(range);
+		setArea(area);
+		setBaseValue(baseValue);
+		setScaling(scaling);
+		setAttributeConcerned(attributeConcerned);
+	}
+	
 	public Skill(String name) {
 		setName(name);
 		Properties properties = new Properties();
 		try {
 			properties.load( new FileInputStream( new File("./res/data/jobAndGodAttributes.properties").getAbsolutePath() ) );
-			int newHp = Integer.parseInt( properties.getProperty( new StringBuilder(name).append(".").append("hp").toString() ) );
+			setType(SkillTypeEnum.valueOf( properties.getProperty( new StringBuilder(name).append(".").append("type").toString() ) ) );
+			setEffect(EffectTypeEnum.valueOf( properties.getProperty( new StringBuilder(name).append(".").append("effect").toString() ) ) );
+			setPrice(Integer.parseInt( properties.getProperty( new StringBuilder(name).append(".").append("price").toString() ) ) );
+			setRange(Integer.parseInt( properties.getProperty( new StringBuilder(name).append(".").append("range").toString() ) ) );
+			setArea(Integer.parseInt( properties.getProperty( new StringBuilder(name).append(".").append("area").toString() ) ) );
+			setBaseValue(Integer.parseInt( properties.getProperty( new StringBuilder(name).append(".").append("baseValue").toString() ) ) );
+			setScaling(Integer.parseInt( properties.getProperty( new StringBuilder(name).append(".").append("scaling").toString() ) ) );
+			setAttributeConcerned(AttributesEnumType.valueOf( properties.getProperty( new StringBuilder(name).append(".").append("attributeConcerned").toString() ) ) );
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -151,11 +174,11 @@ public class Skill extends Nameable{
 		this.attributeConcerned = attributeConcerned;
 	}
 	
-	public float getScaling() {
+	public int getScaling() {
 		return scaling;
 	}
 
-	public void setScaling(float scaling) {
+	public void setScaling(int scaling) {
 		this.scaling = scaling;
 	}
 

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import monoko.objects.Character;
+import monoko.objects.Skill;
 import monoko.objects.Soul;
 import monoko.objects.Team;
 import monoko.objects.User;
@@ -23,7 +24,7 @@ public class Network {
 
 	public static void main(String[] args) throws Exception {
 		Network http = new Network();
-		
+		/*
 		List<Character> l = new ArrayList<Character>();
 		Character c1 = new Character(0, "Escanor", new Soul("Fighter"), new Soul("Ross'Fert"), "unSprite", "unAutreSprite");
 		Character c2 = new Character(1, "Phillipe", new Soul("Hunter"), new Soul("Simmenoid"), "unSprite", "unAutreSprite");
@@ -31,14 +32,12 @@ public class Network {
 		l.add(c1);
 		l.add(c2);
 		l.add(c3);
-		//Team t = new Team(0, "Team O", l);
 		http.login("Mambab", "azerty");
 		http.saveCharacter(c1);
 		http.saveCharacter(c2);
 		http.saveCharacter(c3);
-		
-		//http.register("p", "p");
-		//http.login("p", "p");
+		*/
+		Skill s = new Skill("Sword");
 	}
 	
 	private int sendPost(String url, String urlParameters) throws Exception {
