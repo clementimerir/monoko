@@ -21,6 +21,8 @@ public class TeamCreatorController extends TeamCreatorBase{
 	@Override
 	public void onOkClicked() {
 		_root._teamsVBox.getChildren().add( new FxmlManager("./ui/team.fxml", new TeamController(_root, _nameTextfield.getText())).load() );
+		
+		
 		_root._teamCreator.close();
 	}
 
