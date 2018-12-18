@@ -27,10 +27,6 @@ public class Skill extends Nameable{
 		setPrice();
 		setRange();
 		setIsPredilection(false);
-		
-		
-		
-		
 	}
 	
 	public Skill(int id, String name, SkillTypeEnum type, EffectTypeEnum effect, int price, boolean isPredilection) {
@@ -40,8 +36,18 @@ public class Skill extends Nameable{
 		setPrice(price);
 		setRange();
 		setIsPredilection(isPredilection);
-		
-		
+	}
+	
+	public Skill(String name) {
+		setName(name);
+		Properties properties = new Properties();
+		try {
+			properties.load( new FileInputStream( new File("./res/data/jobAndGodAttributes.properties").getAbsolutePath() ) );
+			int newHp = Integer.parseInt( properties.getProperty( new StringBuilder(name).append(".").append("hp").toString() ) );
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	//GETTERS SETTERS
