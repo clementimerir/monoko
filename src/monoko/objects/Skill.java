@@ -19,7 +19,8 @@ public class Skill extends Nameable{
 	private int area;
 	private int baseValue;
 	private AttributesEnumType attributeConcerned;
-	
+	private boolean inUse = false;
+
 	public Skill(int id, String name, SkillTypeEnum type, EffectTypeEnum effect) {
 		setId(id);
 		setName(name);
@@ -51,6 +52,14 @@ public class Skill extends Nameable{
 	}
 	
 	//GETTERS SETTERS
+	public boolean isInUse() {
+		return inUse;
+	}
+
+	public void setInUse(boolean inUse) {
+		this.inUse = inUse;
+	}	
+	
 	public SkillTypeEnum getType() {
 		return type;
 	}

@@ -41,6 +41,15 @@ public class Character extends Nameable{
 		this.team = team;
 	}
 	
+	public boolean isUsingSkill() {
+		for (int i = 0; i<this.getSkills().size(); i++) {
+			if(this.getSkills().get(i).isInUse()) {
+				return this.getSkills().get(i).isInUse();
+			}
+		}
+		return false;
+	}
+	
 	
 	public void useSkill(Character target, Skill s, int posX, int posY) {
 		switch(s.getEffect()) {

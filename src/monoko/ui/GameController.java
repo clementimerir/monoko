@@ -23,6 +23,7 @@ public class GameController extends GameBase{
 	public int[] coordSelected = new int[] {-1,-1};
 	public int[] coordMouse = new int[] {-1,-1};
 	SkillBarController skillBar = new SkillBarController(this);
+	boolean haveCharacter = false;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -104,29 +105,36 @@ public class GameController extends GameBase{
         				gc.setFill(null);
         				gc.setGlobalAlpha(1.0);
         				
-        				//
-        				//The tile where the character can move
-        				//
-        				if(currentTile.isMvmnt()) {
-        					gc.setFill(Color.BLUE);
-        					gc.setGlobalAlpha(0.5);
-            		        gc.fillPolygon(new double[]{p1[0], p2[0], p3[0], p4[0]},
-            		                       new double[]{p1[1], p2[1], p3[1], p4[1]}, 4);
-    					}
-        				gc.setFill(null);
-        				gc.setGlobalAlpha(1.0);
         				
         				//
-        				//The tile where the character can attack
+        				//Information concerning a character selected
         				//
-        				if(currentTile.isAction()) {
-        					gc.setFill(Color.RED);
-        					gc.setGlobalAlpha(0.5);
-            		        gc.fillPolygon(new double[]{p1[0], p2[0], p3[0], p4[0]},
-            		                       new double[]{p1[1], p2[1], p3[1], p4[1]}, 4);
-    					}
-        				gc.setFill(null);
-        				gc.setGlobalAlpha(1.0);
+        				if(haveCharacter) {
+        					//
+            				//The tile where the character can move
+            				//
+        					if(!board.getCurrentTileSelected().getCharacter().isUsingSkill() && currentTile.isMvmnt()) {
+            					gc.setFill(Color.BLUE);
+            					gc.setGlobalAlpha(0.5);
+                		        gc.fillPolygon(new double[]{p1[0], p2[0], p3[0], p4[0]},
+                		                       new double[]{p1[1], p2[1], p3[1], p4[1]}, 4);
+        					}
+            				gc.setFill(null);
+            				gc.setGlobalAlpha(1.0);
+            				
+            				//
+            				//The tile where the character can attack
+            				//
+            				if(board.getCurrentTileSelected().getCharacter().isUsingSkill() && currentTile.isAction()) {
+            					gc.setFill(Color.RED);
+            					gc.setGlobalAlpha(0.5);
+                		        gc.fillPolygon(new double[]{p1[0], p2[0], p3[0], p4[0]},
+                		                       new double[]{p1[1], p2[1], p3[1], p4[1]}, 4);
+        					}
+            				gc.setFill(null);
+            				gc.setGlobalAlpha(1.0);
+        				}
+        				
         				
         				//
         				//Add health bar for each and every character on the map
@@ -177,6 +185,7 @@ public class GameController extends GameBase{
             		board.getTile(board.getCurrentlySelected()).setCharacter(null);
             		board.changeSelected(-1, -1);
             		board.resetAction_Mouvmnnt();
+            		haveCharacter = false;
             		clearSkillBar();
             	}else if(board.getTile(coordSelected).getType() == 0) {
             		if(board.getTile(coordSelected).isAction() && board.getTile(coordSelected).haveEnemyCharacter(board.getCurrentTileSelected())) {
@@ -188,6 +197,7 @@ public class GameController extends GameBase{
             			board.changeSelected(-1, -1);
             			board.resetAction_Mouvmnnt();
                 		clearSkillBar();
+                		haveCharacter = false;
             		}else {
             			board.changeSelected(coordSelected);
                 		if(board.getCurrentTileSelected().haveCharacter()){
@@ -195,9 +205,11 @@ public class GameController extends GameBase{
                 			board.setTabMvmnt();
                 			reloadSkillBar(board.getCurrentTileSelected().getCharacter());
                 			board.setAction();
+                			haveCharacter = true;
         				}else {
         					board.resetAction_Mouvmnnt();
         					clearSkillBar();
+        					haveCharacter = false;
         				}
             		}
             		
