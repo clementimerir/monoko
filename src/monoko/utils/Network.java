@@ -25,7 +25,7 @@ public class Network {
 	public static void main(String[] args) throws Exception {
 		Network http = new Network();
 		List<Character> l = new ArrayList<Character>();
-		Character c1 = new Character(0, "Escanor", new Soul("Fighter"), new Soul("Ross'Fert");
+		Character c1 = new Character(0, "Escanor", new Soul("Fighter"), new Soul("Ross'Fert"));
 		Character c2 = new Character(1, "Phillipe", new Soul("Hunter"), new Soul("Simmenoid"));
 		Character c3 = new Character(2, "Jean", new Soul("Cleric"), null);
 		l.add(c1);
