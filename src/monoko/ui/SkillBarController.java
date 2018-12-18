@@ -11,13 +11,16 @@ import monoko.utils.FxmlManager;
 public class SkillBarController extends SkillBarBase{
 
 	private List<Skill> _skills;
+	private GameController _game;
 	
-	public SkillBarController() {
+	public SkillBarController(GameController game) {
 		_skills = new ArrayList<Skill>();
+		_game = game;
 	}
 	
-	public SkillBarController(List<Skill> list) {
+	public SkillBarController(GameController game, List<Skill> list) {
 		_skills = list;
+		_game = game;
 	}
 	
 	@Override
@@ -41,7 +44,7 @@ public class SkillBarController extends SkillBarBase{
 	public void loadSkills() {
 		_skillBar.getChildren().clear();
 		for(Skill skill : _skills) {
-			_skillBar.getChildren().add( new FxmlManager("./ui/skill.fxml", new SkillController(skill)).load() );
+			_skillBar.getChildren().add( new FxmlManager("./ui/skill.fxml", new SkillController(_game, skill)).load() );
 		}
 	}
 	

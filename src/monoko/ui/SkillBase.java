@@ -6,4 +6,6 @@ import javafx.scene.control.Button;
 
 public abstract class SkillBase implements Initializable{
 	@FXML Button _skillButton;
+	
+	@FXML public abstract void onSkillClicked();
 }

@@ -22,7 +22,7 @@ public class GameController extends GameBase{
 	
 	public int[] coordSelected = new int[] {-1,-1};
 	public int[] coordMouse = new int[] {-1,-1};
-	SkillBarController skillBar = new SkillBarController();
+	SkillBarController skillBar = new SkillBarController(this);
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -227,4 +227,8 @@ public class GameController extends GameBase{
 		skillBar.loadSkills();
 	}
     
+	public void setSelectedSkill(Skill skill) {
+		System.out.println("selected : " + skill.getName());
+	}
+	
 }

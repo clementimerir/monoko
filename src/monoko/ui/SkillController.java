@@ -9,9 +9,11 @@ import monoko.objects.Skill;
 public class SkillController extends SkillBase{
 
 	private Skill _skill;
+	private GameController _game;
 	
-	public SkillController(Skill skill) {
+	public SkillController(GameController game, Skill skill) {
 		setSkill(skill);
+		_game = game;
 	}
 	
 	@Override
@@ -28,5 +30,10 @@ public class SkillController extends SkillBase{
 
 	public void setSkill(Skill skill) {
 		this._skill = skill;
+	}
+
+	@Override
+	public void onSkillClicked() {
+		_game.setSelectedSkill(_skill);
 	}
 }
