@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import monoko.objects.Character;
+import monoko.objects.Team;
 import monoko.utils.FxmlManager;
 
 public class TeamEditorController extends TeamEditorBase{
@@ -21,6 +22,7 @@ public class TeamEditorController extends TeamEditorBase{
 	public void initialize(URL url, ResourceBundle bundle) {
 		new FxmlManager().fitToParent(_rootHBox, 0.0);
 		loadCharacters();
+		loadTeams();
 	}
 
 	@Override
@@ -50,6 +52,20 @@ public class TeamEditorController extends TeamEditorBase{
 	public void deleteCharacter(Character character) {
 		getRoot().getUser().getCharacters().remove(character);
 		loadCharacters();
+	}
+	
+	public void loadTeams() {
+		_teamsVBox.getChildren().clear();
+		if(_root.getUser() != null) {
+			for(Team team : _root.getUser().getTeams()) {
+				_teamsVBox.getChildren().add( new FxmlManager("./ui/team.fxml", new TeamController(this, team)).load() );
+			}			
+		}
+	}
+	
+	public void deleteteam(Team team) {
+		getRoot().getUser().getTeams().remove(team);
+		loadTeams();
 	}
 	
 	//GETTERS SETTERS

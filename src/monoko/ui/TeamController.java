@@ -8,21 +8,23 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import monoko.objects.Character;
+import monoko.objects.Team;
 import monoko.utils.FxmlManager;
+import monoko.utils.Network;
 
 public class TeamController extends TeamBase{
 
 	private TeamEditorController _root;
-	private String _name;
+	private Team _team;
 	
-	public TeamController(TeamEditorController root, String name) {
+	public TeamController(TeamEditorController root, Team team) {
 		_root = root;
-		_name = name;
+		setTeam(team);
 	}
 	
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
-		_teamTitledPane.setText(_name);
+		_teamTitledPane.setText(getTeam().getName());
 		
 		_teamsHBox.setOnDragOver(new EventHandler<DragEvent>() {
 		    public void handle(DragEvent event) {
@@ -56,11 +58,20 @@ public class TeamController extends TeamBase{
 		        Dragboard db = event.getDragboard();
 		        boolean success = false;
 		        if (db.hasString()) {
-		        	System.out.println("AAA");
 		        	for(Character currentCharacter : _root.getRoot().getUser().getCharacters()) {
 		        		if(currentCharacter.getId() == Integer.valueOf(db.getString())) {
 		        			
 		        			_teamsHBox.getChildren().add(new FxmlManager("./ui/character.fxml", new CharacterController(_root, currentCharacter)).load());
+		        			
+		        			getTeam().getCharacters().add(currentCharacter);
+		        			
+		        			try {
+								new Network(_root.getRoot().getUser()).saveTeam(getTeam());
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+
+		        			break;
 		        			
 		        		}
 		        	}
@@ -84,4 +95,12 @@ public class TeamController extends TeamBase{
 		
 	}
 
+	//GETTERS SETTERS
+	public Team getTeam() {
+		return _team;
+	}
+
+	public void setTeam(Team team) {
+		this._team = team;
+	}
 }

@@ -24,10 +24,13 @@ public class TeamCreatorController extends TeamCreatorBase{
 
 	@Override
 	public void onOkClicked() {
-		_root._teamsVBox.getChildren().add( new FxmlManager("./ui/team.fxml", new TeamController(_root, _nameTextfield.getText())).load() );
+		Team team = new Team(ThreadLocalRandom.current().nextInt( 0 , 999999 + 1 ), _nameTextfield.getText(), new ArrayList<monoko.objects.Character>());
+		TeamController teamController = new TeamController(_root, team);
+		
+		_root._teamsVBox.getChildren().add( new FxmlManager("./ui/team.fxml", teamController).load() );
 		
 		try {
-			new Network(_root.getRoot().getUser()).saveTeam(new Team(ThreadLocalRandom.current().nextInt( 0 , 999999 + 1 ), _nameTextfield.getText(), new ArrayList<monoko.objects.Character>()));
+			new Network(_root.getRoot().getUser()).saveTeam(team);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
