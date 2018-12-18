@@ -106,7 +106,6 @@ public class Network {
 			user.setPassword(password);
 			JsonReader reader = Json.createReader(new StringReader(response.toString()));
 			JsonObject userJson = reader.readObject();
-			System.out.println(userJson);
 			JsonArray characters = userJson.getJsonArray("characters");
 			for(int i=0; i<characters.size(); i++) {
 				JsonObject c = characters.getJsonObject(i);
@@ -118,13 +117,12 @@ public class Network {
 				if(!job.equals("none"))
 					character.setJob(new Soul(job));
 				if(!god.equals("none"))
-					character.setJob(new Soul(god));
+					character.setGod(new Soul(god));
 				JsonArray skills = c.getJsonArray("skills");
 				for(int j=0; j<skills.size(); j++) {
 					
 				}
 				user.addCharacter(character);
-				System.out.println(character.toJson());
 			}
 			return user;
 		}
