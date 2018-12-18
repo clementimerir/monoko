@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -110,7 +108,14 @@ public class CharacterEditorController extends CharacterEditorBase{
 			_nameTextfield.setText(_name);
 			
 			for(Skill skill : _itemList) {
-				addItem(skill.getName());
+				
+				_itemsVBox.getChildren().clear();
+				skill.setId(_itemList.size());
+				setTotalPrice( getTotalPrice() + skill.getPrice() );
+				for (Skill loop : _itemList) {
+					_itemsVBox.getChildren().add( new FxmlManager("./ui/item.fxml", new ItemController(loop, this)).load() );
+				}
+				
 			}
 		}
 	}
