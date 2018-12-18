@@ -53,7 +53,7 @@ public class LoginController extends LoginBase{
 								_loginLabel.setVisible(false);
 //							}
 						} catch (Exception e) {
-							
+							e.printStackTrace();
 							new Thread(new Runnable() {
 							    @Override public void run() {
 						        Platform.runLater(new Runnable() {

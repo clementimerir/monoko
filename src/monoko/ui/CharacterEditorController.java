@@ -302,7 +302,7 @@ public class CharacterEditorController extends CharacterEditorBase{
 		
 		Soul job = new Soul(_jobComboBox.getSelectionModel().getSelectedItem());
 		Soul god = new Soul(_godComboBox.getSelectionModel().getSelectedItem());
-		Character character = new Character(ThreadLocalRandom.current().nextInt( 0 , 999999 + 1 ), _nameTextfield.getText(), job, god, "", "");
+		Character character = new Character(ThreadLocalRandom.current().nextInt( 0 , 999999 + 1 ), _nameTextfield.getText(), job, god);
 		character.setSkills(_itemList);
 
 		if(editionMode) {
