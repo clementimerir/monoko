@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.scene.image.Image;
 import monoko.objects.Character;
 import monoko.utils.FxmlManager;
+import monoko.utils.Network;
 
 public class CharacterController extends CharacterBase{
 
@@ -31,6 +32,13 @@ public class CharacterController extends CharacterBase{
 	@Override
 	public void onDeleteClicked() {
 		_root.deleteCharacter(_character);
+		
+		try {
+			new Network().deleteCharacter(_character);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	//SETTERS GETTERS

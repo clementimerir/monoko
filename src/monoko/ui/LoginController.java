@@ -44,7 +44,7 @@ public class LoginController extends LoginBase{
 		                _loginProgressIndicator.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
 		                
 						try {
-							User user = new Network().login("Mambab", "azerty");
+							User user = new Network().login("p", "p");
 //							User user = new Network().login(_idTextfield.getText(), _passwordTextfield.getText());
 //							if( user != null ) {
 								_parent.setUser(user);

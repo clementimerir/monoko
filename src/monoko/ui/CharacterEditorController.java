@@ -315,6 +315,14 @@ public class CharacterEditorController extends CharacterEditorBase{
 			_root.getUser().getCharacters().add(character);
 		}
 		
+		try {
+			Network net = new Network();
+			net.setUser(_root.getUser());
+			net.saveCharacter(character);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		_root.getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/teamEditor.fxml", new TeamEditorController(_root)).load());
 	}
 	
