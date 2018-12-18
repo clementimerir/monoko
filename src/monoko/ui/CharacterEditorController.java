@@ -187,10 +187,10 @@ public class CharacterEditorController extends CharacterEditorBase{
 				for(Skill loop : _itemList) {
 					if(loop.getName().equals(itemChosen.getName())) {
 						_itemList.remove(loop);
+						deleteItem(loop);
 						break;
 					}
 				}
-				deleteItem(itemChosen);
 			}
 			
 			_predilectionVBox.getChildren().clear();
