@@ -1,7 +1,11 @@
 package monoko.objects;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.json.simple.*;
 
@@ -19,8 +23,8 @@ public class Character extends Nameable{
 	private boolean inUse;
 	private Team team;
 
-
-	public Character(int id, String name, Soul job, Soul god, String inGameSprite, String inMenuSprite) {
+	
+	public Character(int id, String name, Soul job, Soul god, String inGame, String inMenu) {
 		setId(id);
 		setName(name);
 		setJob(job);
@@ -29,8 +33,24 @@ public class Character extends Nameable{
 		setCurrentAttributes( new Attributes(0, 0, 0, 0, 0) );
 		buildAttributes(job,god);
 		buildCurrentAttributes(job, god);
-		setInGameSprite(inGameSprite);
-		setInMenuSprite(inMenuSprite);
+		setInGameSprite(inGame);
+		setInMenuSprite(inMenu);
+		setPosition(0, 0, true);
+		setInUse(false);
+		skills = new ArrayList<Skill>();
+	}
+
+	public Character(int id, String name, Soul job, Soul god) {
+		setId(id);
+		setName(name);
+		setJob(job);
+		setGod(god);
+		setBaseAttributes( new Attributes(0, 0, 0, 0, 0) );
+		setCurrentAttributes( new Attributes(0, 0, 0, 0, 0) );
+		buildAttributes(job,god);
+		buildCurrentAttributes(job, god);
+		setInGameSprite();
+		setInMenuSprite();
 		setPosition(0, 0, true);
 		setInUse(false);
 		skills = new ArrayList<Skill>();
@@ -262,6 +282,17 @@ public class Character extends Nameable{
 	public void setInGameSprite(String inGameSprite) {
 		this.inGameSprite = inGameSprite;
 	}
+	
+	public void setInGameSprite() {
+		Properties jobProperties = new Properties();
+		try {
+			jobProperties.load( new FileInputStream( new File("./res/data/jobAndGodAttributes.properties").getAbsolutePath() ) );
+			this.inGameSprite = jobProperties.getProperty( new StringBuilder(this.getJob().getName()).append(".").append("up").toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 	public String getInMenuSprite() {
 		return inMenuSprite;
@@ -269,6 +300,16 @@ public class Character extends Nameable{
 
 	public void setInMenuSprite(String inMenuSprite) {
 		this.inMenuSprite = inMenuSprite;
+	}
+	
+	public void setInMenuSprite() {
+		Properties jobProperties = new Properties();
+		try {
+			jobProperties.load( new FileInputStream( new File("./res/data/jobAndGodAttributes.properties").getAbsolutePath() ) );
+			this.inGameSprite = jobProperties.getProperty( new StringBuilder(this.getJob().getName()).append(".").append("sprt").toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public int getPosX() {
