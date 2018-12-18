@@ -71,25 +71,25 @@ public class Network {
 		return responseCode;
 	}
 
-	private void saveCharacter(Character c) throws Exception {
+	public void saveCharacter(Character c) throws Exception {
 		String urlParameters = "{\"username\":\"" +user.getUsername()+ "\",\"password\":\"" +user.getPassword()+ "\",\"character\":" + c.toJson()+ "}";
 		System.out.println(urlParameters);
 		sendPost("https://multiplayer-mambab.c9users.io/saveCharacter", urlParameters);
 	}
 	
-	private void deleteCharacter(Character c) throws Exception {
+	public void deleteCharacter(Character c) throws Exception {
 		String urlParameters = "{\"username\":\"" +user.getUsername()+ "\",\"password\":\"" +user.getPassword()+ "\",\"ref\":" +c.getId()+ "}";
 		System.out.println(urlParameters);
 		sendPost("https://multiplayer-mambab.c9users.io/deleteCharacter", urlParameters);
 	}
 
-	private void saveTeam(Team t) throws Exception {
+	public void saveTeam(Team t) throws Exception {
 		String urlParameters = "{\"username\":\"" +user.getUsername()+ "\",\"password\":\"" +user.getPassword()+ "\",\"team\":" + t.toJson()+ "}";
 		System.out.println(urlParameters);
 		sendPost("https://multiplayer-mambab.c9users.io/saveTeam", urlParameters);
 	}
 	
-	private void deleteTeam(Team t) throws Exception {
+	public void deleteTeam(Team t) throws Exception {
 		String urlParameters = "{\"username\":\"" +user.getUsername()+ "\",\"password\":\"" +user.getPassword()+ "\",\"ref\":" +t.getId()+ "}";
 		System.out.println(urlParameters);
 		sendPost("https://multiplayer-mambab.c9users.io/deleteTeam", urlParameters);
@@ -116,7 +116,10 @@ public class Network {
 					character.setJob(new Soul(job));
 				if(!god.equals("none"))
 					character.setJob(new Soul(god));
-				
+				JsonArray skills = c.getJsonArray("skills");
+				for(int j=0; j<skills.size(); j++) {
+					
+				}
 				System.out.println(character.toJson());
 			}
 			return user;
