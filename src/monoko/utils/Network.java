@@ -117,13 +117,15 @@ public class Network {
 			JsonArray characters = userJson.getJsonArray("characters");
 			for(int i=0; i<characters.size(); i++) {
 				JsonObject c = characters.getJsonObject(i);
-				Character character = new Character(c.getInt("ref"), c.getString("name"), null, null);
+				Character character = new Character(c.getInt("ref"), c.getString("name"), null, null, "", "");
 				String job = c.getString("job");
 				String god = c.getString("god");
 				if(!job.equals("none"))
 					character.setJob(new Soul(job));
 				if(!god.equals("none"))
 					character.setGod(new Soul(god));
+				character.setInGameSprite();
+				character.setInMenuSprite();
 				JsonArray skills = c.getJsonArray("skills");
 				for(int j=0; j<skills.size(); j++) {
 					character.addSkill(new Skill(skills.getString(j)));
