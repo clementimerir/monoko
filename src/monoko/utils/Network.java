@@ -117,7 +117,7 @@ public class Network {
 			JsonArray characters = userJson.getJsonArray("characters");
 			for(int i=0; i<characters.size(); i++) {
 				JsonObject c = characters.getJsonObject(i);
-				Character character = new Character(c.getInt("ref"), c.getString("name"), null, null, "", "");
+				Character character = new Character(c.getInt("ref"), c.getString("name"), null, null, "none", "none");
 				String job = c.getString("job");
 				String god = c.getString("god");
 				if(!job.equals("none"))
