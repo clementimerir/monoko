@@ -41,6 +41,14 @@ public class Network {
 		*/
 	}
 	
+	public Network() {
+		setUser(new User());
+	}
+
+	public Network(User user) {
+		setUser(user);
+	}
+	
 	private int sendPost(String url, String urlParameters) throws Exception {
 		URL obj = new URL(url);
 		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();

@@ -1,50 +1,30 @@
 package monoko.junk;
-import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.Scanner;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
 
-/**
-* Written by Martin Ombura Jr. <@martinomburajr>
-*/
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpServer;
+
 public class ServerTest {
-    public static void main(String[] args) {
-    	ServerTest serv = new ServerTest();
-        serv.connectToServer();
+
+    public static void main(String[] args) throws Exception {
+        HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
+        server.createContext("/test", new MyHandler());
+        server.setExecutor(null); // creates a default executor
+        server.start();
     }
-    
-    public ServerTest() {
-    	
-    }
 
-    public void connectToServer() {
-        //Try connect to the server on an unused port eg 9991. A successful connection will return a socket
-        try(ServerSocket serverSocket = new ServerSocket(9991)) {
-            Socket connectionSocket = serverSocket.accept();
-
-            //Create Input&Outputstreams for the connection
-            InputStream inputToServer = connectionSocket.getInputStream();
-            OutputStream outputFromServer = connectionSocket.getOutputStream();
-
-            Scanner scanner = new Scanner(inputToServer, "UTF-8");
-            PrintWriter serverPrintOut = new PrintWriter(new OutputStreamWriter(outputFromServer, "UTF-8"), true);
-
-            serverPrintOut.println("Hello World! Enter Peace to exit.");
-
-            //Have the server take input from the client and echo it back
-            //This should be placed in a loop that listens for a terminator text e.g. bye
-            boolean done = false;
-
-            while(!done && scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                serverPrintOut.println("Echo from <Your Name Here> Server: " + line);
-
-                if(line.toLowerCase().trim().equals("peace")) {
-                    done = true;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+    static class MyHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange t) throws IOException {
+            String response = "This is the response";
+            t.sendResponseHeaders(200, response.length());
+            OutputStream os = t.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
         }
     }
+
 }
