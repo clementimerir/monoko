@@ -185,7 +185,6 @@ public class Gameboard extends Nameable{
 	public void setAction() {
 		
 		Character c = this.getCurrentTileSelected().getCharacter();
-		String nomSkill = c.getSkills().get(0).getName();
 		int range = c.getSkills().get(0).getRange();
 		
 		boolean[] stop = new boolean[4];
