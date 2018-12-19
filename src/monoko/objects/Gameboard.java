@@ -13,13 +13,13 @@ public class Gameboard extends Nameable{
 	private Tile[][] board;
 	private int[] currentlySelected;
 	String items[] = {"Sword", "Bow", "Pyromancy Tome" , "Scepter"};
-	Team team1;
-	Team team2;
+	Player p1;
+	Player p2;
 	
-
-	public Gameboard(int id, String name, int width, int height) {
+	public Gameboard(int id, String name, int width, int height, Player p1, Player p2) {
 		setId(id);
 		setName(name);
+		setPlayers(p1, p2);
 		setBoard(width,height);
 		setCurrentlySelected(-1, -1);
 	}
@@ -29,51 +29,78 @@ public class Gameboard extends Nameable{
 		//Creation aleatoire de la map
         this.board = new Tile[width][height];
         double rand = 0;
-        double rand2 = 0;
+        //double rand2 = 0;
         int mod = 0;
+        //int mod2 = 0;
+        int x=0;
+        int x2=0;
+        int widthP1 = this.getPlayer1().getTeam().getCharacters().size();
+        int widthP2 = this.getPlayer2().getTeam().getCharacters().size();
         int mod2 = 0;
-        team1 = new Team(1,"Team1",null);
-        team2 = new Team(2,"Team2",null);
         for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
 				//Creation de la tile
+				
 				rand = Math.ceil(Math.random() * ( 25 - 0 ));
-				rand2 = Math.ceil(Math.random() * ( 25 - 0 ));
 				mod = (int) rand;
-				mod2 = (int) rand2;
-				if(mod <= 20) {
-					if (mod2 == 1) {
-						Character c = new Character(0, "", new Soul(404, "Fighter", new Attributes(5, 2, 1, 5, 3) ), new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ));
-						c.getSkills().add( new Skill(0, "Sword", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE) );
-						c.setTeam(team1);
-						team1.getCharacters().add(c);
-						this.board[i][j] = new Tile(0,c);
-					}else if(mod2 == 2) {
-						Character c = new Character(0, "", new Soul(404, "Cleric", new Attributes(10, 1, 2, 1, 2) ), new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ));
-						c.getSkills().add(new Skill(0, "Bow", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE));
-						c.setTeam(team2);
-						team2.getCharacters().add(c);
-						Properties jobProperties = new Properties();
-						try {
-							jobProperties.load( new FileInputStream( new File("./res/data/jobAndGodAttributes.properties").getAbsolutePath() ) );
-							c.setInGameSprite(jobProperties.getProperty( new StringBuilder(c.getJob().getName()).append(".").append("down").toString()));
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						
-						this.board[i][j] = new Tile(0,c);
+				
+				if(j == 0) {
+					mod2 = width/widthP1;
+					if(i % mod2 == 1 && x < p1.getTeam().getCharacters().size()) {
+						p1.getTeam().getCharacters().get(x).setVision(2);
+						p1.getTeam().getCharacters().get(x).setInGameSprite();
+						this.board[i][j] = new Tile(0,p1.getTeam().getCharacters().get(x));
+						x++;
 					}else {
 						this.board[i][j] = new Tile(0,null);
 					}
-				}else if(mod <= 23){
-					this.board[i][j] = new Tile(1,null);
+				}else if(j == height-1) {
+					mod2 = width/widthP2;
+					if(i % mod2 == 1  && x2 < p2.getTeam().getCharacters().size()) {
+						this.board[i][j] = new Tile(0,p2.getTeam().getCharacters().get(x2));
+						x2++;
+					}else {
+						this.board[i][j] = new Tile(0,null);
+					}
 				}else {
-					this.board[i][j] = new Tile(2,null);
+					if(mod <= 20) {
+						this.board[i][j] = new Tile(0,null);
+					}else if(mod <= 23){
+						this.board[i][j] = new Tile(1,null);
+					}else {
+						this.board[i][j] = new Tile(2,null);
+					}
 				}
+				
 			}
 		}
         
         
+	}
+	
+	
+	public void setPlayers(Player p1, Player p2) {
+		setPlayer1(p1);
+		setPlayer2(p2);
+	}
+	
+	public Player getPlayer1() {
+		return p1;
+	}
+
+
+	public void setPlayer1(Player p1) {
+		this.p1 = p1;
+	}
+
+
+	public Player getPlayer2() {
+		return p2;
+	}
+
+
+	public void setPlayer2(Player p2) {
+		this.p2 = p2;
 	}
 	
 	public void setBoard(Tile[][] board) {

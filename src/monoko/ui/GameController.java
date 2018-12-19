@@ -13,7 +13,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import monoko.objects.Character;
 import monoko.objects.Gameboard;
+import monoko.objects.Player;
 import monoko.objects.Skill;
+import monoko.objects.Team;
 import monoko.objects.Tile;
 import monoko.utils.AssetManager;
 import monoko.utils.FxmlManager;
@@ -25,6 +27,8 @@ public class GameController extends GameBase{
 	SkillBarController skillBar = new SkillBarController(this);
 	boolean haveCharacter = false;
 	Gameboard board;
+	Player[] players;
+	Team playerTurn;
 	
 	
 	@Override
@@ -49,7 +53,16 @@ public class GameController extends GameBase{
     	
 		AssetManager.init();
 		
-    	board = new Gameboard(0, "map1", AssetManager.TILES_W, AssetManager.TILES_H);
+		//
+		//TO CHANGE
+		//
+		players = AssetManager.teamCreator();
+		//
+		//
+		//
+    	board = new Gameboard(0, "map1", AssetManager.TILES_W, AssetManager.TILES_H, players[0], players[1]);
+    	playerTurn = players[0].getTeam();
+    	
     	
         final Canvas canvas = new Canvas(AssetManager.GAME_WIDTH, AssetManager.GAME_HEIGHT);
         final GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -135,13 +148,8 @@ public class GameController extends GameBase{
         					}
             				gc.setFill(null);
             				gc.setGlobalAlpha(1.0);
-            				
-            				
         				}
 
-        				
-    					
-    					
     					if(currentTile.getCharacter() != null) {
     						//
             				//Add health bar for each and every character on the map
@@ -176,11 +184,12 @@ public class GameController extends GameBase{
             @Override
             public void handle(MouseEvent event) {
             	coordSelected = AssetManager.toGrid(event.getSceneX(), event.getSceneY());
+            	int [] oldCoordSelected = board.getCurrentlySelected();
             	//We check if a character is present on the selected tile
 
-            	if(board.haveSelected() && board.getCurrentTileSelected().haveCharacter() && board.getTile(coordSelected).isMvmnt()) {
+            	if(board.haveSelected() && board.getCurrentTileSelected().haveCharacter() && board.getTile(coordSelected).isMvmnt() && !board.getCurrentTileSelected().getCharacter().isUsingSkill()) {
+            		//Mouvement d'un personnage
             		int integ = board.getCurrentTileSelected().getCharacter().setDirection(coordSelected[0],coordSelected[1]);
-            		System.out.println("New vision = " + integ);
             		board.getTile(coordSelected).setCharacter(board.getTile(board.getCurrentlySelected()).getCharacter());
             		board.getCurrentTileSelected().getCharacter().setInGameSprite();
             		board.getTile(board.getCurrentlySelected()).setCharacter(null);
@@ -189,32 +198,42 @@ public class GameController extends GameBase{
             		haveCharacter = false;
             		clearSkillBar();
             	}else if(board.getTile(coordSelected).getType() == 0) {
-            		if(board.getTile(coordSelected).isAction() && board.getTile(coordSelected).haveEnemyCharacter(board.getCurrentTileSelected())) {
+            		//Attaque&changement de case
+            		if(board.getTile(coordSelected).isAction() && board.getTile(coordSelected).haveEnemyCharacter(board.getCurrentTileSelected()) && board.getTile(coordSelected).getCharacter().isUsingSkill()) {
+            			//Attaque
             			Character c = board.getTile(coordSelected).getCharacter();
             			c.takeDamage(1);
             			if(c.getCurrentAttributes().getHp() == 0) {
             				board.getTile(coordSelected).setCharacter(null);
             			}
+            			board.getCurrentTileSelected().getCharacter().setUsedSkill(null);
             			board.changeSelected(-1, -1);
             			board.resetAction_Mouvmnnt();
                 		clearSkillBar();
                 		haveCharacter = false;
+                		nextTurn();
             		}else {
+            			//Changement de case
+            			if(oldCoordSelected[0] > 0 && board.getTile(oldCoordSelected).getCharacter().isUsingSkill() && board.getTile(oldCoordSelected).haveCharacter()) {
+            				board.getTile(oldCoordSelected).getCharacter().setUsedSkill(null);
+            			}
+            			
             			board.changeSelected(coordSelected);
+            			
                 		if(board.getCurrentTileSelected().haveCharacter()){
+                			//Avec un personnage
                 			board.resetAction_Mouvmnnt();
                 			board.setTabMvmnt();
                 			reloadSkillBar(board.getCurrentTileSelected().getCharacter());
                 			board.setAction();
                 			haveCharacter = true;
         				}else {
+        					//Case vide
         					board.resetAction_Mouvmnnt();
         					clearSkillBar();
         					haveCharacter = false;
         				}
             		}
-            		
-            		
             	}
             	
             	System.out.println("X :" + coordSelected[0]+ "Y :" +coordSelected[1]);
@@ -243,6 +262,14 @@ public class GameController extends GameBase{
 	public void setSelectedSkill(Skill skill) {
 		System.out.println("selected : " + skill.getName());
 		this.board.getCurrentTileSelected().getCharacter().setUsedSkill(skill);
+	}
+	
+	private void nextTurn() {
+		if (playerTurn.getName().equals(players[0].getTeam().getName())) {
+			playerTurn = players[1].getTeam();
+		}else {
+			playerTurn = players[0].getTeam();
+		}
 	}
 	
 }

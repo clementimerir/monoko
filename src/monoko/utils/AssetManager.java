@@ -1,7 +1,16 @@
 package monoko.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.scene.canvas.GraphicsContext;
 import monoko.objects.Character;
+import monoko.objects.EffectTypeEnum;
+import monoko.objects.Player;
+import monoko.objects.Skill;
+import monoko.objects.SkillTypeEnum;
+import monoko.objects.Soul;
+import monoko.objects.Team;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 
@@ -293,6 +302,84 @@ public class AssetManager {
     }
     
     
+    //
+	//TO REMOVE
+	//
+	
+    //Team creator
+    public static Player[] teamCreator() {
+    	Team team1 = new Team(1,"Team1", null);
+    	Team team2 = new Team(2,"Team2", null);
+    	
+    	Player p1 = new Player(1, "Player1", team1);
+    	Player p2 = new Player(2, "Player2", team2);
+    	
+    	Player[] players = new Player[] {p1,p2};
+    	
+    	List<Character> characters1 = new ArrayList<Character>();
+    	List<Character> characters2 = new ArrayList<Character>();
+    	
+    	//Create a Fighter for Player1
+    	Character f1 = new Character(1, "Fighter1", new Soul("Fighter"), new Soul("Simmenoid"));
+    	f1.getSkills().add( new Skill(0, "Sword", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE) );
+    	f1.setTeam(team1);
+    	characters1.add(f1);
+    	//Create a Cleric for Player1
+    	Character c1 = new Character(2, "Cleric1", new Soul("Cleric"), new Soul("Simmenoid"));
+    	c1.getSkills().add( new Skill(0, "Scepter", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE) );
+    	c1.setTeam(team1);
+    	characters1.add(c1);
+    	//Create a Hunter for Player1
+    	Character h1 = new Character(3, "Hunter1", new Soul("Hunter"), new Soul("Simmenoid"));
+    	h1.getSkills().add( new Skill(0, "Bow", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE) );
+    	h1.setTeam(team1);
+    	characters1.add(h1);
+    	//Create a Guardian for Player1
+    	Character g1 = new Character(4, "Guardian1", new Soul("Guardian"), new Soul("Simmenoid"));
+    	g1.getSkills().add( new Skill(0, "Sword", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE) );
+    	g1.setTeam(team1);
+    	characters1.add(g1);
+    	//Create a Sage for Player1
+    	Character s1 = new Character(5, "Sage1", new Soul("Sage"), new Soul("Simmenoid"));
+    	s1.getSkills().add( new Skill(0, "Pyromancy Tome", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE) );
+    	s1.setTeam(team1);
+    	characters1.add(s1);
+    	team1.setCharacters(characters1);
+    	
+    	//Create a Fighter for Player2
+    	Character f2 = new Character(6, "Fighter2", new Soul("Fighter"), new Soul("Simmenoid"));
+    	f2.getSkills().add( new Skill(0, "Sword", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE) );
+    	f2.setTeam(team2);
+    	characters2.add(f2);
+    	//Create a Cleric for Player2
+    	Character c2 = new Character(7, "Cleric2", new Soul("Cleric"), new Soul("Simmenoid"));
+    	c2.getSkills().add( new Skill(0, "Scepter", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE) );
+    	c2.setTeam(team2);
+    	characters2.add(c2);
+    	//Create a Hunter for Player1
+    	Character h2 = new Character(8, "Hunter2", new Soul("Hunter"), new Soul("Simmenoid"));
+    	h2.getSkills().add( new Skill(0, "Bow", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE) );
+    	h2.setTeam(team2);
+    	characters2.add(h2);
+    	//Create a Guardian for Player1
+    	Character g2 = new Character(9, "Guardian2", new Soul("Guardian"), new Soul("Simmenoid"));
+    	g2.getSkills().add( new Skill(0, "Sword", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE) );
+    	g2.setTeam(team2);
+    	characters2.add(g2);
+    	//Create a Sage for Player1
+    	Character s2 = new Character(10, "Sage2", new Soul("Sage"), new Soul("Simmenoid"));
+    	s2.getSkills().add( new Skill(0, "Pyromancy Tome", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE) );
+    	s2.setTeam(team2);
+    	characters2.add(s2);
+    	team2.setCharacters(characters2);
+    	
+    	
+    	return players;
+    	
+    }
     
+	//
+	//
+	//
     
 }

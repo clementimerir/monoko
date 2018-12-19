@@ -33,7 +33,7 @@ public class IsoMouvmnt extends Application{
     	
 		AssetManager.init();
 		
-    	Gameboard board = new Gameboard(0, "map1", AssetManager.TILES_W, AssetManager.TILES_H);
+    	Gameboard board = new Gameboard(0, "map1", AssetManager.TILES_W, AssetManager.TILES_H, null, null);
     	
         theStage.setTitle("Monoko");
         

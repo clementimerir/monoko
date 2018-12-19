@@ -93,6 +93,15 @@ public class Character extends Nameable{
 	}
 	
 	public boolean setUsedSkill(Skill skill) {
+		if(skill == null) {
+			for (int i = 0; i<this.getSkills().size(); i++) {
+				if(this.getSkills().get(i).isInUse()) {
+					this.getSkills().get(i).setInUse(false);
+					return true;
+				}
+			}
+		}
+		
 		for (int i = 0; i<this.getSkills().size(); i++) {
 			if (this.getSkills().get(i).getName().equals(skill.getName())) {
 				if(this.getSkills().get(i).isInUse()) {
