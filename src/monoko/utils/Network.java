@@ -137,7 +137,11 @@ public class Network {
 				for(int j=0; j<charactersRefs.size(); j++) {
 					teamCharacters.add(user.findCharacter(charactersRefs.getInt(j)));
 				}
-				user.addTeam(new Team(t.getInt("ref"), t.getString("name"), teamCharacters));
+				Team team = new Team(t.getInt("ref"), t.getString("name"), teamCharacters);
+				for(Character c : team.getCharacters()) {
+					c.setTeam(team);
+				}
+				user.addTeam(team);
 			}
 			return user;
 		}
