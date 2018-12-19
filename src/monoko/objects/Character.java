@@ -276,6 +276,18 @@ public class Character extends Nameable{
 		getCurrentAttributes().setSpeed(getBaseAttributes().getSpeed());
 	}
 	
+	public void buildAttributes() {
+		buildAttributes(job, god);
+	}
+	
+	public void buildCurrentAttributes() {
+		buildCurrentAttributes(job, god);
+	}
+	
+	public void buildAllAttributes() {
+		buildAttributes(job, god);
+		buildCurrentAttributes(job, god);
+	}
 	
 	//GETTERS SETTERS
 	public Attributes getCurrentAttributes() {
