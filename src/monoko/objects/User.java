@@ -26,6 +26,7 @@ public class User {
 		for(Character c : characters) {
 			if(c.getId() == ref)
 				characters.remove(c);
+				break;
 		}
 	}
 	
@@ -49,6 +50,7 @@ public class User {
 		for(Team t : teams) {
 			if(t.getId() == ref)
 				teams.remove(t);
+				break;
 		}
 	}
 	

@@ -31,6 +31,7 @@ public class TeamCreatorController extends TeamCreatorBase{
 
 		try {
 			new Network(_root.getRoot().getUser()).saveTeam(team);
+			_root.getRoot().getUser().addTeam(team);
 			_root.loadTeams();
 		} catch (Exception e) {
 			e.printStackTrace();

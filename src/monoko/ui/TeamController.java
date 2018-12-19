@@ -115,6 +115,7 @@ public class TeamController extends TeamBase{
 	public void onDeleteClicked() {
 		try {
 			new Network(_root.getRoot().getUser()).deleteTeam(_team);
+			_root.getRoot().getUser().deleteTeam(this.getTeam().getId());
 			_root.loadTeams();
 		} catch (Exception e) {
 			e.printStackTrace();
