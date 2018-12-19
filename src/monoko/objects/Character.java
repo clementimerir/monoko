@@ -56,6 +56,22 @@ public class Character extends Nameable{
 		skills = new ArrayList<Skill>();
 	}
 	
+	public Character(Character character) {
+		setId(character.getId());
+		setName(character.getName());
+		setJob(character.getJob());
+		setGod(character.getGod());
+		setBaseAttributes(character.getBaseAttributes());
+		setCurrentAttributes(character.getCurrentAttributes());
+		buildAttributes(getJob(), getGod());
+		buildCurrentAttributes(getJob(), getJob());
+		setPosition(character.getPosX(), character.getPosY(), character.getVision());
+		setInMenuSprite();
+		setInGameSprite();
+		setInUse(false);
+		setSkills(character.getSkills());
+	}
+	
 	public int getVision() {
 		return vision;
 	}

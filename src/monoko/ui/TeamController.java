@@ -63,9 +63,10 @@ public class TeamController extends TeamBase{
 		        	for(Character currentCharacter : _root.getRoot().getUser().getCharacters()) {
 		        		if(currentCharacter.getId() == Integer.valueOf(db.getString())) {
 
-//		        			_teamsHBox.getChildren().add(new FxmlManager("./ui/character.fxml", new CharacterController(_root, currentCharacter)).load());
-		        			currentCharacter.setTeam(_team);
-		        			getTeam().getCharacters().add(currentCharacter);
+		        			Character chara = new Character(currentCharacter);
+		        			chara.setTeam(_team);
+		        			
+		        			getTeam().getCharacters().add(chara);
 		        			loadCharacters();
 		        			
 		        			try {
