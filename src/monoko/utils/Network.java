@@ -118,6 +118,7 @@ public class Network {
 					character.setJob(new Soul(job));
 				if(!god.equals("none"))
 					character.setGod(new Soul(god));
+				//character.buildAttributes(job, god);
 				character.setInGameSprite();
 				character.setInMenuSprite();
 				JsonArray skills = c.getJsonArray("skills");
