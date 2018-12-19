@@ -44,6 +44,8 @@ public class Network {
 		List<String> waitingPlayers = http.getWaitingPlayers();
 		for(String s : waitingPlayers)
 			System.out.println(s);
+		
+		//http.register("p", "p");
 	}
 	
 	public Network() {
