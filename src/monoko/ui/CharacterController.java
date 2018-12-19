@@ -10,6 +10,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import monoko.objects.Character;
+import monoko.objects.Team;
 import monoko.utils.FxmlManager;
 import monoko.utils.Network;
 
@@ -18,6 +19,7 @@ public class CharacterController extends CharacterBase{
 	private TeamEditorController _root;
 	private Character _character;
 	private boolean _teamMode;
+	private Team _team;
 	
 	public CharacterController(TeamEditorController root, Character character, boolean teamMode) {
 		_root = root;
@@ -56,7 +58,8 @@ public class CharacterController extends CharacterBase{
 	@Override
 	public void onDeleteClicked() {
 		if(_teamMode) {
-			_character.getTeam().getCharacters().remove(_character);
+			
+			getTeam().getCharacters().remove(_character);
 			
 			try {
 				Network net = new Network(_root.getRoot().getUser());
@@ -86,5 +89,12 @@ public class CharacterController extends CharacterBase{
 
 	public void setCharacter(Character character) {
 		this._character = character;
+	}
+	public Team getTeam() {
+		return _team;
+	}
+
+	public void setTeam(Team team) {
+		this._team = team;
 	}
 }

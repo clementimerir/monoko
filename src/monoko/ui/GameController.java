@@ -17,6 +17,7 @@ import monoko.objects.Player;
 import monoko.objects.Skill;
 import monoko.objects.Team;
 import monoko.objects.Tile;
+import monoko.objects.User;
 import monoko.utils.AssetManager;
 import monoko.utils.FxmlManager;
 import monoko.utils.Manager;
@@ -28,7 +29,7 @@ public class GameController extends GameBase{
 	SkillBarController skillBar = new SkillBarController(this);
 	boolean haveCharacter = false;
 	Gameboard board;
-	Player[] players;
+	Player[] players = new Player[2];
 	Team playerTurn;
 	
 	
@@ -41,14 +42,23 @@ public class GameController extends GameBase{
 	public void reloadSkillBar(Character character) {
 		
 		List<Skill> skills = character.getSkills();
-//		skills.add( new Skill(0, "Sword", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10, false) );
-//		skills.add( new Skill(0, "Bow", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10, false) );
-//		skills.add( new Skill(0, "Pyromancy Tome", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10, false) );
-//		skills.add( new Skill(0, "Scepter", SkillTypeEnum.OFFENSE, EffectTypeEnum.DAMAGE, 10, false) );
 		skillBar.setSkills(skills);
 		skillBar.loadSkills();
 	}
  
+	public void loadPlayers() {
+		players[0] = new Player(1, "Player 1", Manager.getInstance().getController().getUser().getTeams().get(0));
+		players[1] = new Player(2, "Player 2", Manager.getInstance().getController().getUser().getTeams().get(1));
+		
+//		for(Character currentCharacter : players[0].getTeam().getCharacters()) {
+//			currentCharacter.setTeam(players[0].getTeam());
+//		}
+//		for(Character currentCharacter : players[1].getTeam().getCharacters()) {
+//			currentCharacter.setTeam(players[1].getTeam());
+//		}
+//		System.out.println(1);
+	}
+	
     public void start() 
     {
     	
@@ -58,8 +68,7 @@ public class GameController extends GameBase{
 		//TO CHANGE
 		//
 		//players = AssetManager.teamCreator();
-		players[0] = new Player(1, "Player 1", Manager.getInstance().getController().getUser().getTeams().get(0));
-		players[1] = new Player(2, "Player 2", Manager.getInstance().getController().getUser().getTeams().get(1));
+		loadPlayers();//remove this line for pre-made teams
 		//
 		//
 		//
@@ -158,7 +167,7 @@ public class GameController extends GameBase{
             				//Add health bar for each and every character on the map
             				//
             				int [] bar = AssetManager.toIsoBar(i,j);
-        					gc.setFill(Color.RED);
+        					gc.setFill( currentTile.getCharacter().getTeam().equals(players[0].getTeam()) ? Color.RED : Color.BLUE );
         					gc.setStroke(Color.BLACK);
         					gc.setGlobalAlpha(0.5);
         					double charaHp = currentTile.getCharacter().getCurrentAttributes().getHp();
@@ -273,7 +282,6 @@ public class GameController extends GameBase{
     				haveCharacter = false;
             		clearSkillBar();
             	}
-            	
             	
             	System.out.println("X :" + coordSelected[0]+ "Y :" +coordSelected[1]);
             }

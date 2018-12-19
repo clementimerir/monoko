@@ -106,6 +106,7 @@ public class TeamController extends TeamBase{
 		for(Character character : getTeam().getCharacters()) {
 //			character.setTeam(_team);
 			CharacterController controller = new CharacterController(_root, character, true);
+			controller.setTeam(_team);
 			_teamsHBox.getChildren().add(new FxmlManager("./ui/character.fxml", controller).load());
 		}
 	}
