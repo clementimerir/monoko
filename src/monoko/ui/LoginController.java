@@ -7,9 +7,9 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
-import monoko.objects.Player;
 import monoko.objects.User;
 import monoko.utils.FxmlManager;
+import monoko.utils.Manager;
 import monoko.utils.Network;
 
 public class LoginController extends LoginBase{
@@ -48,7 +48,9 @@ public class LoginController extends LoginBase{
 //							User user = new Network().login(_idTextfield.getText(), _passwordTextfield.getText());
 //							if( user != null ) {
 								_parent.setUser(user);
-								_parent.getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/mainMenu.fxml", new MainMenuController(_parent)).load());
+								Manager.getInstance().setController(_parent);
+								Manager.getInstance().setMainMenu(new MainMenuController(Manager.getInstance().getController()));
+								_parent.getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/mainMenu.fxml", Manager.getInstance().getMainMenu()).load());
 								_loginProgressIndicator.setVisible(false);
 								_loginLabel.setVisible(false);
 //							}

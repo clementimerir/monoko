@@ -20,6 +20,7 @@ import monoko.objects.Character;
 import monoko.objects.Skill;
 import monoko.objects.Soul;
 import monoko.utils.FxmlManager;
+import monoko.utils.Manager;
 import monoko.utils.Network;
 import monoko.utils.SkillManager;
 
@@ -328,7 +329,7 @@ public class CharacterEditorController extends CharacterEditorBase{
 			e.printStackTrace();
 		}
 		
-		_root.getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/teamEditor.fxml", new TeamEditorController(_root)).load());
+		_root.getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/teamEditor.fxml", Manager.getInstance().getTeamEditor()).load());
 	}
 	
 	//GETTERS SETTERS

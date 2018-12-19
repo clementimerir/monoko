@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import monoko.objects.Character;
 import monoko.objects.Team;
 import monoko.utils.FxmlManager;
+import monoko.utils.Manager;
 
 public class TeamEditorController extends TeamEditorBase{
 
@@ -20,7 +21,7 @@ public class TeamEditorController extends TeamEditorBase{
 	
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
-		new FxmlManager().fitToParent(_rootHBox, 0.0);
+		new FxmlManager().fitToParent(_rootVBox, 0.0);
 		loadCharacters();
 		loadTeams();
 	}
@@ -39,6 +40,11 @@ public class TeamEditorController extends TeamEditorBase{
         dialog.show();
         _teamCreator = dialog;
 	}
+	
+	@Override
+	public void onMainMenuClicked() {
+		_root.getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/mainMenu.fxml", Manager.getInstance().getMainMenu()).load());		
+	}
 
 	public void loadCharacters() {
 		_charactersFlowpane.getChildren().clear();
@@ -55,6 +61,7 @@ public class TeamEditorController extends TeamEditorBase{
 	}
 	
 	public void loadTeams() {
+		System.out.println("ss");
 		_teamsVBox.getChildren().clear();
 		if(_root.getUser() != null) {
 			for(Team team : _root.getUser().getTeams()) {

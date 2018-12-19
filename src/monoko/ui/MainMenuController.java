@@ -5,13 +5,12 @@ import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import monoko.utils.FxmlManager;
+import monoko.utils.Manager;
 
 public class MainMenuController extends MainMenuBase{
 
-	private MonokoController _parent;
-	
 	public MainMenuController(MonokoController parent) {
-		setParent(parent);
+		Manager.getInstance().setController(parent);
 	}
 	
 	@Override
@@ -21,12 +20,14 @@ public class MainMenuController extends MainMenuBase{
 	
 	@Override
 	void onPlayButtonClicked() {
-		_parent.getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/game.fxml", new GameController()).load());
+		Manager.getInstance().setGame( new GameController() );
+		Manager.getInstance().getController().getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/game.fxml", Manager.getInstance().getGame()).load());
 	}
 
 	@Override
 	void onTeamEditorButtonClicked() {
-		_parent.getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/teamEditor.fxml", new TeamEditorController(_parent)).load());
+		Manager.getInstance().setTeamEditor( new TeamEditorController(Manager.getInstance().getController()) );
+		Manager.getInstance().getController().getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/teamEditor.fxml", Manager.getInstance().getTeamEditor()).load());
 	}
 
 	@Override
@@ -44,9 +45,4 @@ public class MainMenuController extends MainMenuBase{
 		Platform.exit();
 	}
 
-	//GETTERS SETTERS
-	public void setParent(MonokoController _parent) {
-		this._parent = _parent;
-	}
-	
 }

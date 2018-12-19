@@ -110,6 +110,16 @@ public class TeamController extends TeamBase{
 			_teamsHBox.getChildren().add(new FxmlManager("./ui/character.fxml", new CharacterController(_root, character)).load());
 		}
 	}
+	
+	@Override
+	public void onDeleteClicked() {
+		try {
+			new Network(_root.getRoot().getUser()).deleteTeam(_team);
+			_root.loadTeams();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	//GETTERS SETTERS
 	public Team getTeam() {
@@ -119,4 +129,5 @@ public class TeamController extends TeamBase{
 	public void setTeam(Team team) {
 		this._team = team;
 	}
+
 }

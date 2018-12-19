@@ -8,7 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public abstract class TeamEditorBase implements Initializable{
-	@FXML HBox _rootHBox;
+	@FXML VBox _rootVBox;
 	
 	@FXML FlowPane _charactersFlowpane;
 	
@@ -16,7 +16,9 @@ public abstract class TeamEditorBase implements Initializable{
 
 	@FXML Button _createCharacterButton;
 	@FXML Button _createTeamButton;
+	@FXML Button _mainMenuButton;
 	
 	@FXML public abstract void onCreateCharacterClicked();
 	@FXML public abstract void onCreateTeamClicked();
+	@FXML public abstract void onMainMenuClicked();
 }

@@ -8,41 +8,67 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<HBox fx:id="_rootHBox" alignment="TOP_CENTER" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<VBox id="VBox" fx:id="_rootVBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="5.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <children>
-    <VBox alignment="CENTER" maxHeight="-1.0" maxWidth="960.0" prefHeight="-1.0" prefWidth="-1.0" spacing="5.0" HBox.hgrow="ALWAYS">
+    <HBox id="HBox" alignment="CENTER" spacing="5.0" VBox.vgrow="ALWAYS">
       <children>
-        <Label alignment="CENTER" minHeight="50.0" minWidth="200.0" text="Characters">
-          <font>
-            <Font size="24.0" fx:id="x1" />
-          </font>
-        </Label>
-        <Separator prefWidth="-1.0" />
-        <HBox id="HBox" alignment="TOP_LEFT" spacing="5.0" VBox.vgrow="ALWAYS">
+        <VBox alignment="CENTER" maxHeight="-1.0" maxWidth="960.0" prefHeight="-1.0" prefWidth="-1.0" spacing="5.0" HBox.hgrow="ALWAYS">
           <children>
-            <Pane minWidth="5.0" prefHeight="-1.0" prefWidth="-1.0" />
-            <FlowPane fx:id="_charactersFlowpane" hgap="10.0" maxHeight="540.0" maxWidth="540.0" orientation="HORIZONTAL" prefHeight="-1.0" prefWidth="-1.0" vgap="10.0" />
-            <Pane minWidth="5.0" prefHeight="-1.0" prefWidth="-1.0" />
+            <HBox id="HBox" alignment="CENTER" spacing="5.0">
+              <children>
+                <Label alignment="CENTER" minHeight="50.0" minWidth="200.0" text="Characters">
+                  <font>
+                    <Font size="24.0" fx:id="x1" />
+                  </font>
+                </Label>
+              </children>
+            </HBox>
+            <Separator prefWidth="-1.0" />
+            <HBox id="HBox" alignment="TOP_LEFT" spacing="5.0" VBox.vgrow="ALWAYS">
+              <children>
+                <Pane minWidth="5.0" prefHeight="-1.0" prefWidth="-1.0" />
+                <FlowPane fx:id="_charactersFlowpane" hgap="10.0" maxHeight="540.0" maxWidth="540.0" orientation="HORIZONTAL" prefHeight="-1.0" prefWidth="-1.0" vgap="10.0" />
+                <Pane minWidth="5.0" prefHeight="-1.0" prefWidth="-1.0" />
+              </children>
+              <VBox.margin>
+                <Insets />
+              </VBox.margin>
+            </HBox>
+            <Separator prefWidth="-1.0" />
           </children>
-          <VBox.margin>
-            <Insets />
-          </VBox.margin>
-        </HBox>
-        <Separator prefWidth="-1.0" />
-        <Button fx:id="_createCharacterButton" font="$x1" minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#onCreateCharacterClicked" text="Create Character" />
-        <Pane minHeight="10.0" prefHeight="-1.0" prefWidth="-1.0" />
+        </VBox>
+        <Separator maxHeight="950.0" orientation="VERTICAL" prefHeight="-1.0" />
+        <VBox alignment="CENTER" maxHeight="-1.0" maxWidth="960.0" prefHeight="-1.0" prefWidth="-1.0" spacing="5.0" HBox.hgrow="ALWAYS">
+          <children>
+            <Label alignment="CENTER" font="$x1" minHeight="50.0" minWidth="200.0" text="Teams" />
+            <Separator prefWidth="-1.0" />
+            <VBox fx:id="_teamsVBox" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS" />
+            <Separator prefWidth="-1.0" />
+          </children>
+        </VBox>
       </children>
-    </VBox>
-    <Separator maxHeight="950.0" orientation="VERTICAL" prefHeight="-1.0" />
-    <VBox alignment="CENTER" maxHeight="-1.0" maxWidth="960.0" prefHeight="-1.0" prefWidth="-1.0" spacing="5.0" HBox.hgrow="ALWAYS">
+    </HBox>
+    <HBox maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
       <children>
-        <Label alignment="CENTER" font="$x1" minHeight="50.0" minWidth="200.0" text="Teams" />
-        <Separator prefWidth="-1.0" />
-        <VBox fx:id="_teamsVBox" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS" />
-        <Separator prefWidth="-1.0" />
-        <Button fx:id="_createTeamButton" font="$x1" minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#onCreateTeamClicked" text="Create Team" />
-        <Pane minHeight="10.0" prefHeight="-1.0" prefWidth="-1.0" />
+        <VBox id="VBox" alignment="CENTER" maxWidth="960.0" spacing="5.0" HBox.hgrow="ALWAYS">
+          <children>
+            <Button fx:id="_createCharacterButton" font="$x1" minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#onCreateCharacterClicked" text="Create Character" />
+            <Pane minHeight="5.0" prefHeight="-1.0" prefWidth="-1.0" />
+          </children>
+        </VBox>
+        <VBox id="VBox" alignment="CENTER" spacing="5.0">
+          <children>
+            <Button fx:id="_mainMenuButton" font="$x1" minHeight="50.0" mnemonicParsing="false" onAction="#onMainMenuClicked" text="Main Menu" />
+            <Pane minHeight="5.0" prefHeight="-1.0" prefWidth="-1.0" />
+          </children>
+        </VBox>
+        <VBox id="VBox" alignment="CENTER" maxWidth="960.0" spacing="5.0" HBox.hgrow="ALWAYS">
+          <children>
+            <Button fx:id="_createTeamButton" font="$x1" minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#onCreateTeamClicked" text="Create Team" />
+            <Pane minHeight="5.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="NEVER" />
+          </children>
+        </VBox>
       </children>
-    </VBox>
+    </HBox>
   </children>
-</HBox>
+</VBox>
