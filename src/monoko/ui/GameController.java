@@ -57,7 +57,7 @@ public class GameController extends GameBase{
 		//
 		//TO CHANGE
 		//
-		players = AssetManager.teamCreator();
+		//players = AssetManager.teamCreator();
 		players[0] = new Player(1, "Player 1", Manager.getInstance().getController().getUser().getTeams().get(0));
 		players[1] = new Player(2, "Player 2", Manager.getInstance().getController().getUser().getTeams().get(1));
 		//
@@ -190,55 +190,90 @@ public class GameController extends GameBase{
             	int [] oldCoordSelected = board.getCurrentlySelected();
             	//We check if a character is present on the selected tile
             	
-            	
-            	if(board.haveSelected() && board.getCurrentTileSelected().haveCharacter() && board.getTile(coordSelected).isMvmnt() && !board.getCurrentTileSelected().getCharacter().isUsingSkill()) {
-            		//Mouvement d'un personnage
-            		int integ = board.getCurrentTileSelected().getCharacter().setDirection(coordSelected[0],coordSelected[1]);
-            		board.getTile(coordSelected).setCharacter(board.getTile(board.getCurrentlySelected()).getCharacter());
-            		board.getCurrentTileSelected().getCharacter().setInGameSprite();
-            		board.getTile(board.getCurrentlySelected()).setCharacter(null);
-            		board.changeSelected(-1, -1);
-            		board.resetAction_Mouvmnnt();
-            		haveCharacter = false;
-            		clearSkillBar();
-            	}else if(board.getTile(coordSelected).getType() == 0) {
-            		//Attaque&changement de case
-            		if(board.getTile(coordSelected).isAction() && board.getTile(coordSelected).haveEnemyCharacter(board.getCurrentTileSelected()) && board.getTile(coordSelected).getCharacter().isUsingSkill()) {
-            			//Attaque
-            			Character c = board.getTile(coordSelected).getCharacter();
-            			c.takeDamage(1);
-            			if(c.getCurrentAttributes().getHp() == 0) {
-            				board.getTile(coordSelected).setCharacter(null);
+            	if(oldCoordSelected[0] == -1) {
+            		if(board.getTile(coordSelected).haveCharacter()) {
+            			if(board.getTile(coordSelected).getCharacter().getTeam().getName().equals(playerTurn.getName())) {
+            				//Changement de case vers un personnage
+            				board.setCurrentlySelected(coordSelected);
+            				board.resetAction_Mouvmnnt();
+            				board.setTabMvmnt();
+            				haveCharacter = true;
+            				reloadSkillBar(board.getCurrentTileSelected().getCharacter());
             			}
-            			board.getCurrentTileSelected().getCharacter().setUsedSkill(null);
-            			board.changeSelected(-1, -1);
-            			board.resetAction_Mouvmnnt();
-                		clearSkillBar();
-                		haveCharacter = false;
-                		nextTurn();
             		}else {
             			//Changement de case
-            			if(oldCoordSelected[0] > 0 && board.getTile(oldCoordSelected).haveCharacter() && board.getTile(oldCoordSelected).getCharacter().isUsingSkill() && board.getTile(oldCoordSelected).haveCharacter()) {
-            				board.getTile(oldCoordSelected).getCharacter().setUsedSkill(null);
-            			}
-            			
-            			board.changeSelected(coordSelected);
-            			
-                		if(board.getCurrentTileSelected().haveCharacter()){
-                			//Avec un personnage
-                			board.resetAction_Mouvmnnt();
-                			board.setTabMvmnt();
-                			reloadSkillBar(board.getCurrentTileSelected().getCharacter());
-                			board.setAction();
-                			haveCharacter = true;
-        				}else {
-        					//Case vide
-        					board.resetAction_Mouvmnnt();
-        					clearSkillBar();
-        					haveCharacter = false;
-        				}
+            			board.setCurrentlySelected(coordSelected);
+        				board.resetAction_Mouvmnnt();
+        				haveCharacter = false;
+                		clearSkillBar();
             		}
+            	}else if(board.getTile(oldCoordSelected).haveCharacter()) {
+            		if(board.getTile(coordSelected).haveCharacter() && board.getTile(coordSelected).getCharacter().getTeam().getName().equals(playerTurn.getName())) {
+            			//Changement de case vers un personnage
+            			board.getCurrentTileSelected().getCharacter().setUsedSkill(null);
+            			board.setCurrentlySelected(coordSelected);
+        				board.resetAction_Mouvmnnt();
+        				board.setTabMvmnt();
+        				haveCharacter = true;
+        				reloadSkillBar(board.getCurrentTileSelected().getCharacter());
+            		}else if(board.getTile(coordSelected).isMvmnt() && !board.getTile(oldCoordSelected).getCharacter().isUsingSkill()){
+            			//Mouvement d'un personnage
+            			board.getCurrentTileSelected().getCharacter().setDirection(coordSelected[0],coordSelected[1]);
+            			board.getTile(coordSelected).setCharacter(board.getTile(oldCoordSelected).getCharacter());
+                		board.getTile(coordSelected).getCharacter().setInGameSprite();
+                		board.getTile(board.getCurrentlySelected()).setCharacter(null);
+        				board.resetAction_Mouvmnnt();
+        				haveCharacter = false;
+                		clearSkillBar();
+        				board.setCurrentlySelected(-1,-1);
+            		}else if(board.getTile(coordSelected).isAction()  && board.getTile(oldCoordSelected).getCharacter().isUsingSkill()) {
+            			if(!board.getTile(coordSelected).haveCharacter()) {
+            				board.getCurrentTileSelected().getCharacter().setUsedSkill(null);
+            				board.setCurrentlySelected(-1,-1);
+            				board.resetAction_Mouvmnnt();
+            				haveCharacter = false;
+                    		clearSkillBar();
+            			}else {
+            				//Attaque
+                			Character c = board.getTile(coordSelected).getCharacter();
+                			c.takeDamage(15);
+                			if(c.getCurrentAttributes().getHp() == 0) {
+                				board.getTile(coordSelected).setCharacter(null);
+                			}
+                			board.getCurrentTileSelected().getCharacter().setUsedSkill(null);
+                			board.changeSelected(-1, -1);
+                			board.resetAction_Mouvmnnt();
+                    		clearSkillBar();
+                    		haveCharacter = false;
+                    		nextTurn();
+            			}
+            		}else {
+            			if(!board.getTile(coordSelected).haveCharacter()) {
+            				//Changement de case
+            				board.getTile(oldCoordSelected).getCharacter().setUsedSkill(null);
+            				board.setCurrentlySelected(coordSelected);
+            				board.resetAction_Mouvmnnt();
+            				haveCharacter = false;
+                    		clearSkillBar();
+            			}
+            		}
+            	}else if(board.getTile(coordSelected).haveCharacter()) {
+            		if(board.getTile(coordSelected).getCharacter().getTeam().getName().equals(playerTurn.getName())) {
+            			//Changement de case vers un personnage
+            			board.setCurrentlySelected(coordSelected);
+        				board.resetAction_Mouvmnnt();
+        				board.setTabMvmnt();
+        				haveCharacter = true;
+                		reloadSkillBar(board.getCurrentTileSelected().getCharacter());
+            		}
+            	}else {
+            		//Changement de case
+            		board.setCurrentlySelected(coordSelected);
+    				board.resetAction_Mouvmnnt();
+    				haveCharacter = false;
+            		clearSkillBar();
             	}
+            	
             	
             	System.out.println("X :" + coordSelected[0]+ "Y :" +coordSelected[1]);
             }
@@ -266,6 +301,7 @@ public class GameController extends GameBase{
 	public void setSelectedSkill(Skill skill) {
 		System.out.println("selected : " + skill.getName());
 		this.board.getCurrentTileSelected().getCharacter().setUsedSkill(skill);
+		this.board.setAction();
 	}
 	
 	private void nextTurn() {

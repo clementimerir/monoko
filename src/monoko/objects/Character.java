@@ -116,6 +116,7 @@ public class Character extends Nameable{
 					return true;
 				}
 			}
+			return true;
 		}
 		
 		for (int i = 0; i<this.getSkills().size(); i++) {
