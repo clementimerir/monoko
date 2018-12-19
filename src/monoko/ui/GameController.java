@@ -218,7 +218,7 @@ public class GameController extends GameBase{
                 		nextTurn();
             		}else {
             			//Changement de case
-            			if(oldCoordSelected[0] > 0 && board.getTile(oldCoordSelected).getCharacter().isUsingSkill() && board.getTile(oldCoordSelected).haveCharacter()) {
+            			if(oldCoordSelected[0] > 0 && board.getTile(oldCoordSelected).haveCharacter() && board.getTile(oldCoordSelected).getCharacter().isUsingSkill() && board.getTile(oldCoordSelected).haveCharacter()) {
             				board.getTile(oldCoordSelected).getCharacter().setUsedSkill(null);
             			}
             			
