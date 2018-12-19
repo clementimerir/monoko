@@ -14,7 +14,8 @@ public class Character extends Nameable{
 	private Attributes baseAttributes;
 	private Soul job;
 	private Soul god;
-	private List<Skill> skills;
+	private List<Skill> addedSkills;
+	private List<Skill> allSkills;
 	private String inGameSprite;
 	private String inMenuSprite;
 	private int posX;
@@ -37,7 +38,7 @@ public class Character extends Nameable{
 		setInGameSprite(inGame);
 		setInMenuSprite(inMenu);
 		setInUse(false);
-		skills = new ArrayList<Skill>();
+		allSkills = new ArrayList<Skill>();
 	}
 
 	public Character(int id, String name, Soul job, Soul god) {
@@ -53,7 +54,7 @@ public class Character extends Nameable{
 		setInMenuSprite();
 		setInGameSprite();
 		setInUse(false);
-		skills = new ArrayList<Skill>();
+		allSkills = new ArrayList<Skill>();
 	}
 	
 	public Character(Character character) {
@@ -72,6 +73,14 @@ public class Character extends Nameable{
 		setSkills(character.getSkills());
 	}
 	
+	public List<Skill> getAddedSkills() {
+		return addedSkills;
+	}
+
+	public void setAddedSkills(List<Skill> addedSkills) {
+		this.addedSkills = addedSkills;
+	}
+	
 	public int getVision() {
 		return vision;
 	}
@@ -81,13 +90,13 @@ public class Character extends Nameable{
 	}
 
 	public void addSkill(Skill s) {
-		skills.add(s);
+		allSkills.add(s);
 	}
 
 	public void removeSkill(String skillName) {
-		for(Skill s : skills) {
+		for(Skill s : allSkills) {
 			if(s.getName() == skillName)
-				skills.remove(s);
+				allSkills.remove(s);
 		}
 	}
 
@@ -247,9 +256,9 @@ public class Character extends Nameable{
 			characterJSON.put("god", god.getName());
 		else
 			characterJSON.put("god", "none");
-		if (skills!=null) {
-			for(int i=0; i<skills.size(); i++) {
-				skillsJSON.add(skills.get(i).getName());
+		if (allSkills!=null) {
+			for(int i=0; i<allSkills.size(); i++) {
+				skillsJSON.add(allSkills.get(i).getName());
 			}
 		}
 		characterJSON.put("skills", skillsJSON);
@@ -340,14 +349,14 @@ public class Character extends Nameable{
 	}
 	
 	public List<Skill> getSkills() {
-		if(skills == null) {
-			skills = new ArrayList<Skill>();
+		if(allSkills == null) {
+			allSkills = new ArrayList<Skill>();
 		}
-		return skills;
+		return allSkills;
 	}
 
 	public void setSkills(List<Skill> skills) {
-		this.skills = skills;
+		this.allSkills = skills;
 	}
 	
 	public String getInGameSprite() {

@@ -30,6 +30,7 @@ public class CharacterEditorController extends CharacterEditorBase{
 	private Soul _god;
 	private Attributes _attributes;
 	private SkillManager _skillManager;
+	private List<Skill> _addedItemList;
 	private List<Skill> _itemList;
 	private int totalPrice;
 	private boolean _addingPredilectionWeapon;
@@ -64,7 +65,7 @@ public class CharacterEditorController extends CharacterEditorBase{
 		_attributes = character.getBaseAttributes() == null ? new Attributes(0, 0, 0, 0, 0) : character.getBaseAttributes();
 		_job = character.getJob() == null ? new Soul(404, "None", new Attributes(0, 0, 0, 0, 0) ) : character.getJob();
 		_god = character.getJob() == null ? new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ) : character.getGod();
-		_itemList = new ArrayList<Skill>(character.getSkills());
+		_addedItemList = new ArrayList<Skill>(character.getAddedSkills());
 		_name = character.getName();
 		_id = character.getId();
 	}
@@ -75,6 +76,7 @@ public class CharacterEditorController extends CharacterEditorBase{
 	public void init() {
 		_skillManager = new SkillManager();
 		_itemList = new ArrayList<Skill>();
+		_addedItemList = new ArrayList<Skill>();
 		_addingPredilectionWeapon = false;
 		
 		setTotalPrice(15);
@@ -108,12 +110,12 @@ public class CharacterEditorController extends CharacterEditorBase{
 			_godComboBox.getSelectionModel().select(_god.getName());
 			_nameTextfield.setText(_name);
 			
-			for(Skill skill : _itemList) {
+			for(Skill skill : _addedItemList) {
 				
 				_itemsVBox.getChildren().clear();
-				skill.setId(_itemList.size());
+				skill.setId(_addedItemList.size());
 				setTotalPrice( getTotalPrice() + skill.getPrice() );
-				for (Skill loop : _itemList) {
+				for (Skill loop : _addedItemList) {
 					_itemsVBox.getChildren().add( new FxmlManager("./ui/item.fxml", new ItemController(loop, this)).load() );
 				}
 				
@@ -165,7 +167,7 @@ public class CharacterEditorController extends CharacterEditorBase{
 			return true;
 		}
 		
-		for(Skill currentItem : _itemList) {
+		for(Skill currentItem : _addedItemList) {
 			if(currentItem.getName().equals(name)) {
 				isEquipped = true;
 			}
@@ -187,7 +189,7 @@ public class CharacterEditorController extends CharacterEditorBase{
 			if( isEquipped(itemChosen.getName()) ) {
 				for(Skill loop : _itemList) {
 					if(loop.getName().equals(itemChosen.getName())) {
-						_itemList.remove(loop);
+//						_itemList.remove(loop);
 						deleteItem(loop);
 						break;
 					}
@@ -200,15 +202,17 @@ public class CharacterEditorController extends CharacterEditorBase{
 			itemChosen.setIsPredilection( _addingPredilectionWeapon );
 			
 			_predilectionWeapon = itemChosen;
+			_itemList.add(itemChosen);
 			_predilectionVBox.getChildren().add( new FxmlManager("./ui/item.fxml", new ItemController(_predilectionWeapon, this)).load() );
 			
 		}else {
 			if(!isEquipped(name)) {
 				_itemsVBox.getChildren().clear();
-				itemChosen.setId(_itemList.size());
+				itemChosen.setId(_addedItemList.size());
+				_addedItemList.add(itemChosen);
 				_itemList.add(itemChosen);
 				setTotalPrice( getTotalPrice() + itemChosen.getPrice() );
-				for (Skill loop : _itemList) {
+				for (Skill loop : _addedItemList) {
 					_itemsVBox.getChildren().add( new FxmlManager("./ui/item.fxml", new ItemController(loop, this)).load() );
 				}				
 			}else {
@@ -228,13 +232,15 @@ public class CharacterEditorController extends CharacterEditorBase{
 		
 		if(item.isPredilection()) {
 			_predilectionVBox.getChildren().clear();
+			_itemList.remove(_predilectionWeapon);
 			_predilectionWeapon = null;
 		}else {
 
 			_itemsVBox.getChildren().clear();
+			_addedItemList.remove(item);
 			_itemList.remove(item);
 			setTotalPrice( getTotalPrice() - item.getPrice() );
-			for(Skill skill : _itemList) {
+			for(Skill skill : _addedItemList) {
 				_itemsVBox.getChildren().add( new FxmlManager("./ui/item.fxml", new ItemController(skill, this)).load() );
 			}
 		}
@@ -305,6 +311,7 @@ public class CharacterEditorController extends CharacterEditorBase{
 		Soul god = new Soul(_godComboBox.getSelectionModel().getSelectedItem());
 		Character character = new Character(ThreadLocalRandom.current().nextInt( 0 , 999999 + 1 ), _nameTextfield.getText(), job, god);
 		character.setSkills(_itemList);
+		character.setAddedSkills(_addedItemList);
 
 		if(editionMode) {
 			character.setId(_id);
