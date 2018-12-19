@@ -65,7 +65,7 @@ public class TeamController extends TeamBase{
 		        		if(currentCharacter.getId() == Integer.valueOf(db.getString())) {
 
 		        			Character chara = new Character(currentCharacter);
-//		        			chara.setId(ThreadLocalRandom.current().nextInt( 0 , 999999 + 1 ));
+		        			chara.setId(ThreadLocalRandom.current().nextInt( 0 , 999999 + 1 ));
 		        			chara.setTeam(_team);
 		        			
 		        			getTeam().getCharacters().add(chara);
@@ -73,6 +73,7 @@ public class TeamController extends TeamBase{
 		        			
 		        			try {
 								new Network(_root.getRoot().getUser()).saveTeam(getTeam());
+								new Network(_root.getRoot().getUser()).saveCharacter(chara);
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
