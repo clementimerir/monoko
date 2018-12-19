@@ -19,6 +19,7 @@ import monoko.objects.Team;
 import monoko.objects.Tile;
 import monoko.utils.AssetManager;
 import monoko.utils.FxmlManager;
+import monoko.utils.Manager;
 
 public class GameController extends GameBase{
 	
@@ -57,6 +58,8 @@ public class GameController extends GameBase{
 		//TO CHANGE
 		//
 		players = AssetManager.teamCreator();
+		players[0] = new Player(1, "Player 1", Manager.getInstance().getController().getUser().getTeams().get(0));
+		players[1] = new Player(2, "Player 2", Manager.getInstance().getController().getUser().getTeams().get(1));
 		//
 		//
 		//

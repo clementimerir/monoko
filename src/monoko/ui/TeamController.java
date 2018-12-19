@@ -2,6 +2,7 @@ package monoko.ui;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.DragEvent;
@@ -64,6 +65,7 @@ public class TeamController extends TeamBase{
 		        		if(currentCharacter.getId() == Integer.valueOf(db.getString())) {
 
 		        			Character chara = new Character(currentCharacter);
+//		        			chara.setId(ThreadLocalRandom.current().nextInt( 0 , 999999 + 1 ));
 		        			chara.setTeam(_team);
 		        			
 		        			getTeam().getCharacters().add(chara);
