@@ -17,17 +17,22 @@ public class CharacterController extends CharacterBase{
 
 	private TeamEditorController _root;
 	private Character _character;
+	private boolean _teamMode;
 	
-	public CharacterController(TeamEditorController root, Character character) {
+	public CharacterController(TeamEditorController root, Character character, boolean teamMode) {
 		_root = root;
 		setCharacter(character);
+		_teamMode = teamMode;
 	}
 	
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
 		_nameLabel.setText(getCharacter().getName());
 		_classImageview.setImage( new Image( new StringBuilder("/textures/").append(getCharacter().getJob().getName()).append("-Small").append(".png").toString() ) );
-		
+//		_editButton.setVisible(!_teamMode);
+		if(_teamMode) {
+			_buttonsVBox.getChildren().remove(_editButton);
+		}
 		
 		_rootHBox.setOnDragDetected(new EventHandler<MouseEvent>() {
 
@@ -50,14 +55,26 @@ public class CharacterController extends CharacterBase{
 
 	@Override
 	public void onDeleteClicked() {
-		_root.deleteCharacter(_character);
-		
-		try {
-			Network net = new Network();
-			net.setUser(_root.getRoot().getUser());
-			net.deleteCharacter(_character);
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(_teamMode) {
+			_character.getTeam().getCharacters().remove(_character);
+			
+			try {
+				Network net = new Network(_root.getRoot().getUser());
+				net.saveTeam(_character.getTeam());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			_root.loadTeams();
+		}else {
+			_root.deleteCharacter(_character);
+			
+			try {
+				Network net = new Network(_root.getRoot().getUser());
+				net.deleteCharacter(_character);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
 	}

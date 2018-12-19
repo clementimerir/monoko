@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public abstract class CharacterBase implements Initializable{
 	
@@ -16,6 +17,8 @@ public abstract class CharacterBase implements Initializable{
 
 	@FXML Button _editButton;
 	@FXML Button _deleteButton;
+	
+	@FXML VBox _buttonsVBox;
 	
 	@FXML public abstract void onEditClicked();
 	@FXML public abstract void onDeleteClicked();

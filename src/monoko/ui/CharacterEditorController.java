@@ -308,7 +308,6 @@ public class CharacterEditorController extends CharacterEditorBase{
 
 		if(editionMode) {
 			character.setId(_id);
-			
 			int i = 0;
 			for(Character currentChar : _root.getUser().getCharacters()) {
 				if(currentChar.getId() == _id) {

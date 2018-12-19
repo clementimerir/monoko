@@ -64,7 +64,7 @@ public class TeamController extends TeamBase{
 		        		if(currentCharacter.getId() == Integer.valueOf(db.getString())) {
 
 //		        			_teamsHBox.getChildren().add(new FxmlManager("./ui/character.fxml", new CharacterController(_root, currentCharacter)).load());
-
+		        			currentCharacter.setTeam(_team);
 		        			getTeam().getCharacters().add(currentCharacter);
 		        			loadCharacters();
 		        			
@@ -99,15 +99,10 @@ public class TeamController extends TeamBase{
 	}
 
 	private void loadCharacters() {
-//		try {
-//			new Network(_root.getRoot().getUser()).deleteTeam(getTeam());
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
 		for(Character character : getTeam().getCharacters()) {
-			_teamsHBox.getChildren().add(new FxmlManager("./ui/character.fxml", new CharacterController(_root, character)).load());
+			character.setTeam(_team);
+			CharacterController controller = new CharacterController(_root, character, true);
+			_teamsHBox.getChildren().add(new FxmlManager("./ui/character.fxml", controller).load());
 		}
 	}
 	

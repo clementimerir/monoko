@@ -21,7 +21,7 @@
         <Pane minHeight="10.0" prefHeight="-1.0" prefWidth="-1.0" />
       </children>
     </VBox>
-    <VBox alignment="CENTER" minWidth="50.0" prefHeight="-1.0" prefWidth="-1.0" spacing="10.0">
+    <VBox fx:id="_buttonsVBox" alignment="CENTER" minWidth="50.0" prefHeight="-1.0" prefWidth="-1.0" spacing="10.0">
       <children>
         <Button fx:id="_editButton" maxHeight="-1.0" maxWidth="-1.0" mnemonicParsing="false" onAction="#onEditClicked" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/textures/edit.png');&#10;-fx-background-radius: 10;" text="" />
         <Button fx:id="_deleteButton" maxHeight="-1.0" maxWidth="-1.0" mnemonicParsing="false" onAction="#onDeleteClicked" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/textures/delete2.png');&#10;-fx-background-radius: 10;" text="" />

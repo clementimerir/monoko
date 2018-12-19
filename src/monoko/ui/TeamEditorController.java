@@ -50,7 +50,7 @@ public class TeamEditorController extends TeamEditorBase{
 		_charactersFlowpane.getChildren().clear();
 		if(_root.getUser() != null) {
 			for(Character character : _root.getUser().getCharacters()) {
-				_charactersFlowpane.getChildren().add( new FxmlManager("./ui/character.fxml", new CharacterController(this, character)).load() );
+				_charactersFlowpane.getChildren().add( new FxmlManager("./ui/character.fxml", new CharacterController(this, character, false)).load() );
 			}			
 		}
 	}
