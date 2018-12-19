@@ -99,6 +99,7 @@ public class TeamController extends TeamBase{
 	}
 
 	private void loadCharacters() {
+		_teamsHBox.getChildren().clear();
 		for(Character character : getTeam().getCharacters()) {
 			character.setTeam(_team);
 			CharacterController controller = new CharacterController(_root, character, true);
