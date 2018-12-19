@@ -24,6 +24,7 @@ public class Network {
 
 	public static void main(String[] args) throws Exception {
 		Network http = new Network();
+		
 		List<Character> l = new ArrayList<Character>();
 		Character c1 = new Character(0, "Escanor", new Soul("Fighter"), new Soul("Ross'Fert"));
 		Character c2 = new Character(1, "Phillipe", new Soul("Hunter"), new Soul("Simmenoid"));
@@ -33,12 +34,16 @@ public class Network {
 		l.add(c3);
 		c1.addSkill(new Skill("Sword"));
 		c3.addSkill(new Skill("Scepter"));
+		Team t = new Team(0, "lolilol", l);
+		
 		http.login("Mambab", "azerty");
-		/*
-		http.saveCharacter(c1);
-		http.saveCharacter(c2);
-		http.saveCharacter(c3);
-		*/
+		http.joinGame(t);
+		http.login("p", "p");
+		http.joinGame(t);
+		http.login("Mambab", "azerty");
+		List<String> waitingPlayers = http.getWaitingPlayers();
+		for(String s : waitingPlayers)
+			System.out.println(s);
 	}
 	
 	public Network() {
@@ -52,29 +57,18 @@ public class Network {
 	private int sendPost(String url, String urlParameters) throws Exception {
 		URL obj = new URL(url);
 		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
-
-		//add request header
 		con.setRequestMethod("POST");
 		con.setRequestProperty("Content-Type", "application/json");
 		con.setRequestProperty("Accept", "application/json");
-		
-		// Send post request
 		con.setDoOutput(true);
 		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 		wr.writeBytes(urlParameters);
 		wr.flush();
 		wr.close();
-
 		int responseCode = con.getResponseCode();
-		/*
-		System.out.println("\nSending 'POST' request to URL : " + url);
-		System.out.println("Post parameters : " + urlParameters);
-		System.out.println("Response Code : " + responseCode);
-		*/
 		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		String inputLine;
 		response = new StringBuffer();
-
 		while ((inputLine = in.readLine()) != null) {
 			response.append(inputLine);
 		}
@@ -151,6 +145,28 @@ public class Network {
 		String urlParameters = "{\"username\":\"" +_username+ "\",\"password\":\"" +_password+ "\"}";
 		System.out.println(urlParameters);
 		sendPost("https://multiplayer-mambab.c9users.io/register", urlParameters);
+	}
+
+	public void joinGame(Team t) throws Exception {
+		String urlParameters = "{\"username\":\"" +user.getUsername()+ "\",\"password\":\"" +user.getPassword()+ "\",\"teamCharacters\":\"\"}";
+		System.out.println(urlParameters);
+		sendPost("https://multiplayer-mambab.c9users.io/joinGame", urlParameters);
+		System.out.println(response);
+	}
+
+	public List<String> getWaitingPlayers() throws Exception {
+		String urlParameters = "{\"username\":\"" +user.getUsername()+ "\",\"password\":\"" +user.getPassword()+ "\"}";
+		System.out.println(urlParameters);
+		sendPost("https://multiplayer-mambab.c9users.io/getWaitingPlayers", urlParameters);
+		System.out.println(response);
+		List<String> waitingPlayers = new ArrayList<String>();
+		JsonReader reader = Json.createReader(new StringReader(response.toString()));
+		JsonArray waitingPlayersJson = reader.readArray();
+		for(int i=0; i<waitingPlayersJson.size(); i++) {
+			JsonObject p = waitingPlayersJson.getJsonObject(i);
+			waitingPlayers.add(p.getString("username"));
+		}
+		return waitingPlayers;
 	}
 	
 	public User getUser() {
