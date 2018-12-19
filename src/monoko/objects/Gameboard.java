@@ -1,11 +1,7 @@
 package monoko.objects;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 public class Gameboard extends Nameable{
 
@@ -40,7 +36,6 @@ public class Gameboard extends Nameable{
         for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
 				//Creation de la tile
-				
 				rand = Math.ceil(Math.random() * ( 25 - 0 ));
 				mod = (int) rand;
 				
