@@ -186,7 +186,8 @@ public class GameController extends GameBase{
             	coordSelected = AssetManager.toGrid(event.getSceneX(), event.getSceneY());
             	int [] oldCoordSelected = board.getCurrentlySelected();
             	//We check if a character is present on the selected tile
-
+            	
+            	
             	if(board.haveSelected() && board.getCurrentTileSelected().haveCharacter() && board.getTile(coordSelected).isMvmnt() && !board.getCurrentTileSelected().getCharacter().isUsingSkill()) {
             		//Mouvement d'un personnage
             		int integ = board.getCurrentTileSelected().getCharacter().setDirection(coordSelected[0],coordSelected[1]);
