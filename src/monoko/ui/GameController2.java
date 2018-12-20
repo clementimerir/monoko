@@ -116,14 +116,19 @@ public class GameController2 extends GameBase{
         	nextTurn();
         }));
         timer.setCycleCount(Animation.INDEFINITE);
-        timer.play();
+        
+        
         
         countdown = new Timeline(new KeyFrame(Duration.seconds(0.1), ev -> {
     	    counter += 0.1;
     	    _turnTimerIndicator.setProgress( counter / turnDuration );
         }));
         countdown.setCycleCount(Animation.INDEFINITE);
-        countdown.play();
+        
+        if(net.getUser().getUsername().equals(userTurn.getName())) {
+        	timer.play();
+        	countdown.play();
+        }
         
         netDemand = new Timeline(new KeyFrame(Duration.seconds(2), ev -> {
         	try {
@@ -271,7 +276,7 @@ public class GameController2 extends GameBase{
 				//TO NETWORK
 				//
 				//TODO RAJOUT D'UN IF ENGLOBANT POUR LA TEAM
-            	if (net.getUser().getUsername() ==  userTurn.getName()) {
+            	//if (net.getUser().getUsername() ==  userTurn.getName()) {
             		//
     				//
     				//
@@ -423,7 +428,7 @@ public class GameController2 extends GameBase{
                 	
                 	System.out.println("X :" + coordSelected[0]+ "Y :" +coordSelected[1]);
                 }
-        	}
+        	//}
         });
         
         
@@ -494,6 +499,7 @@ public class GameController2 extends GameBase{
 		board.changeSelected(-1, -1);
 		
         timer.stop();
+        countdown.stop();
         
         counter = 0;
         
@@ -513,6 +519,7 @@ public class GameController2 extends GameBase{
 		}
 		
 		timer.play();
+		countdown.play();
 	}
 	
 	private void makeAction(Action currentAction) {
