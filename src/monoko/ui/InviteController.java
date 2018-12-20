@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import monoko.objects.Game;
+import monoko.utils.FxmlManager;
 import monoko.utils.Manager;
 
 public class InviteController extends InviteBase{
@@ -21,7 +22,11 @@ public class InviteController extends InviteBase{
 	@Override
 	public void onAcceptGameClicked() {
 		try {
-			Manager.getInstance().getNetwork().acceptGame(game.getGameID());
+			Manager.getInstance().getNetwork().acceptGame(game);
+			
+			Manager.getInstance().setGame( new GameController() );
+			Manager.getInstance().getController().getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/game.fxml", Manager.getInstance().getGame()).load());
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

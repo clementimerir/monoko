@@ -15,7 +15,8 @@ public class MainMenuController extends MainMenuBase{
 	
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
-		
+		new FxmlManager().fitToParent(_mainMenuVBox, 0.0);
+		_loreButton.setText("Offline Game");
 	}
 	
 	@Override
@@ -41,6 +42,8 @@ public class MainMenuController extends MainMenuBase{
 	@Override
 	void onLoreButtonClicked() {
 //		_parent.getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/lore.fxml").load());
+		Manager.getInstance().setGame( new GameController() );
+		Manager.getInstance().getController().getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/game.fxml", Manager.getInstance().getGame()).load());
 	}
 	
 	@Override

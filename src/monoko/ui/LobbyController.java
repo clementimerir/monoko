@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import monoko.objects.Game;
+import monoko.objects.Team;
 import monoko.objects.User;
 import monoko.utils.FxmlManager;
 import monoko.utils.Manager;
@@ -26,6 +27,9 @@ public class LobbyController extends LobbyBase{
 		new FxmlManager().fitToParent(_rootVBox, 0.0);
 		setUser( Manager.getInstance().getController().getUser() );
 		setNetwork( Manager.getInstance().getNetwork() );
+		
+		_teamsComboBox.getSelectionModel().select( getUser().getTeams().get(0).getName() );
+		
 		refreshQueue();
 	}
 
@@ -34,8 +38,20 @@ public class LobbyController extends LobbyBase{
 		_root.getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/mainMenu.fxml", Manager.getInstance().getMainMenu()).load());		
 	}
 	
+	public Team getSelectedTeam(String name) {
+		for(Team team : getNetwork().getUser().getTeams()) {
+			if(team.getName().equals(name)) {
+				return team;
+			}
+		}
+		return null;
+	}
+	
 	private void refreshQueue() {
+		
 		try {
+			getNetwork().joinGame( getSelectedTeam( _teamsComboBox.getSelectionModel().getSelectedItem() ) );
+			
 			QueueInfo queue = getNetwork().updateQueue();
 			refreshPlayers(queue.getWaitingPlayers());
 			refreshGames(queue.getWaitingGames());
@@ -54,7 +70,7 @@ public class LobbyController extends LobbyBase{
 	private void refreshGames(List<Game> games) {
 		_invitationVBox.getChildren().clear();
 		for(Game game : games) {
-			_invitationVBox.getChildren().add( new FxmlManager("./ui/connectedPlayer.fxml", new InviteController(game)).load() );
+			_invitationVBox.getChildren().add( new FxmlManager("./ui/invite.fxml", new InviteController(game)).load() );
 		}
 	}
 
