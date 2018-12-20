@@ -20,8 +20,11 @@ public class MainMenuController extends MainMenuBase{
 	
 	@Override
 	void onPlayButtonClicked() {
-		Manager.getInstance().setGame( new GameController() );
-		Manager.getInstance().getController().getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/game.fxml", Manager.getInstance().getGame()).load());
+//		Manager.getInstance().setGame( new GameController() );
+//		Manager.getInstance().getController().getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/game.fxml", Manager.getInstance().getGame()).load());
+		
+		Manager.getInstance().setLobby( new LobbyController( Manager.getInstance().getController() ) );
+		Manager.getInstance().getController().getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/lobby.fxml", Manager.getInstance().getLobby()).load());
 	}
 
 	@Override

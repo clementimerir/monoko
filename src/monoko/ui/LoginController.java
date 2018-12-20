@@ -45,15 +45,16 @@ public class LoginController extends LoginBase{
 		                _loginProgressIndicator.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
 		                
 						try {
-//							User user = new Network().login("p", "p");
+							User user = new Network().login("p", "p");
 //							User user = new Network().login(_idTextfield.getText(), _passwordTextfield.getText());
-//							if( user != null ) {
-//								_parent.setUser(user);
+							if( user != null ) {
+								_parent.setUser(user);
+								Manager.getInstance().setNetwork( new Network(user) );
 								Manager.getInstance().setMainMenu(new MainMenuController(Manager.getInstance().getController()));
 								_parent.getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/mainMenu.fxml", Manager.getInstance().getMainMenu()).load());
 								_loginProgressIndicator.setVisible(false);
 								_loginLabel.setVisible(false);
-//							}
+							}
 						} catch (Exception e) {
 							e.printStackTrace();
 							new Thread(new Runnable() {

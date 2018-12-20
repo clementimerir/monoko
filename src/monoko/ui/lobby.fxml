@@ -10,13 +10,13 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<VBox fx:id="_rootVBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="720.0" minWidth="1280.0" prefHeight="-1.0" prefWidth="-1.0" style="" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<VBox fx:id="_rootVBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="720.0" minWidth="1280.0" prefHeight="-1.0" prefWidth="-1.0" style="-fx-background-image: url(&quot;/textures/bg.jpg&quot;);&#10;-fx-background-position: center;&#10;-fx-background-size: cover;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <children>
     <HBox alignment="TOP_CENTER" maxHeight="100.0" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-        <Label fx:id="_titleLabel" alignment="CENTER" contentDisplay="CENTER" minHeight="50.0" minWidth="300.0" text="Lobby">
+        <Label fx:id="_titleLabel" alignment="CENTER" contentDisplay="CENTER" minHeight="50.0" minWidth="300.0" text="Lobby" textFill="WHITE">
           <font>
-            <Font size="24.0" fx:id="x1" />
+            <Font size="30.0" />
           </font>
         </Label>
       </children>
@@ -24,29 +24,33 @@
     <HBox alignment="CENTER" maxHeight="800.0" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
         <Pane minWidth="10.0" prefHeight="-1.0" prefWidth="-1.0" />
-        <TitledPane fx:id="_playersTitledPane" alignment="CENTER" animated="false" collapsible="false" content="$null" contentDisplay="RIGHT" maxHeight="750.0" maxWidth="550.0" text="Connected Players" HBox.hgrow="ALWAYS">
+        <TitledPane fx:id="_playersTitledPane" alignment="CENTER" animated="false" collapsible="false" contentDisplay="RIGHT" maxHeight="800.0" maxWidth="550.0" opacity="0.7" text="Connected Players" HBox.hgrow="ALWAYS">
+          <content>
+            <VBox fx:id="_playersVBox" alignment="TOP_CENTER" prefHeight="-1.0" prefWidth="-1.0" spacing="10.0" />
+          </content>
           <font>
-            <Font size="20.0" fx:id="x2" />
+            <Font size="24.0" fx:id="x1" />
           </font>
         </TitledPane>
         <Pane minWidth="10.0" prefHeight="-1.0" prefWidth="-1.0" />
-        <TitledPane fx:id="_invitationsTitledPane" alignment="CENTER" animated="false" collapsible="false" content="$null" contentDisplay="RIGHT" font="$x2" maxHeight="750.0" maxWidth="550.0" text="Game Invitations" HBox.hgrow="ALWAYS" />
+        <TitledPane fx:id="_invitationsTitledPane" alignment="CENTER" animated="false" collapsible="false" contentDisplay="RIGHT" font="$x1" maxHeight="800.0" maxWidth="550.0" opacity="0.7" text="Game Invitations" HBox.hgrow="ALWAYS">
+          <content>
+            <VBox fx:id="_invitationVBox" prefHeight="-1.0" prefWidth="-1.0" spacing="10.0" />
+          </content>
+        </TitledPane>
         <Pane minWidth="10.0" prefHeight="-1.0" prefWidth="-1.0" />
         <VBox alignment="TOP_CENTER" minWidth="100.0" prefHeight="-1.0" prefWidth="-1.0" spacing="10.0" HBox.hgrow="ALWAYS">
           <children>
-            <Label alignment="CENTER" font="$x2" maxWidth="1.7976931348623157E308" text="Choose your Team : " />
+            <Label alignment="CENTER" font="$x1" maxWidth="1.7976931348623157E308" text="Choose your Team : " textFill="WHITE" />
             <ComboBox fx:id="_teamsComboBox" maxWidth="200.0" VBox.vgrow="ALWAYS">
               <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
+                <FXCollections fx:factory="observableArrayList" />
               </items>
               <VBox.margin>
                 <Insets />
               </VBox.margin>
             </ComboBox>
+            <Pane prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS" />
             <Button fx:id="_mainMenuButton" font="$x1" minHeight="50.0" mnemonicParsing="false" onAction="#onMainMenuClicked" text="Main Menu" />
           </children>
         </VBox>
