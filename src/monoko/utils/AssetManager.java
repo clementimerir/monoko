@@ -18,16 +18,18 @@ public class AssetManager {
 
 	
 	
-	public static final int TILES_W = 15; //Number of tiles for one side
-	public static final int TILES_H = 25; //Number of tiles for one side
+	public static final int TILES_W = 20; //Number of tiles for one side
+	public static final int TILES_H = 30; //Number of tiles for one side
 	public static final int CHARA_WIDTH = 32; //width of the character sprite
 	public static final int CHARA_HEIGHT = 64; //height of the character sprite
 	public static final int CHARA_WIDTH_HALF = CHARA_WIDTH / 2;
 	public static final int CHARA_HEIGHT_HALF = CHARA_HEIGHT / 2;
 	public static final int CHARA_WIDTH_QUARTER = CHARA_WIDTH / 4;
 	public static final int CHARA_HEIGHT_QUARTER = CHARA_HEIGHT / 4;
+	
 	public static final int TILE_WIDTH = 64; //width of a tile
 	public static final int TILE_HEIGHT = 64; //height of a tile
+	
 	public static final int TILE_WIDTH_HALF = TILE_WIDTH / 2;
 	public static final int TILE_HEIGHT_HALF = TILE_HEIGHT / 2;
 	public static final int TILE_WIDTH_QUARTER = TILE_WIDTH / 4;
@@ -50,9 +52,16 @@ public class AssetManager {
 	
 	
 	public static WritableImage grass;
+	public static WritableImage grassHigh;
+	public static WritableImage grassStones;
 	public static WritableImage stones;
+	public static WritableImage stonesCrossed;
 	public static WritableImage water;
-	public static WritableImage blocade;
+	public static WritableImage waterWalkable;
+	public static WritableImage waterGrass;
+	public static WritableImage waterNenuphar;
+	public static WritableImage wall;
+	
 	public static WritableImage charadown;
 	public static WritableImage charaup;
 	public static WritableImage figtdown;
@@ -87,10 +96,18 @@ public class AssetManager {
     	Image sage = new Image("/textures/sprite_sage32x64.png");
     	Image hunt = new Image("/textures/sprite_hunter32x64.png");
     	Image cler = new Image("/textures/sprite_cleric32x64.png");
-    	grass = new WritableImage(tiles1.getPixelReader(), 681, 164, 137, 86);
-    	stones = new WritableImage(tiles2.getPixelReader(),  0, TILE_HEIGHT*3, TILE_WIDTH, TILE_HEIGHT);
-    	water = new WritableImage(tiles2.getPixelReader(), TILE_WIDTH*9, TILE_HEIGHT*5, TILE_WIDTH, TILE_HEIGHT);
-    	blocade = new WritableImage(tiles2.getPixelReader(), 0, 0, TILE_WIDTH, TILE_HEIGHT);
+    	
+    	grass = new WritableImage(new Image("/tiles/grass.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//0
+    	grassStones = new WritableImage(new Image("/tiles/grass-stones.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//1
+    	grassHigh = new WritableImage(new Image("/tiles/grass-high.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//2
+    	stones = new WritableImage(new Image("/tiles/stones.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//3
+    	stonesCrossed = new WritableImage(new Image("/tiles/stones-crossed.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//4
+    	water = new WritableImage(new Image("/tiles/water.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//5
+    	waterWalkable = new WritableImage(new Image("/tiles/water.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//6
+    	waterGrass = new WritableImage(new Image("/tiles/water.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//7
+    	waterNenuphar = new WritableImage(new Image("/tiles/water.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//8
+    	wall = new WritableImage(new Image("/tiles/wall.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//9
+    	
     	charadown = new WritableImage(chara.getPixelReader(), 0, 0, CHARA_WIDTH, CHARA_HEIGHT);
     	charaup = new WritableImage(chara.getPixelReader(), CHARA_WIDTH, 0, CHARA_WIDTH, CHARA_HEIGHT);
     	figtdown = new WritableImage(figt.getPixelReader(), 0, 0, CHARA_WIDTH, CHARA_HEIGHT);

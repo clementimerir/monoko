@@ -71,7 +71,7 @@ public class IsoMouvmnt extends Application{
         				}else if (currentTile.getType() == 1) {
         					gc.drawImage(AssetManager.water, coordISO[0], coordISO[1], AssetManager.TILE_WIDTH, AssetManager.TILE_HEIGHT);
         				}else if (currentTile.getType() == 2){
-        					gc.drawImage(AssetManager.blocade, coordISO[0], coordISO[1], AssetManager.TILE_WIDTH, AssetManager.TILE_HEIGHT);
+        					gc.drawImage(AssetManager.wall, coordISO[0], coordISO[1], AssetManager.TILE_WIDTH, AssetManager.TILE_HEIGHT);
         				}
 		        		
 		        		//Where the mouse is pointing
