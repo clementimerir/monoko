@@ -67,6 +67,14 @@ public class LobbyController extends LobbyBase{
 			QueueInfo queue = getNetwork().updateQueue();
 			refreshPlayers(queue.getWaitingPlayers());
 			refreshGames(queue.getWaitingGames());
+			
+			for(Game game : queue.getWaitingGames()) {
+				if( game.getStatus().equals( "ready" ) ) {
+					Manager.getInstance().getController().getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/game.fxml", new GameController2(game)).load());
+					break;
+				}
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
