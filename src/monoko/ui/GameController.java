@@ -36,9 +36,10 @@ public class GameController extends GameBase{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		start();
+		Manager.getInstance().getController().setBackgroundMusic("./res/sound/fight-theme.wav");
 		root.getChildren().add( new FxmlManager("./ui/skillBar.fxml", skillBar).load() );
 	}
-	
+
 	public void reloadSkillBar(Character character) {
 		
 		List<Skill> skills = character.getSkills();

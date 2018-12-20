@@ -1,18 +1,28 @@
 package monoko.ui;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.scene.layout.AnchorPane;
-import monoko.objects.Player;
 import monoko.objects.User;
 import monoko.utils.FxmlManager;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+import sun.audio.ContinuousAudioDataStream;
 
 public class MonokoController extends MonokoBase{
 
 	User _user;
+	String _backgroundMusic;
 	
-	public MonokoController() {}
+	public MonokoController() {
+		_backgroundMusic = "./res/sound/menu-theme-dofus.wav";
+		music();
+	}
 	
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
@@ -28,6 +38,33 @@ public class MonokoController extends MonokoBase{
 		this._rootAnchorPane = _rootAnchorPane;
 	}
 	
+	public void music(){       
+        AudioPlayer MGP = AudioPlayer.player;
+        AudioStream BGM;
+
+        ContinuousAudioDataStream loop = null;
+
+        try
+        {
+            InputStream test = new FileInputStream(_backgroundMusic);
+            BGM = new AudioStream(test);
+            AudioPlayer.player.start(BGM);
+            //MD = BGM.getData();
+            //loop = new ContinuousAudioDataStream(MD);
+
+        }
+        catch(FileNotFoundException e){
+            System.out.print(e.toString());
+        }
+        catch(IOException error)
+        {
+            System.out.print(error.toString());
+        }
+        MGP.start(loop);
+
+    }
+	
+	
 	//GETTERS SETTERS
 	public User getUser() {
 		return _user;
@@ -36,5 +73,14 @@ public class MonokoController extends MonokoBase{
 	public void setUser(User player) {
 		this._user = player;
 	}
+	public String getBackgroundMusic() {
+		return _backgroundMusic;
+	}
+
+	public void setBackgroundMusic(String backgroundMusic) {
+		this._backgroundMusic = backgroundMusic;
+		this.music();
+	}
+
 	
 }
