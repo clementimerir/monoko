@@ -42,6 +42,7 @@ public class MainMenuController extends MainMenuBase{
 	
 	@Override
 	protected void onQuitButtonClicked() {
+		Manager.getInstance().getController().stopMusic();
 		Platform.exit();
 	}
 

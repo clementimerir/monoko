@@ -18,6 +18,8 @@ public class MonokoController extends MonokoBase{
 
 	User _user;
 	String _backgroundMusic;
+	AudioStream BGM;
+	InputStream test;
 	
 	public MonokoController() {
 		_backgroundMusic = "./res/sound/menu-theme-dofus.wav";
@@ -38,17 +40,15 @@ public class MonokoController extends MonokoBase{
 		this._rootAnchorPane = _rootAnchorPane;
 	}
 	
-	public void music(){       
-        AudioPlayer MGP = AudioPlayer.player;
-        AudioStream BGM;
-
+	public void music(){
+		AudioPlayer MGP = AudioPlayer.player;
         ContinuousAudioDataStream loop = null;
-
+        MGP.stop(BGM);
         try
         {
-            InputStream test = new FileInputStream(_backgroundMusic);
+            test = new FileInputStream(_backgroundMusic);
             BGM = new AudioStream(test);
-            AudioPlayer.player.start(BGM);
+            MGP.start(BGM);
             //MD = BGM.getData();
             //loop = new ContinuousAudioDataStream(MD);
 
@@ -61,7 +61,6 @@ public class MonokoController extends MonokoBase{
             System.out.print(error.toString());
         }
         MGP.start(loop);
-
     }
 	
 	
@@ -82,5 +81,8 @@ public class MonokoController extends MonokoBase{
 		this.music();
 	}
 
+	public void stopMusic() {
+		AudioPlayer.player.stop(BGM);
+	}
 	
 }

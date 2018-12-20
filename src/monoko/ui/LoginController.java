@@ -23,6 +23,7 @@ public class LoginController extends LoginBase{
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
 //		onLoginClicked();
+		Manager.getInstance().setController(_parent);
 	}
 
 	@Override
@@ -48,7 +49,6 @@ public class LoginController extends LoginBase{
 //							User user = new Network().login(_idTextfield.getText(), _passwordTextfield.getText());
 //							if( user != null ) {
 								_parent.setUser(user);
-								Manager.getInstance().setController(_parent);
 								Manager.getInstance().setMainMenu(new MainMenuController(Manager.getInstance().getController()));
 								_parent.getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/mainMenu.fxml", Manager.getInstance().getMainMenu()).load());
 								_loginProgressIndicator.setVisible(false);
@@ -90,6 +90,7 @@ public class LoginController extends LoginBase{
 
 	@Override
 	public void onQuitClicked() {
+		Manager.getInstance().getController().stopMusic();
 		Platform.exit();		
 	}
 
