@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import javafx.scene.layout.AnchorPane;
 import monoko.objects.User;
 import monoko.utils.FxmlManager;
+import monoko.utils.Manager;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 import sun.audio.ContinuousAudioDataStream;
