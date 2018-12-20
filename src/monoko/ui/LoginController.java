@@ -86,7 +86,18 @@ public class LoginController extends LoginBase{
 	@Override
 	public void onRegisterClicked() {
 		//TODO
-		//interface not made yet but OSEF
+		try {
+			new Network().register(_idTextfield.getText(), _passwordTextfield.getText());
+			
+			Stage dialog = new Stage();
+			Scene dialogScene = new Scene(new FxmlManager("./ui/warning.fxml", new WarningController("Your account has been registered.")).load(), 400, 100);
+			dialog.setTitle("Registration Success");
+            dialog.setScene(dialogScene);
+            dialog.show();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
