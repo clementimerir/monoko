@@ -244,8 +244,9 @@ public class GameController extends GameBase{
             		}else if(skillUsed < 2 && board.getTile(coordSelected).isAction()  && board.getTile(oldCoordSelected).getCharacter().isUsingSkill() && board.getTile(coordSelected).haveEnemyCharacter(board.getTile(oldCoordSelected))) {
         				//Skill used ! <-- Character selected but only one skill allowed now
             			Character c = board.getTile(coordSelected).getCharacter();
+            			//caraTurn.useSkill(c, , posX, posY);
             			c.takeDamage(15);
-            			if(c.getCurrentAttributes().getHp() == 0) {
+            			if(c.getCurrentAttributes().getHp() <= 0) {
             				board.getTile(coordSelected).setCharacter(null);
             			}
             			board.getCurrentTileSelected().getCharacter().setUsedSkill(null);
@@ -315,7 +316,7 @@ public class GameController extends GameBase{
             				//Skill used ! <-- Character selected but only one skill allowed now
                 			Character c = board.getTile(coordSelected).getCharacter();
                 			c.takeDamage(15);
-                			if(c.getCurrentAttributes().getHp() == 0) {
+                			if(c.getCurrentAttributes().getHp() <= 0) {
                 				board.getTile(coordSelected).setCharacter(null);
                 			}
                 			board.getCurrentTileSelected().getCharacter().setUsedSkill(null);
