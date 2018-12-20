@@ -21,10 +21,21 @@
         <Pane minHeight="10.0" prefHeight="-1.0" prefWidth="-1.0" />
       </children>
     </VBox>
-    <VBox fx:id="_buttonsVBox" alignment="CENTER" minWidth="50.0" prefHeight="-1.0" prefWidth="-1.0" spacing="10.0">
+    <VBox fx:id="_buttonsVBox" alignment="BOTTOM_CENTER" minWidth="50.0" prefHeight="-1.0" prefWidth="-1.0" spacing="10.0">
       <children>
+        <Pane minWidth="5.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS" />
         <Button fx:id="_editButton" maxHeight="-1.0" maxWidth="-1.0" mnemonicParsing="false" onAction="#onEditClicked" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/textures/edit.png');&#10;-fx-background-radius: 10;" text="" />
         <Button fx:id="_deleteButton" maxHeight="-1.0" maxWidth="-1.0" mnemonicParsing="false" onAction="#onDeleteClicked" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/textures/delete2.png');&#10;-fx-background-radius: 10;" text="" />
+        <HBox alignment="CENTER_RIGHT" maxHeight="30.0" maxWidth="50.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+          <children>
+            <Label fx:id="_costLabel" minHeight="30.0" minWidth="20.0" text="15" textFill="WHITE">
+              <font>
+                <Font size="16.0" />
+              </font>
+            </Label>
+            <ImageView fx:id="_coinImageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" style="" />
+          </children>
+        </HBox>
       </children>
     </VBox>
     <Pane minWidth="5.0" prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="NEVER" />

@@ -314,7 +314,6 @@ public class CharacterEditorController extends CharacterEditorBase{
 		character.setSkills(_itemList);
 		character.setAddedSkills(_addedItemList);
 		character.setCost(getTotalPrice());
-		System.out.println(getTotalPrice());
 
 		if(editionMode) {
 			character.setId(_id);

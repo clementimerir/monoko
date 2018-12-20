@@ -30,6 +30,8 @@ public class CharacterController extends CharacterBase{
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
 		_nameLabel.setText(getCharacter().getName());
+		_costLabel.setText( String.valueOf(getCharacter().getCost()) );
+		_coinImageView.setImage( new Image( new StringBuilder("/textures/").append("coin.png").toString() ) );
 		_classImageview.setImage( new Image( new StringBuilder("/textures/").append(getCharacter().getJob().getName()).append("-Small").append(".png").toString() ) );
 //		_editButton.setVisible(!_teamMode);
 		if(_teamMode) {

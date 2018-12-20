@@ -75,7 +75,6 @@ public class TeamController extends TeamBase{
 		        			int cost = currentCharacter.getCost();
 		        			for(Character loop : getTeam().getCharacters()) {
 		        				cost += loop.getCost();
-		        				System.out.println(cost);
 		        			}
 		        			
 		        			if(cost <= 100) {
@@ -86,7 +85,7 @@ public class TeamController extends TeamBase{
 									new Network(_root.getRoot().getUser()).saveTeam(getTeam());
 								} catch (Exception e) {
 									e.printStackTrace();
-								}		        				
+								}
 		        			}else {
 		        				Stage dialog = new Stage();
 								Scene dialogScene = new Scene(new FxmlManager("./ui/warning.fxml", new WarningController("You can't make a team whose cost is over 100.")).load(), 400, 100);

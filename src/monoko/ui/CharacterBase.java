@@ -12,8 +12,10 @@ public abstract class CharacterBase implements Initializable{
 	
 	@FXML HBox _rootHBox;
 	@FXML ImageView _classImageview;
+	@FXML ImageView _coinImageView;
 	
 	@FXML Label _nameLabel;
+	@FXML Label _costLabel;
 
 	@FXML Button _editButton;
 	@FXML Button _deleteButton;
