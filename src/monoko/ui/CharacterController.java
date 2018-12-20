@@ -63,7 +63,7 @@ public class CharacterController extends CharacterBase{
 			
 			try {
 				Network net = new Network(_root.getRoot().getUser());
-				net.saveTeam(_character.getTeam());
+				net.saveTeam(getTeam());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
