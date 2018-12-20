@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+
 import org.json.simple.*;
 
 public class Character extends Nameable{
@@ -71,6 +74,29 @@ public class Character extends Nameable{
 		setInGameSprite();
 		setInUse(false);
 		setSkills(character.getSkills());
+	}
+	
+	public Character(JsonObject characterJson) {
+		setId(characterJson.getInt("ref"));
+		setName(characterJson.getString("name"));
+		setPosition(0, 0, 0);
+		setInUse(false);
+		baseAttributes = new Attributes(0, 0, 0, 0, 0);
+		currentAttributes = new Attributes(0, 0, 0, 0, 0);
+		allSkills = new ArrayList<Skill>();
+		String job = characterJson.getString("job");
+		String god = characterJson.getString("god");
+		if(!job.equals("none"))
+			setJob(new Soul(job));
+		if(!god.equals("none"))
+			setGod(new Soul(god));
+		buildAllAttributes();
+		setInGameSprite();
+		setInMenuSprite();
+		JsonArray skills = characterJson.getJsonArray("skills");
+		for(int j=0; j<skills.size(); j++) {
+			addSkill(new Skill(skills.getString(j)));
+		}
 	}
 	
 	public List<Skill> getAddedSkills() {

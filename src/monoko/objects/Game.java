@@ -9,6 +9,7 @@ public class Game extends Nameable{
 	private Player player1;
 	private Player player2;
 	private String status;
+	private String gameID;
 	private List<Action> actions;
 	
 	public Game(Player player1, Player player2) {
@@ -51,6 +52,14 @@ public class Game extends Nameable{
 
 	public void setActions(List<Action> actions) {
 		this.actions = actions;
+	}
+
+	public String getGameID() {
+		return gameID;
+	}
+
+	public void setGameID(String gameID) {
+		this.gameID = gameID;
 	}
 	
 }

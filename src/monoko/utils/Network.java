@@ -16,6 +16,7 @@ import java.util.List;
 
 import monoko.objects.Character;
 import monoko.objects.Game;
+import monoko.objects.Player;
 import monoko.objects.Skill;
 import monoko.objects.Soul;
 import monoko.objects.Team;
@@ -117,20 +118,7 @@ public class Network {
 			JsonArray characters = userJson.getJsonArray("characters");
 			for(int i=0; i<characters.size(); i++) {
 				JsonObject c = characters.getJsonObject(i);
-				Character character = new Character(c.getInt("ref"), c.getString("name"), null, null, "none", "none");
-				String job = c.getString("job");
-				String god = c.getString("god");
-				if(!job.equals("none"))
-					character.setJob(new Soul(job));
-				if(!god.equals("none"))
-					character.setGod(new Soul(god));
-				character.buildAllAttributes();
-				character.setInGameSprite();
-				character.setInMenuSprite();
-				JsonArray skills = c.getJsonArray("skills");
-				for(int j=0; j<skills.size(); j++) {
-					character.addSkill(new Skill(skills.getString(j)));
-				}
+				Character character = new Character(c);
 				user.addCharacter(character);
 			}
 			JsonArray teams = userJson.getJsonArray("teams");
@@ -188,7 +176,10 @@ public class Network {
 		JsonArray waitingGamesJson = status.getJsonArray("gamesList");
 		for(int i=0; i<waitingGamesJson.size(); i++) {
 			JsonObject g = waitingGamesJson.getJsonObject(i);
-			Game game = new Game(null, null);
+			Player p1 = new Player(1, g.getString("player1"), null);
+			Player p2 = new Player(1, g.getString("player2"), null);
+			Game game = new Game(p1, p2);
+			game.setStatus(g.getString("status"));
 			waitingGames.add(game);
 		}
 		QueueInfo queue = new QueueInfo(waitingPlayers, waitingGames);
