@@ -41,7 +41,7 @@ public class Network {
 		http.login("p", "p");
 		http.joinGame(t);
 		http.login("Mambab", "azerty");
-		List<String> waitingPlayers = http.getWaitingPlayers();
+		List<String> waitingPlayers = http.updateQueue();
 		for(String s : waitingPlayers)
 			System.out.println(s);
 		
@@ -161,14 +161,15 @@ public class Network {
 		System.out.println(response);
 	}
 
-	public List<String> getWaitingPlayers() throws Exception {
+	public List<String> updateQueue() throws Exception {
 		String urlParameters = "{\"username\":\"" +user.getUsername()+ "\",\"password\":\"" +user.getPassword()+ "\"}";
 		System.out.println(urlParameters);
-		sendPost("https://multiplayer-mambab.c9users.io/getWaitingPlayers", urlParameters);
+		sendPost("https://multiplayer-mambab.c9users.io/updateQueue", urlParameters);
 		System.out.println(response);
 		List<String> waitingPlayers = new ArrayList<String>();
 		JsonReader reader = Json.createReader(new StringReader(response.toString()));
-		JsonArray waitingPlayersJson = reader.readArray();
+		JsonObject status = reader.readObject();
+		JsonArray waitingPlayersJson = status.getJsonArray("playersList");
 		for(int i=0; i<waitingPlayersJson.size(); i++) {
 			JsonObject p = waitingPlayersJson.getJsonObject(i);
 			waitingPlayers.add(p.getString("username"));
