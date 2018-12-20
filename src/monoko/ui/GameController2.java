@@ -400,7 +400,7 @@ public class GameController2 extends GameBase{
     
     
     private boolean sendToNetwork(String actionFaite, int[] target) {
-    	Action lastAction = new Action(numAction, caraTurn.getId(), caraTurn.getTeam().getId(), actionFaite, target[0], target [1]);
+    	Action lastAction = new Action(numAction, caraTurn.getId(), "PUTE DE DAVID", actionFaite, target[0], target [1]);
     	try {
 			net.updateGame(_game, lastAction);
 			return true;
