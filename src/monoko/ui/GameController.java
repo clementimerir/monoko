@@ -126,14 +126,7 @@ public class GameController extends GameBase{
         		        int [] p3 = AssetManager.toIsoPoly(i+1,j+1);
         		        int [] p4 = AssetManager.toIsoPoly(i+1,j);
         		        
-        		        //Create tile in fonction of the type attribute
-		        		if (currentTile.getType() == 0) {
-        					gc.drawImage(AssetManager.stones, coordISO[0], coordISO[1], AssetManager.TILE_WIDTH, AssetManager.TILE_HEIGHT);
-        				}else if (currentTile.getType() == 1) {
-        					gc.drawImage(AssetManager.water, coordISO[0], coordISO[1], AssetManager.TILE_WIDTH, AssetManager.TILE_HEIGHT);
-        				}else if (currentTile.getType() == 2){
-        					gc.drawImage(AssetManager.wall, coordISO[0], coordISO[1], AssetManager.TILE_WIDTH, AssetManager.TILE_HEIGHT);
-        				}
+		        		AssetManager.drawTile(gc, currentTile, coordISO[0], coordISO[1]);
 		        		
 		        		//
 		        		//Where the mouse is pointing

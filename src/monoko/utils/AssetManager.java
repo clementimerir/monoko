@@ -11,6 +11,7 @@ import monoko.objects.Skill;
 import monoko.objects.SkillTypeEnum;
 import monoko.objects.Soul;
 import monoko.objects.Team;
+import monoko.objects.Tile;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 
@@ -88,8 +89,8 @@ public class AssetManager {
 	//Initialisation of every tiles of the game
     public static void init(){
     	
-    	Image tiles1 = new Image("/textures/tiles3d.png");
-    	Image tiles2 = new Image("/textures/sheet.png");
+    	//Image tiles1 = new Image("/textures/tiles3d.png");
+    	//Image tiles2 = new Image("/textures/sheet.png");
     	Image chara = new Image("/textures/test_sprite32x64.png");
     	Image figt = new Image("/textures/sprite_fighter32x64.png");
     	Image guar = new Image("/textures/sprite_guardian32x64.png");
@@ -103,9 +104,9 @@ public class AssetManager {
     	stones = new WritableImage(new Image("/tiles/stones.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//3
     	stonesCrossed = new WritableImage(new Image("/tiles/stones-crossed.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//4
     	water = new WritableImage(new Image("/tiles/water.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//5
-    	waterWalkable = new WritableImage(new Image("/tiles/water.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//6
-    	waterGrass = new WritableImage(new Image("/tiles/water.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//7
-    	waterNenuphar = new WritableImage(new Image("/tiles/water.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//8
+    	waterWalkable = new WritableImage(new Image("/tiles/water-walkable.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//6
+    	waterGrass = new WritableImage(new Image("/tiles/water-grass.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//7
+    	waterNenuphar = new WritableImage(new Image("/tiles/water-nenuphar.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//8
     	wall = new WritableImage(new Image("/tiles/wall.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//9
     	
     	charadown = new WritableImage(chara.getPixelReader(), 0, 0, CHARA_WIDTH, CHARA_HEIGHT);
@@ -314,6 +315,46 @@ public class AssetManager {
     		break;
     	default: 
     		gc.drawImage(AssetManager.charaup, x, y, AssetManager.CHARA_WIDTH, AssetManager.CHARA_HEIGHT);
+            break;
+    	}
+    }
+    
+    
+    public static void drawTile(GraphicsContext gc, Tile t, int x, int y) {
+    	int imageNum = t.getImage();
+    	switch(imageNum) {
+    	case 0:
+    		gc.drawImage(AssetManager.grass, x, y, AssetManager.TILE_WIDTH, AssetManager.TILE_HEIGHT);
+    		break;
+    	case 3:
+    		gc.drawImage(AssetManager.grassHigh, x, y, AssetManager.TILE_WIDTH, AssetManager.TILE_HEIGHT);
+    		break;
+    	case 6:
+    		gc.drawImage(AssetManager.grassStones, x, y, AssetManager.TILE_WIDTH, AssetManager.TILE_HEIGHT);
+    		break;
+    	case 9:
+    		gc.drawImage(AssetManager.waterWalkable, x, y, AssetManager.TILE_WIDTH, AssetManager.TILE_HEIGHT);
+    		break;
+    	case 12:
+    		gc.drawImage(AssetManager.stones, x, y, AssetManager.TILE_WIDTH, AssetManager.TILE_HEIGHT);
+    		break;
+    	case 1:
+    		gc.drawImage(AssetManager.water, x, y, AssetManager.TILE_WIDTH, AssetManager.TILE_HEIGHT);
+    		break;
+    	case 4:
+    		gc.drawImage(AssetManager.waterGrass, x, y, AssetManager.TILE_WIDTH, AssetManager.TILE_HEIGHT);
+    		break;
+    	case 7:
+    		gc.drawImage(AssetManager.waterNenuphar, x, y, AssetManager.TILE_WIDTH, AssetManager.TILE_HEIGHT);
+    		break;
+    	case 2:
+    		gc.drawImage(AssetManager.stonesCrossed, x, y, AssetManager.TILE_WIDTH, AssetManager.TILE_HEIGHT);
+    		break;
+    	case 5:
+    		gc.drawImage(AssetManager.wall, x, y, AssetManager.TILE_WIDTH, AssetManager.TILE_HEIGHT);
+    		break;
+    	default: 
+    		gc.drawImage(AssetManager.grass, x, y, AssetManager.TILE_WIDTH, AssetManager.TILE_HEIGHT);
             break;
     	}
     }

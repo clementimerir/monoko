@@ -32,56 +32,16 @@ public class Gameboard extends Nameable{
 		
         this.board = new Tile[width][height];
         this.mapReader("map1.txt");
-        //double rand = 0;
-        //double rand2 = 0;
-        int mod = 0;
-        //int mod2 = 0;
         int x=0;
         int x2=0;
         int widthP1 = this.getPlayer1().getTeam().getCharacters().size();
         int widthP2 = this.getPlayer2().getTeam().getCharacters().size();
-        int mod2 = 0;
-       /*
-        for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
-				//Creation de la tile
-				rand = Math.ceil(Math.random() * ( 25 - 0 ));
-				mod = (int) rand;
-				
-				if(j == 0) {
-					mod2 = width/widthP1;
-					if(i % mod2 == 1 && x < p1.getTeam().getCharacters().size()) {
-						p1.getTeam().getCharacters().get(x).setVision(2);
-						p1.getTeam().getCharacters().get(x).setInGameSprite();
-						this.board[i][j] = new Tile(0,0,p1.getTeam().getCharacters().get(x));
-						x++;
-					}else {
-						this.board[i][j] = new Tile(0,0,null);
-					}
-				}else if(j == height-1) {
-					mod2 = width/widthP2;
-					if(i % mod2 == 1  && x2 < p2.getTeam().getCharacters().size()) {
-						this.board[i][j] = new Tile(0,0,p2.getTeam().getCharacters().get(x2));
-						x2++;
-					}else {
-						this.board[i][j] = new Tile(0,0,null);
-					}
-				}else {
-					if(mod <= 20) {
-						this.board[i][j] = new Tile(0,0,null);
-					}else if(mod <= 23){
-						this.board[i][j] = new Tile(1,1,null);
-					}else {
-						this.board[i][j] = new Tile(2,2,null);
-					}
-				}
-			}
-		}
-		*/
-        mod = width/widthP1;
-        mod2 = width/widthP2;
-        int j1 = 0;
-        int j2 = height-1;
+        int mod = width/widthP1;
+        int mod2 = width/widthP2;
+        int j1 = 1;
+        int j2 = height-2;
+        
+        //Ajout des personnages
         for (int i = 0; i < width; i++) {
         	if(i % mod == 1 && x < p1.getTeam().getCharacters().size()) {
     			p1.getTeam().getCharacters().get(x).setVision(2);
