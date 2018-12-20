@@ -17,7 +17,8 @@ import javafx.scene.image.WritableImage;
 
 public class AssetManager {
 
-	
+	public static final int ANIM_WIDTH = 64;
+	public static final int ANIM_HEIGHT = 64;
 	
 	public static final int TILES_W = 20; //Number of tiles for one side
 	public static final int TILES_H = 30; //Number of tiles for one side
@@ -52,6 +53,7 @@ public class AssetManager {
 								    	};
 	
 	
+	//Tiles
 	public static WritableImage grass;
 	public static WritableImage grassHigh;
 	public static WritableImage grassStones;
@@ -62,7 +64,7 @@ public class AssetManager {
 	public static WritableImage waterGrass;
 	public static WritableImage waterNenuphar;
 	public static WritableImage wall;
-	
+	//Players
 	public static WritableImage charadown;
 	public static WritableImage charaup;
 	public static WritableImage figtdown;
@@ -85,6 +87,8 @@ public class AssetManager {
 	public static WritableImage clerup;
 	public static WritableImage clerleft;
 	public static WritableImage clerright;
+	//Attacks
+	public static Image slash;
 	
 	//Initialisation of every tiles of the game
     public static void init(){
@@ -97,7 +101,10 @@ public class AssetManager {
     	Image sage = new Image("/textures/sprite_sage32x64.png");
     	Image hunt = new Image("/textures/sprite_hunter32x64.png");
     	Image cler = new Image("/textures/sprite_cleric32x64.png");
+    	//Attacks
+    	slash = new Image("/attacks/slashsprite.png");
     	
+    	//Tiles
     	grass = new WritableImage(new Image("/tiles/grass.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//0
     	grassStones = new WritableImage(new Image("/tiles/grass-stones.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//1
     	grassHigh = new WritableImage(new Image("/tiles/grass-high.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//2
@@ -108,7 +115,7 @@ public class AssetManager {
     	waterGrass = new WritableImage(new Image("/tiles/water-grass.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//7
     	waterNenuphar = new WritableImage(new Image("/tiles/water-nenuphar.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//8
     	wall = new WritableImage(new Image("/tiles/wall.png").getPixelReader(), TILE_WIDTH, TILE_HEIGHT);//9
-    	
+    	//Character
     	charadown = new WritableImage(chara.getPixelReader(), 0, 0, CHARA_WIDTH, CHARA_HEIGHT);
     	charaup = new WritableImage(chara.getPixelReader(), CHARA_WIDTH, 0, CHARA_WIDTH, CHARA_HEIGHT);
     	figtdown = new WritableImage(figt.getPixelReader(), 0, 0, CHARA_WIDTH, CHARA_HEIGHT);
@@ -131,7 +138,6 @@ public class AssetManager {
     	clerup = new WritableImage(cler.getPixelReader(), CHARA_WIDTH, 0, CHARA_WIDTH, CHARA_HEIGHT);
     	clerleft = new WritableImage(cler.getPixelReader(), CHARA_WIDTH*2, 0, CHARA_WIDTH, CHARA_HEIGHT);
     	clerright = new WritableImage(cler.getPixelReader(), CHARA_WIDTH*3, 0, CHARA_WIDTH, CHARA_HEIGHT);
-    	
     	
     }
     

@@ -5,13 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.animation.*;
+import javafx.beans.property.*;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.DoubleProperty;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -38,10 +43,17 @@ public class GameController extends GameBase{
 	int mvmntUsed = 0;//Contains how many cases did the player used
 	int skillUsed = 0;
 	//Timer
-	Timeline timer;
+	Timeline timer, animation;
 	Timeline countdown = new Timeline();
 	double counter = 0;
 	double turnDuration = 10;
+	
+	//Variable d'animation
+	boolean animationStart = false;
+	Image animImage = null;
+	WritableImage currentSprite = null;
+	int[] animPlace = new int[] {0,0};
+	DoubleProperty frame  = new SimpleDoubleProperty();
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -106,6 +118,16 @@ public class GameController extends GameBase{
         }));
         countdown.setCycleCount(Animation.INDEFINITE);
         countdown.play();
+        
+        //Time line pour Animation
+        animation = new Timeline(
+            new KeyFrame(Duration.seconds(0),
+                    new KeyValue(frame, 0)
+            ),
+            new KeyFrame(Duration.seconds(0.5),
+                    new KeyValue(frame, 5)
+            )
+        );
         
         new AnimationTimer()
         {
@@ -207,6 +229,24 @@ public class GameController extends GameBase{
         			}
         		}
             	
+            	//Partie sur l'affichage des animations;
+            	
+        		
+        		
+            	if(animationStart) {
+            		
+            		animation.play();
+            		
+            		if(frame.doubleValue() >= 4) {
+            			animationStart = false;
+            			frame.set(0.0);
+            		}else {
+            			currentSprite = new WritableImage(animImage.getPixelReader(), frame.intValue()*AssetManager.ANIM_WIDTH, 0,  AssetManager.ANIM_WIDTH, AssetManager.ANIM_HEIGHT);
+                		gc.drawImage(currentSprite, animPlace[0], animPlace[1], AssetManager.ANIM_WIDTH, AssetManager.ANIM_HEIGHT);
+            		}
+            		
+            	}
+            	
             }
         }.start();
          
@@ -236,6 +276,7 @@ public class GameController extends GameBase{
             		}else if(skillUsed < 2 && board.getTile(coordSelected).isAction()  && board.getTile(oldCoordSelected).getCharacter().isUsingSkill() && board.getTile(coordSelected).haveCharacter()) {
         				//Skill used ! <-- Character selected but only one skill allowed now
             			Character c = board.getTile(coordSelected).getCharacter();
+            			animateSkill(caraTurn.getUsedSkill(), coordSelected);
             			caraTurn.useSkill(c, caraTurn.getUsedSkill(), coordSelected[0], coordSelected[1]);
             			if(c.getCurrentAttributes().getHp() <= 0) {
             				board.getTile(coordSelected).setCharacter(null);
@@ -296,6 +337,8 @@ public class GameController extends GameBase{
             				//Skill used ! <-- Character selected but only one skill allowed now
                 			Character c = board.getTile(coordSelected).getCharacter();
                 			caraTurn = board.getTile(oldCoordSelected).getCharacter();
+                			//Lancer l'animation d'une attaque
+                			animateSkill(caraTurn.getUsedSkill(), coordSelected);
                 			caraTurn.useSkill(c, caraTurn.getUsedSkill(), coordSelected[0], coordSelected[1]);
                 			if(c.getCurrentAttributes().getHp() <= 0) {
                 				board.getTile(coordSelected).setCharacter(null);
@@ -348,6 +391,28 @@ public class GameController extends GameBase{
             }
           });
         
+    }
+    
+    private void animateSkill(Skill skill, int[] target) {
+    	String skillName = skill.getName();
+    	animPlace = AssetManager.toIso(target[0],target[1]);
+    	animationStart = true;
+    	switch(skillName) {
+    	case "Sword":
+    		animImage = AssetManager.slash;
+    		break;
+    	case "Bow":
+    		animImage = AssetManager.slash;
+    		break;
+    	case "Scepter":
+    		animImage = AssetManager.slash;
+    		break;
+    	case "Pyromancy Tome":
+    		animImage = AssetManager.slash;
+    		break;
+    	default: 
+            break;
+    	}
     }
     
 	private void clearSkillBar() {
