@@ -47,9 +47,17 @@ public class Network {
 		http.joinGame(t);
 		http.login("Mambab", "azerty");
 		QueueInfo queue = http.updateQueue();
-		for(String s : queue.getWaitingPlayers())
+		for(String s : queue.getWaitingPlayers()) {
 			System.out.println(s);
-		
+			http.invitePlayer(s);
+		}
+		http.login("p", "p");
+		queue = http.updateQueue();
+		for(Game g : queue.getWaitingGames()) {
+			System.out.println(g.getPlayer1().getName());
+			http.acceptGame(g.getGameID());
+			http.endGame(g.getGameID());
+		}
 		//http.register("p", "p");
 	}
 	
@@ -180,10 +188,29 @@ public class Network {
 			Player p2 = new Player(1, g.getString("player2"), null);
 			Game game = new Game(p1, p2);
 			game.setStatus(g.getString("status"));
+			game.setGameID(g.getString("gameID"));
 			waitingGames.add(game);
 		}
 		QueueInfo queue = new QueueInfo(waitingPlayers, waitingGames);
 		return queue;
+	}
+
+	public void invitePlayer(String opponentUsername) throws Exception {
+		String urlParameters = "{\"username\": \"" +user.getUsername()+ "\", \"password\" : \"" +user.getPassword()+ "\", \"opponentUsername\" : \"" +opponentUsername+ "\"}";
+		System.out.println(urlParameters);
+		sendPost("https://multiplayer-mambab.c9users.io/invitePlayer", urlParameters);
+	}
+
+	public void acceptGame(String gameID) throws Exception {
+		String urlParameters = "{\"username\": \"" +user.getUsername()+ "\", \"password\" : \"" +user.getPassword()+ "\", \"gameID\" : \"" +gameID+ "\"}";
+		System.out.println(urlParameters);
+		sendPost("https://multiplayer-mambab.c9users.io/acceptGame", urlParameters);
+	}
+
+	public void endGame(String gameID) throws Exception {
+		String urlParameters = "{\"username\": \"" +user.getUsername()+ "\", \"password\" : \"" +user.getPassword()+ "\", \"gameID\" : \"" +gameID+ "\"}";
+		System.out.println(urlParameters);
+		sendPost("https://multiplayer-mambab.c9users.io/endGame", urlParameters);
 	}
 	
 	public User getUser() {
