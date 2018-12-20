@@ -22,9 +22,11 @@ import monoko.objects.Player;
 import monoko.objects.Skill;
 import monoko.objects.Team;
 import monoko.objects.Tile;
+import monoko.utils.Action;
 import monoko.utils.AssetManager;
 import monoko.utils.FxmlManager;
 import monoko.utils.Manager;
+import monoko.utils.Network;
 
 public class GameController2 extends GameBase{
 	
@@ -44,6 +46,8 @@ public class GameController2 extends GameBase{
 	double counter = 0;
 	double turnDuration = 30;
 	private Game _game;
+	Network net = Manager.getInstance().getNetwork();
+	int numAction = 0;
 	
 	public GameController2(Game game) {
 		_game = game;
@@ -228,7 +232,13 @@ public class GameController2 extends GameBase{
             	int [] oldCoordSelected = board.getCurrentlySelected();
             	//We check if a character is present on the selected tile
             	
-            	
+            	//
+				//TO NETWORK
+				//
+				//TODO RAJOUT D'UN IF ENGLOBANT POUR LA TEAM
+				//
+				//
+				//
             	if(caraTurn != null) {
             		if(board.getTile(coordSelected).isMvmnt() && !board.getTile(oldCoordSelected).getCharacter().isUsingSkill()){
             			//Mouvement d'un personnage
@@ -243,6 +253,13 @@ public class GameController2 extends GameBase{
         				board.setTabMvmnt();
         				haveCharacter = true;
         				board.setCurrentlySelected(coordSelected);
+        				//
+        				//TO NETWORK
+        				//
+        				//TODO
+        				//
+        				//
+        				//
             		}else if(skillUsed < 2 && board.getTile(coordSelected).isAction()  && board.getTile(oldCoordSelected).getCharacter().isUsingSkill() && board.getTile(coordSelected).haveCharacter()) {
         				//Skill used ! <-- Character selected but only one skill allowed now
             			Character c = board.getTile(coordSelected).getCharacter();
@@ -257,7 +274,14 @@ public class GameController2 extends GameBase{
             			skillUsed++;
             			if(skillUsed >= 2) {
             				clearSkillBar();
-            			}	
+            			}
+            			//
+        				//TO NETWORK
+        				//
+        				//TODO
+        				//
+        				//
+        				//
                     		
         			}
             	}else if(oldCoordSelected[0] == -1) {
@@ -294,6 +318,13 @@ public class GameController2 extends GameBase{
         				board.setTabMvmnt();
         				haveCharacter = true;
         				board.setCurrentlySelected(coordSelected);
+        				//
+        				//TO NETWORK
+        				//
+        				//TODO
+        				//
+        				//
+        				//
             		}else if(board.getTile(coordSelected).isAction()  && board.getTile(oldCoordSelected).getCharacter().isUsingSkill()) {
             			if(!board.getTile(coordSelected).haveCharacter()) {
             				//Change tile so no action
@@ -314,6 +345,13 @@ public class GameController2 extends GameBase{
                 			board.resetAction_Mouvmnnt();
                 			board.setTabMvmnt();
                 			skillUsed++;
+                			//
+            				//TO NETWORK
+            				//
+            				//TODO
+            				//
+            				//
+            				//
             			}
             		}else {
             			if(!board.getTile(coordSelected).haveCharacter()) {
@@ -358,6 +396,19 @@ public class GameController2 extends GameBase{
             }
           });
         
+    }
+    
+    
+    private boolean sendToNetwork(String actionFaite, int[] target) {
+    	Action lastAction = new Action(numAction, caraTurn.getId(), caraTurn.getTeam().getId(), actionFaite, target[0], target [1]);
+    	try {
+			net.updateGame(_game, lastAction);
+			return true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
     }
     
 	private void clearSkillBar() {
