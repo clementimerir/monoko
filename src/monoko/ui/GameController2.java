@@ -43,11 +43,13 @@ public class GameController2 extends GameBase{
 	//Timer
 	Timeline timer;
 	Timeline countdown = new Timeline();
+	Timeline netDemand =new Timeline();
 	double counter = 0;
 	double turnDuration = 30;
 	private Game _game;
 	Network net = Manager.getInstance().getNetwork();
 	int numAction = 0;
+	boolean appliedNetChange = true;
 	
 	public GameController2(Game game) {
 		_game = game;
@@ -121,10 +123,48 @@ public class GameController2 extends GameBase{
         countdown.setCycleCount(Animation.INDEFINITE);
         countdown.play();
         
+        netDemand = new Timeline(new KeyFrame(Duration.seconds(2), ev -> {
+        	try {
+				net.getGameUpdates(_game);
+				appliedNetChange = false;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }));
+        
+        netDemand.setCycleCount(Animation.INDEFINITE);
+        netDemand.play();
+        
         new AnimationTimer()
         {
             public void handle(long currentNanoTime)
             {
+            	
+            	
+            	if (!appliedNetChange) {
+            		_game.getActions();
+            		
+            		if(_game.getLastActionID() > numAction) {
+            			for(int i = numAction+1; i<=_game.getLastActionID(); i++) {
+            				Action currentAction = _game.getActions().get(i);
+            				String actionName = currentAction.getSkillName();
+            				
+            				if(actionName == "newTurn"){
+            					myTurn();
+            				}else if(actionName == "Move") {
+            					
+            				}else {
+            					
+            				}
+            			}
+            			numAction = _game.getLastActionID();
+            		}
+            		
+            		
+            		appliedNetChange = true;
+            	}
+            	
             	//We clear the board
             	gc.clearRect(0, 0, AssetManager.GAME_WIDTH, AssetManager.GAME_HEIGHT);
             	//We draw the full board with the character
@@ -257,11 +297,20 @@ public class GameController2 extends GameBase{
         				//TO NETWORK
         				//
         				//TODO
+        				sendToNetwork("Move", coordSelected);
         				//
         				//
         				//
             		}else if(skillUsed < 2 && board.getTile(coordSelected).isAction()  && board.getTile(oldCoordSelected).getCharacter().isUsingSkill() && board.getTile(coordSelected).haveCharacter()) {
         				//Skill used ! <-- Character selected but only one skill allowed now
+            			//
+        				//TO NETWORK
+        				//
+        				//TODO
+            			sendToNetwork(caraTurn.getUsedSkill().getName(), coordSelected);
+        				//
+        				//
+        				//
             			Character c = board.getTile(coordSelected).getCharacter();
             			caraTurn.useSkill(c, caraTurn.getUsedSkill(), coordSelected[0], coordSelected[1]);
             			if(c.getCurrentAttributes().getHp() <= 0) {
@@ -275,13 +324,6 @@ public class GameController2 extends GameBase{
             			if(skillUsed >= 2) {
             				clearSkillBar();
             			}
-            			//
-        				//TO NETWORK
-        				//
-        				//TODO
-        				//
-        				//
-        				//
                     		
         			}
             	}else if(oldCoordSelected[0] == -1) {
@@ -322,6 +364,7 @@ public class GameController2 extends GameBase{
         				//TO NETWORK
         				//
         				//TODO
+        				sendToNetwork("Move", coordSelected);
         				//
         				//
         				//
@@ -335,6 +378,14 @@ public class GameController2 extends GameBase{
                     		clearSkillBar();
             			}else {
             				//Skill used ! <-- Character selected but only one skill allowed now
+            				//
+            				//TO NETWORK
+            				//
+            				//TODO
+                			sendToNetwork(caraTurn.getUsedSkill().getName(), coordSelected);
+            				//
+            				//
+            				//
                 			Character c = board.getTile(coordSelected).getCharacter();
                 			caraTurn = board.getTile(oldCoordSelected).getCharacter();
                 			caraTurn.useSkill(c, caraTurn.getUsedSkill(), coordSelected[0], coordSelected[1]);
@@ -345,13 +396,7 @@ public class GameController2 extends GameBase{
                 			board.resetAction_Mouvmnnt();
                 			board.setTabMvmnt();
                 			skillUsed++;
-                			//
-            				//TO NETWORK
-            				//
-            				//TODO
-            				//
-            				//
-            				//
+                			
             			}
             		}else {
             			if(!board.getTile(coordSelected).haveCharacter()) {
@@ -400,9 +445,17 @@ public class GameController2 extends GameBase{
     
     
     private boolean sendToNetwork(String actionFaite, int[] target) {
-    	Action lastAction = new Action(numAction, caraTurn.getId(), caraTurn.getTeam().getId(), actionFaite, target[0], target [1]);
+    	Action lastAction = null;
+    	
+    	if(actionFaite.equals("newTurn")) {
+    		lastAction = new Action(numAction, -1, -1, actionFaite, target[0], target [1]);
+    	}else {
+    		lastAction = new Action(numAction, caraTurn.getId(), caraTurn.getTeam().getId(), actionFaite, target[0], target [1]);
+    	}
+    	
     	try {
 			net.updateGame(_game, lastAction);
+			numAction++;
 			return true;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -443,9 +496,27 @@ public class GameController2 extends GameBase{
 		board.changeSelected(-1, -1);
 		
         timer.stop();
-        timer.play();
         
         counter = 0;
+        
+        sendToNetwork("newTurn",new int[] {-1,-1});
+	}
+	
+	private void myTurn() {
+		
+		if (playerTurn.getName().equals(players[0].getTeam().getName())) {
+			playerTurn = players[1].getTeam();
+			_currentPlayerLabel.setText(players[1].getTeam().getName());
+		}else {
+			playerTurn = players[0].getTeam();
+			_currentPlayerLabel.setText(players[0].getTeam().getName());
+		}
+		
+		timer.play();
+	}
+	
+	private void makeAction() {
+		
 	}
 	
 }
