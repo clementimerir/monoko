@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
@@ -35,7 +37,7 @@ public class GameController extends GameBase{
 	int mvmntUsed = 0;//Contains how many cases did the player used
 	int skillUsed = 0;
 	//Timer
-	
+	Timer timer = new Timer();
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -84,6 +86,14 @@ public class GameController extends GameBase{
         final Canvas canvas = new Canvas(AssetManager.GAME_WIDTH, AssetManager.GAME_HEIGHT);
         final GraphicsContext gc = canvas.getGraphicsContext2D();
         root.getChildren().add( canvas );
+        
+        
+        timer.scheduleAtFixedRate(new TimerTask() {
+        	  @Override
+        	  public void run() {
+        		  nextTurn();
+        	  }
+        	}, 5*1000, 5*1000);
         
         new AnimationTimer()
         {
@@ -208,6 +218,8 @@ public class GameController extends GameBase{
             	if(caraTurn != null) {
             		if(board.getTile(coordSelected).isMvmnt() && !board.getTile(oldCoordSelected).getCharacter().isUsingSkill()){
             			//Mouvement d'un personnage
+            			mvmntUsed = Math.abs(oldCoordSelected[0]-coordSelected[0])+Math.abs(oldCoordSelected[1]-coordSelected[1]);
+            			caraTurn.moved(mvmntUsed);
             			board.getCurrentTileSelected().getCharacter().setDirection(coordSelected[0],coordSelected[1]);
             			board.getTile(coordSelected).setCharacter(board.getTile(oldCoordSelected).getCharacter());
                 		board.getTile(coordSelected).getCharacter().setInGameSprite();
@@ -268,6 +280,8 @@ public class GameController extends GameBase{
             		}else if(board.getTile(coordSelected).isMvmnt() && !board.getTile(oldCoordSelected).getCharacter().isUsingSkill()){
             			//Mouvement d'un personnage <-- Character selected and still 2 skill able to be used
             			caraTurn = board.getTile(oldCoordSelected).getCharacter();
+            			mvmntUsed = Math.abs(oldCoordSelected[0]-coordSelected[0])+Math.abs(oldCoordSelected[1]-coordSelected[1]);
+            			caraTurn.moved(mvmntUsed);
             			board.getCurrentTileSelected().getCharacter().setDirection(coordSelected[0],coordSelected[1]);
             			board.getTile(coordSelected).setCharacter(board.getTile(oldCoordSelected).getCharacter());
                 		board.getTile(coordSelected).getCharacter().setInGameSprite();
@@ -276,7 +290,6 @@ public class GameController extends GameBase{
         				board.changeSelected(coordSelected);
         				board.setTabMvmnt();
         				haveCharacter = true;
-                		//clearSkillBar();
         				board.setCurrentlySelected(coordSelected);
             		}else if(board.getTile(coordSelected).isAction()  && board.getTile(oldCoordSelected).getCharacter().isUsingSkill()) {
             			if(!board.getTile(coordSelected).haveCharacter()) {
@@ -298,9 +311,6 @@ public class GameController extends GameBase{
                 			board.setTabMvmnt();
                 			caraTurn = board.getTile(oldCoordSelected).getCharacter();
                 			skillUsed++;
-                    		//clearSkillBar();
-                    		//haveCharacter = false;
-                    		//nextTurn();
             			}
             		}else {
             			if(!board.getTile(coordSelected).haveCharacter()) {
@@ -365,9 +375,13 @@ public class GameController extends GameBase{
 			playerTurn = players[0].getTeam();
 		}
 		haveCharacter = false; //Boolean to check if a character is currently selected
-		caraTurn = null; //First Character played by the user
 		mvmntUsed = 0;//Contains how many cases did the player used
 		skillUsed = 0;
+		if(caraTurn != null) {
+			caraTurn.resetSpeed();
+			caraTurn.setUsedSkill(null);
+			caraTurn = null;
+		}
 		board.resetAction_Mouvmnnt();
 		board.changeSelected(-1, -1);
 	}

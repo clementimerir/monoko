@@ -225,6 +225,14 @@ public class Character extends Nameable{
 		target.getHealed(s.getBaseValue()+modificator);
 	}
 	
+	public void moved(int speed) {
+		this.getCurrentAttributes().setSpeed(this.getCurrentAttributes().getSpeed()-speed);
+	}
+	
+	public void resetSpeed() {
+		this.getCurrentAttributes().setSpeed(this.getBaseAttributes().getSpeed());
+	}
+	
 	public void takeDamage(int damage) {
 		getCurrentAttributes().setHp(getCurrentAttributes().getHp()-damage);
 	}
