@@ -4,16 +4,16 @@ import org.json.simple.JSONObject;
 
 public class Action implements Comparable<Action> {
 	private int characterID;
-	private int teamID;
+	private String playerName;
 	private String skillName;
 	private int posX;
 	private int posY;
 	private int id;
 
-	public Action(int id, int characterID, int teamID, String skillName, int posX, int posY) {
+	public Action(int id, int characterID, String playerName, String skillName, int posX, int posY) {
 		setId(id);
 		setCharacterID(characterID);
-		setTeamID(teamID);
+		setPlayerName(playerName);
 		setSkillName(skillName);
 		setPosX(posX);
 		setPosY(posY);
@@ -23,7 +23,7 @@ public class Action implements Comparable<Action> {
 	public JSONObject toJson() {
 		JSONObject actionJSON = new JSONObject();
 		actionJSON.put("id", getId());
-		actionJSON.put("teamID", getTeamID());
+		actionJSON.put("playerName", getPlayerName());
 		actionJSON.put("characterID", getCharacterID());
 		actionJSON.put("skillName", getSkillName());
 		actionJSON.put("posX", getPosX());
@@ -37,11 +37,11 @@ public class Action implements Comparable<Action> {
 	public void setCharacterID(int characterID) {
 		this.characterID = characterID;
 	}
-	public int getTeamID() {
-		return teamID;
+	public String getPlayerName() {
+		return playerName;
 	}
-	public void setTeamID(int teamID) {
-		this.teamID = teamID;
+	public void setPlayerName(String playerName) {
+		this.playerName = playerName;
 	}
 	public String getSkillName() {
 		return skillName;

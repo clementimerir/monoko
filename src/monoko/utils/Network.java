@@ -40,10 +40,12 @@ public class Network {
 		c1.addSkill(new Skill("Sword"));
 		c3.addSkill(new Skill("Scepter"));
 		Team t = new Team(0, "lolilol", l);
-		
+		http.login("p", "p");
+		http.joinGame(t);
 		http.login("Mambab", "azerty");
 		http.joinGame(t);
-		http.login("p", "p");
+		http.invitePlayer("p");
+		/*http.login("p", "p");
 		http.joinGame(t);
 		http.login("Mambab", "azerty");
 		QueueInfo queue = http.updateQueue();
@@ -66,7 +68,7 @@ public class Network {
 		action = new Action(1,2,2,"Sword",10,5);
 		http.updateGame(game, action);
 		http.getGameUpdates(game);
-		http.endGame(game);
+		http.endGame(game);*/
 		//http.register("p", "p");
 	}
 	
@@ -266,7 +268,7 @@ public class Network {
 		for(int i=0; i<actions.size(); i++) {
 			JsonObject actionJson = actions.getJsonObject(i);
 			if(actionJson.getInt("id")>game.getLastActionID())
-				game.addAction(new Action(actionJson.getInt("id"), actionJson.getInt("characterID"), actionJson.getInt("teamID"), actionJson.getString("skillName"), actionJson.getInt("posX"), actionJson.getInt("posY")));
+				game.addAction(new Action(actionJson.getInt("id"), actionJson.getInt("characterID"), actionJson.getString("playerName"), actionJson.getString("skillName"), actionJson.getInt("posX"), actionJson.getInt("posY")));
 		}
 	}
 	
