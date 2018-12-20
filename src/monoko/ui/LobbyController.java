@@ -4,6 +4,10 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 import monoko.objects.Game;
 import monoko.objects.Team;
 import monoko.objects.User;
@@ -30,7 +34,15 @@ public class LobbyController extends LobbyBase{
 		
 		_teamsComboBox.getSelectionModel().select( getUser().getTeams().get(0).getName() );
 		
-		refreshQueue();
+		Timeline countdown = new Timeline(new KeyFrame(Duration.seconds(1), ev -> {
+			refreshQueue();
+        }));
+        countdown.setCycleCount(Animation.INDEFINITE);
+        countdown.play();
+        
+        for(Team t : _user.getTeams()) {
+        	_teamsComboBox.getItems().add( t.getName() );
+        }
 	}
 
 	@Override
