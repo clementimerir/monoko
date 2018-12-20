@@ -36,15 +36,15 @@ public class Network {
 		c3.addSkill(new Skill("Scepter"));
 		Team t = new Team(0, "lolilol", l);
 		
-		http.login("Mambab", "azerty");
-		http.joinGame(t);
+		/*http.login("Mambab", "azerty");
+		http.joinGame(t);*/
 		http.login("p", "p");
-		http.joinGame(t);
+		/*http.joinGame(t);
 		http.login("Mambab", "azerty");
 		List<String> waitingPlayers = http.updateQueue();
 		for(String s : waitingPlayers)
 			System.out.println(s);
-		
+		*/
 		//http.register("p", "p");
 	}
 	
@@ -137,11 +137,7 @@ public class Network {
 				for(int j=0; j<charactersRefs.size(); j++) {
 					teamCharacters.add(user.findCharacter(charactersRefs.getInt(j)));
 				}
-				Team team = new Team(t.getInt("ref"), t.getString("name"), teamCharacters);
-				for(Character c : team.getCharacters()) {
-					c.setTeam(team);
-				}
-				user.addTeam(team);
+				user.addTeam(new Team(t.getInt("ref"), t.getString("name"), teamCharacters));
 			}
 			return user;
 		}
