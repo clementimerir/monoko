@@ -268,7 +268,7 @@ public class Network {
 		for(int i=0; i<actions.size(); i++) {
 			JsonObject actionJson = actions.getJsonObject(i);
 			if(actionJson.getInt("id")>game.getLastActionID())
-				game.addAction(new Action(actionJson.getInt("id"), actionJson.getInt("characterID"), actionJson.getString("playerName"), actionJson.getString("skillName"), actionJson.getInt("posX"), actionJson.getInt("posY")));
+				game.addAction(new Action(actionJson.getInt("id"), actionJson.getInt("characterID"), actionJson.getInt("teamID"), actionJson.getString("skillName"), actionJson.getInt("posX"), actionJson.getInt("posY")));
 		}
 	}
 	
