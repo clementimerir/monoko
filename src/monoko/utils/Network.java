@@ -7,11 +7,15 @@ import java.io.StringReader;
 import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import javax.json.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import monoko.objects.Character;
+import monoko.objects.Game;
 import monoko.objects.Skill;
 import monoko.objects.Soul;
 import monoko.objects.Team;
@@ -36,15 +40,15 @@ public class Network {
 		c3.addSkill(new Skill("Scepter"));
 		Team t = new Team(0, "lolilol", l);
 		
-		/*http.login("Mambab", "azerty");
-		http.joinGame(t);*/
-		http.login("p", "p");
-		/*http.joinGame(t);
 		http.login("Mambab", "azerty");
-		List<String> waitingPlayers = http.updateQueue();
-		for(String s : waitingPlayers)
+		http.joinGame(t);
+		http.login("p", "p");
+		http.joinGame(t);
+		http.login("Mambab", "azerty");
+		QueueInfo queue = http.updateQueue();
+		for(String s : queue.getWaitingPlayers())
 			System.out.println(s);
-		*/
+		
 		//http.register("p", "p");
 	}
 	
@@ -150,19 +154,30 @@ public class Network {
 		sendPost("https://multiplayer-mambab.c9users.io/register", urlParameters);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void joinGame(Team t) throws Exception {
-		String urlParameters = "{\"username\":\"" +user.getUsername()+ "\",\"password\":\"" +user.getPassword()+ "\",\"teamCharacters\":\"\"}";
-		System.out.println(urlParameters);
-		sendPost("https://multiplayer-mambab.c9users.io/joinGame", urlParameters);
+		JSONObject urlParametersJSON = new JSONObject();
+		JSONArray teamJSON = new JSONArray();
+		urlParametersJSON.put("username", user.getUsername());
+		urlParametersJSON.put("password", user.getPassword());
+		if (t!=null) {
+			for(int i=0; i<t.getCharacters().size(); i++) {
+				teamJSON.add(t.getCharacters().get(i).toJson());
+			}
+		}
+		urlParametersJSON.put("team", teamJSON);
+		System.out.println(urlParametersJSON.toString());
+		sendPost("https://multiplayer-mambab.c9users.io/joinGame", urlParametersJSON.toString());
 		System.out.println(response);
 	}
 
-	public List<String> updateQueue() throws Exception {
+	public QueueInfo updateQueue() throws Exception {
 		String urlParameters = "{\"username\":\"" +user.getUsername()+ "\",\"password\":\"" +user.getPassword()+ "\"}";
 		System.out.println(urlParameters);
 		sendPost("https://multiplayer-mambab.c9users.io/updateQueue", urlParameters);
 		System.out.println(response);
 		List<String> waitingPlayers = new ArrayList<String>();
+		List<Game> waitingGames = new ArrayList<Game>();
 		JsonReader reader = Json.createReader(new StringReader(response.toString()));
 		JsonObject status = reader.readObject();
 		JsonArray waitingPlayersJson = status.getJsonArray("playersList");
@@ -170,7 +185,14 @@ public class Network {
 			JsonObject p = waitingPlayersJson.getJsonObject(i);
 			waitingPlayers.add(p.getString("username"));
 		}
-		return waitingPlayers;
+		JsonArray waitingGamesJson = status.getJsonArray("gamesList");
+		for(int i=0; i<waitingGamesJson.size(); i++) {
+			JsonObject g = waitingGamesJson.getJsonObject(i);
+			Game game = new Game(null, null);
+			waitingGames.add(game);
+		}
+		QueueInfo queue = new QueueInfo(waitingPlayers, waitingGames);
+		return queue;
 	}
 	
 	public User getUser() {
