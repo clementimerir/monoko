@@ -36,7 +36,9 @@ public class GameController extends GameBase{
 	int mvmntUsed = 0;//Contains how many cases did the player used
 	int skillUsed = 0;
 	//Timer
-	Timer timer = new Timer();
+	Timer timer;
+	Timer countdown = new Timer();
+	int counter = 0;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -87,12 +89,25 @@ public class GameController extends GameBase{
         root.getChildren().add( canvas );
         
         
-        timer.scheduleAtFixedRate(new TimerTask() {
-        	  @Override
-        	  public void run() {
-        		  nextTurn();
-        	  }
-        	}, 5*1000, 5*1000);
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+            	nextTurn();
+            	System.out.println("Changement de tour pour : " + playerTurn.getName());
+            }
+        };
+        timer = new Timer();
+        timer.schedule(timerTask, 5*1000);
+        
+        countdown.scheduleAtFixedRate(new TimerTask() {
+    	  @Override
+    	  public void run() {
+    	    counter++;
+    	    System.out.println("Time Elapsed : " + counter + " s");
+    	  }
+    	}, 1000, 1000);
+        
+        
         
         new AnimationTimer()
         {
@@ -380,9 +395,22 @@ public class GameController extends GameBase{
 			caraTurn.resetSpeed();
 			caraTurn.setUsedSkill(null);
 			caraTurn = null;
+			clearSkillBar();
 		}
 		board.resetAction_Mouvmnnt();
 		board.changeSelected(-1, -1);
+		
+		TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+            	System.out.println("Changement de tour pour : " + playerTurn.getName());
+            	nextTurn();
+            }
+        };
+		timer.cancel();
+		timer = new Timer();
+        timer.schedule(timerTask, 5*1000);
+        counter = 0;
 	}
 	
 }
