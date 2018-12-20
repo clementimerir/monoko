@@ -30,7 +30,9 @@ public class Network {
 
 	public static void main(String[] args) throws Exception {
 		Network http = new Network();
-		http.login("p", "p");
+		http.register("p", "p");
+		http.register("patol", "patol");
+		http.register("Mambab", "azerty");
 		/*
 		List<Character> l = new ArrayList<Character>();
 		Character c1 = new Character(0, "Escanor", new Soul("Fighter"), new Soul("Ross'Fert"));
