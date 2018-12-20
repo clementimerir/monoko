@@ -5,9 +5,11 @@ import java.util.ResourceBundle;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.stage.Stage;
 import monoko.objects.Character;
 import monoko.objects.Team;
 import monoko.utils.FxmlManager;
@@ -70,13 +72,27 @@ public class TeamController extends TeamBase{
 //		        			chara.setId(ThreadLocalRandom.current().nextInt( 0 , 999999 + 1 ));
 //		        			chara.setTeam(_team);
 		        			
-		        			getTeam().getCharacters().add(currentCharacter);
-		        			loadCharacters();
+		        			int cost = currentCharacter.getCost();
+		        			for(Character loop : getTeam().getCharacters()) {
+		        				cost += loop.getCost();
+		        				System.out.println(cost);
+		        			}
 		        			
-		        			try {
-								new Network(_root.getRoot().getUser()).saveTeam(getTeam());
-							} catch (Exception e) {
-								e.printStackTrace();
+		        			if(cost <= 100) {
+		        				getTeam().getCharacters().add(currentCharacter);
+			        			loadCharacters();
+			        			
+			        			try {
+									new Network(_root.getRoot().getUser()).saveTeam(getTeam());
+								} catch (Exception e) {
+									e.printStackTrace();
+								}		        				
+		        			}else {
+		        				Stage dialog = new Stage();
+								Scene dialogScene = new Scene(new FxmlManager("./ui/warning.fxml", new WarningController("You can't make a team whose cost is over 100.")).load(), 400, 100);
+								dialog.setTitle("Maximum cost");
+					            dialog.setScene(dialogScene);
+					            dialog.show();
 							}
 
 		        			break;

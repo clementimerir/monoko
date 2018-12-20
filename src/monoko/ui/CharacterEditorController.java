@@ -61,7 +61,8 @@ public class CharacterEditorController extends CharacterEditorBase{
 		
 		_root = root;
 		editionMode = true;
-		
+
+		setTotalPrice(character.getCost());
 		_attributes = character.getBaseAttributes() == null ? new Attributes(0, 0, 0, 0, 0) : character.getBaseAttributes();
 		_job = character.getJob() == null ? new Soul(404, "None", new Attributes(0, 0, 0, 0, 0) ) : character.getJob();
 		_god = character.getJob() == null ? new Soul(405, "None", new Attributes(0, 0, 0, 0, 0) ) : character.getGod();
@@ -313,6 +314,7 @@ public class CharacterEditorController extends CharacterEditorBase{
 		character.setSkills(_itemList);
 		character.setAddedSkills(_addedItemList);
 		character.setCost(getTotalPrice());
+		System.out.println(getTotalPrice());
 
 		if(editionMode) {
 			character.setId(_id);
