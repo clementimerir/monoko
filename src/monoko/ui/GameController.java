@@ -27,16 +27,20 @@ public class GameController extends GameBase{
 	public int[] coordSelected = new int[] {-1,-1};
 	public int[] coordMouse = new int[] {-1,-1};
 	SkillBarController skillBar = new SkillBarController(this);
-	boolean haveCharacter = false;
 	Gameboard board;
-	Player[] players = new Player[2];
-	Team playerTurn;
+	Player[] players = new Player[2]; //Current players for the game [0] is team 1 and [1] is team 2
+	Team playerTurn; //Contain the team whose turn it is
+	boolean haveCharacter = false; //Boolean to check if a character is currently selected
+	Character caraTurn = null; //First Character played by the user
+	int mvmntUsed = 0;//Contains how many cases did the player used
+	int skillUsed = 0;
+	//Timer
 	
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		start();
-		Manager.getInstance().getController().setBackgroundMusic("./res/sound/fight-theme.wav");
+		//Manager.getInstance().getController().setBackgroundMusic("./res/sound/fight-theme.wav");
 		root.getChildren().add( new FxmlManager("./ui/skillBar.fxml", skillBar).load() );
 	}
 
@@ -75,7 +79,7 @@ public class GameController extends GameBase{
 		//
     	board = new Gameboard(0, "map1", AssetManager.TILES_W, AssetManager.TILES_H, players[0], players[1]);
     	playerTurn = players[0].getTeam();
-    	
+
     	
         final Canvas canvas = new Canvas(AssetManager.GAME_WIDTH, AssetManager.GAME_HEIGHT);
         final GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -200,7 +204,41 @@ public class GameController extends GameBase{
             	int [] oldCoordSelected = board.getCurrentlySelected();
             	//We check if a character is present on the selected tile
             	
-            	if(oldCoordSelected[0] == -1) {
+            	
+            	if(caraTurn != null) {
+            		if(board.getTile(coordSelected).isMvmnt() && !board.getTile(oldCoordSelected).getCharacter().isUsingSkill()){
+            			//Mouvement d'un personnage
+            			board.getCurrentTileSelected().getCharacter().setDirection(coordSelected[0],coordSelected[1]);
+            			board.getTile(coordSelected).setCharacter(board.getTile(oldCoordSelected).getCharacter());
+                		board.getTile(coordSelected).getCharacter().setInGameSprite();
+                		board.getTile(board.getCurrentlySelected()).setCharacter(null);
+        				board.resetAction_Mouvmnnt();
+        				board.changeSelected(coordSelected);
+        				board.setTabMvmnt();
+        				haveCharacter = true;
+        				board.setCurrentlySelected(coordSelected);
+            		}else if(skillUsed < 2 && board.getTile(coordSelected).isAction()  && board.getTile(oldCoordSelected).getCharacter().isUsingSkill() && board.getTile(coordSelected).haveEnemyCharacter(board.getTile(oldCoordSelected))) {
+        				//Skill used ! <-- Character selected but only one skill allowed now
+            			Character c = board.getTile(coordSelected).getCharacter();
+            			c.takeDamage(15);
+            			if(c.getCurrentAttributes().getHp() == 0) {
+            				board.getTile(coordSelected).setCharacter(null);
+            			}
+            			board.getCurrentTileSelected().getCharacter().setUsedSkill(null);
+            			board.resetAction_Mouvmnnt();
+            			board.setTabMvmnt();
+            			caraTurn = board.getTile(oldCoordSelected).getCharacter();
+            			skillUsed++;
+            			if(skillUsed >= 2) {
+            				board.changeSelected(-1, -1);
+            				clearSkillBar();
+                    		haveCharacter = false;
+                    		nextTurn();
+            			}	
+                    		
+        			}
+            	}else if(oldCoordSelected[0] == -1) {
+            		//No tile selected and so no character
             		if(board.getTile(coordSelected).haveCharacter()) {
             			if(board.getTile(coordSelected).getCharacter().getTeam().getName().equals(playerTurn.getName())) {
             				//Changement de case vers un personnage
@@ -218,6 +256,7 @@ public class GameController extends GameBase{
                 		clearSkillBar();
             		}
             	}else if(board.getTile(oldCoordSelected).haveCharacter()) {
+            		//The old tile had a character (from the good team)
             		if(board.getTile(coordSelected).haveCharacter() && board.getTile(coordSelected).getCharacter().getTeam().getName().equals(playerTurn.getName())) {
             			//Changement de case vers un personnage
             			board.getCurrentTileSelected().getCharacter().setUsedSkill(null);
@@ -227,35 +266,41 @@ public class GameController extends GameBase{
         				haveCharacter = true;
         				reloadSkillBar(board.getCurrentTileSelected().getCharacter());
             		}else if(board.getTile(coordSelected).isMvmnt() && !board.getTile(oldCoordSelected).getCharacter().isUsingSkill()){
-            			//Mouvement d'un personnage
+            			//Mouvement d'un personnage <-- Character selected and still 2 skill able to be used
+            			caraTurn = board.getTile(oldCoordSelected).getCharacter();
             			board.getCurrentTileSelected().getCharacter().setDirection(coordSelected[0],coordSelected[1]);
             			board.getTile(coordSelected).setCharacter(board.getTile(oldCoordSelected).getCharacter());
                 		board.getTile(coordSelected).getCharacter().setInGameSprite();
                 		board.getTile(board.getCurrentlySelected()).setCharacter(null);
         				board.resetAction_Mouvmnnt();
-        				haveCharacter = false;
-                		clearSkillBar();
-        				board.setCurrentlySelected(-1,-1);
+        				board.changeSelected(coordSelected);
+        				board.setTabMvmnt();
+        				haveCharacter = true;
+                		//clearSkillBar();
+        				board.setCurrentlySelected(coordSelected);
             		}else if(board.getTile(coordSelected).isAction()  && board.getTile(oldCoordSelected).getCharacter().isUsingSkill()) {
             			if(!board.getTile(coordSelected).haveCharacter()) {
+            				//Change tile so no action
             				board.getCurrentTileSelected().getCharacter().setUsedSkill(null);
             				board.setCurrentlySelected(-1,-1);
             				board.resetAction_Mouvmnnt();
             				haveCharacter = false;
                     		clearSkillBar();
             			}else {
-            				//Attaque
+            				//Skill used ! <-- Character selected but only one skill allowed now
                 			Character c = board.getTile(coordSelected).getCharacter();
                 			c.takeDamage(15);
                 			if(c.getCurrentAttributes().getHp() == 0) {
                 				board.getTile(coordSelected).setCharacter(null);
                 			}
                 			board.getCurrentTileSelected().getCharacter().setUsedSkill(null);
-                			board.changeSelected(-1, -1);
                 			board.resetAction_Mouvmnnt();
-                    		clearSkillBar();
-                    		haveCharacter = false;
-                    		nextTurn();
+                			board.setTabMvmnt();
+                			caraTurn = board.getTile(oldCoordSelected).getCharacter();
+                			skillUsed++;
+                    		//clearSkillBar();
+                    		//haveCharacter = false;
+                    		//nextTurn();
             			}
             		}else {
             			if(!board.getTile(coordSelected).haveCharacter()) {
@@ -319,6 +364,12 @@ public class GameController extends GameBase{
 		}else {
 			playerTurn = players[0].getTeam();
 		}
+		haveCharacter = false; //Boolean to check if a character is currently selected
+		caraTurn = null; //First Character played by the user
+		mvmntUsed = 0;//Contains how many cases did the player used
+		skillUsed = 0;
+		board.resetAction_Mouvmnnt();
+		board.changeSelected(-1, -1);
 	}
 	
 }
