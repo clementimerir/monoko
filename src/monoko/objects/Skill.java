@@ -22,22 +22,61 @@ public class Skill extends Nameable{
 	private AttributesEnumType attributeConcerned;
 	private boolean inUse = false;
 
-	public Skill(int id, String name, SkillTypeEnum type, EffectTypeEnum effect) {
+	public Skill(int id, String name) {
 		setId(id);
 		setName(name);
-		setEffect(effect);
+		setType();
+		setEffect();
 		setPrice();
 		setRange();
 		setIsPredilection(false);
+		setArea();
+		setBaseValue();
+		setScaling();
+		setAttributeConcerned();
+	}
+	
+	public Skill(int id, String name, boolean isPredilection) {
+		setId(id);
+		setName(name);
+		setType();
+		setEffect();
+		setPrice();
+		setRange();
+		setIsPredilection(isPredilection);
+		setArea();
+		setBaseValue();
+		setScaling();
+		setAttributeConcerned();
+	}
+	
+	
+	public Skill(int id, String name, SkillTypeEnum type, EffectTypeEnum effect) {
+		setId(id);
+		setName(name);
+		setType();
+		setEffect();
+		setPrice();
+		setRange();
+		setIsPredilection(false);
+		setArea();
+		setBaseValue();
+		setScaling();
+		setAttributeConcerned();
 	}
 	
 	public Skill(int id, String name, SkillTypeEnum type, EffectTypeEnum effect, int price, boolean isPredilection) {
 		setId(id);
 		setName(name);
+		setType(type);
 		setEffect(effect);
 		setPrice(price);
 		setRange();
 		setIsPredilection(isPredilection);
+		setArea();
+		setBaseValue();
+		setScaling();
+		setAttributeConcerned();
 	}
 	
 	public Skill(int id, String name, SkillTypeEnum type, EffectTypeEnum effect, int price, boolean isPredilection, int range, int area, int baseValue, int scaling, AttributesEnumType attributeConcerned) {
@@ -90,12 +129,37 @@ public class Skill extends Nameable{
 		this.type = type;
 	}
 	
+	public void setType() {
+		Properties jobProperties = new Properties();
+		try {
+			jobProperties.load( new FileInputStream( new File("./res/data/jobAndGodAttributes.properties").getAbsolutePath() ) );
+			String typeSkill = jobProperties.getProperty( new StringBuilder(this.getName()).append(".").append("type").toString());
+			this.type = SkillTypeEnum.valueOf(typeSkill);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			this.type = null;
+		}
+	}
+	
 	public EffectTypeEnum getEffect() {
 		return effect;
 	}
 
 	public void setEffect(EffectTypeEnum effect) {
 		this.effect = effect;
+	}
+	
+	public void setEffect() {
+		Properties jobProperties = new Properties();
+		try {
+			jobProperties.load( new FileInputStream( new File("./res/data/jobAndGodAttributes.properties").getAbsolutePath() ) );
+			String effectSkill = jobProperties.getProperty( new StringBuilder(this.getName()).append(".").append("effect").toString());
+			this.effect = EffectTypeEnum.valueOf(effectSkill);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			this.effect = null;
+		}
 	}
 	
 	public int getPrice() {
@@ -156,12 +220,37 @@ public class Skill extends Nameable{
 		this.area = area;
 	}
 	
+	public void setArea() {
+		Properties jobProperties = new Properties();
+		try {
+			jobProperties.load( new FileInputStream( new File("./res/data/jobAndGodAttributes.properties").getAbsolutePath() ) );
+			int areaSkill = Integer.parseInt( jobProperties.getProperty( new StringBuilder(this.getName()).append(".").append("area").toString()));
+			this.area = areaSkill;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			this.area = 0;
+		}
+		
+	}
+	
 	public int getBaseValue() {
 		return baseValue;
 	}
 
 	public void setBaseValue(int baseValue) {
 		this.baseValue = baseValue;
+	}
+	
+	public void setBaseValue() {
+		Properties jobProperties = new Properties();
+		try {
+			jobProperties.load( new FileInputStream( new File("./res/data/jobAndGodAttributes.properties").getAbsolutePath() ) );
+			int baseValueSkill = Integer.parseInt( jobProperties.getProperty( new StringBuilder(this.getName()).append(".").append("baseValue").toString()));
+			this.baseValue = baseValueSkill;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			this.baseValue = 0;
+		}
 	}
 	
 	public AttributesEnumType getAttributeConcerned() {
@@ -172,12 +261,36 @@ public class Skill extends Nameable{
 		this.attributeConcerned = attributeConcerned;
 	}
 	
+	public void setAttributeConcerned() {
+		Properties jobProperties = new Properties();
+		try {
+			jobProperties.load( new FileInputStream( new File("./res/data/jobAndGodAttributes.properties").getAbsolutePath() ) );
+			String attributeConcernedSkill = jobProperties.getProperty( new StringBuilder(this.getName()).append(".").append("attributeConcerned").toString());
+			this.attributeConcerned = AttributesEnumType.valueOf(attributeConcernedSkill);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			this.attributeConcerned = null;
+		}
+	}
+	
 	public int getScaling() {
 		return scaling;
 	}
 
 	public void setScaling(int scaling) {
 		this.scaling = scaling;
+	}
+	
+	public void setScaling() {
+		Properties jobProperties = new Properties();
+		try {
+			jobProperties.load( new FileInputStream( new File("./res/data/jobAndGodAttributes.properties").getAbsolutePath() ) );
+			int scalingSkill = Integer.parseInt( jobProperties.getProperty( new StringBuilder(this.getName()).append(".").append("scaling").toString()));
+			this.scaling = scalingSkill;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			this.scaling = 0;
+		}
 	}
 
 }

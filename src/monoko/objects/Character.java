@@ -143,6 +143,15 @@ public class Character extends Nameable{
 		return false;
 	}
 	
+	public Skill getUsedSkill() {
+		for (int i = 0; i<this.getSkills().size(); i++) {
+			if(this.getSkills().get(i).isInUse()) {
+				return this.getSkills().get(i);
+			}
+		}
+		return null;
+	}
+	
 	public boolean setUsedSkill(Skill skill) {
 		if(skill == null) {
 			for (int i = 0; i<this.getSkills().size(); i++) {
@@ -231,7 +240,7 @@ public class Character extends Nameable{
 			modificator=getCurrentAttributes().getDexterity()*s.getScaling()/100;
 			break;
 		case INTELLIGENCE:
-			modificator=getCurrentAttributes().getDexterity()*s.getScaling()/100;
+			modificator=getCurrentAttributes().getIntelligence()*s.getScaling()/100;
 			break;
 		default:
 			break;
