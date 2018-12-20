@@ -24,8 +24,7 @@ public class InviteController extends InviteBase{
 		try {
 			Manager.getInstance().getNetwork().acceptGame(game);
 			
-			Manager.getInstance().setGame( new GameController() );
-			Manager.getInstance().getController().getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/game.fxml", Manager.getInstance().getGame()).load());
+			Manager.getInstance().getController().getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/game.fxml", new GameController2(game)).load());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
