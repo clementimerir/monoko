@@ -127,7 +127,6 @@ public class GameController extends GameBase{
         		        int [] p4 = AssetManager.toIsoPoly(i+1,j);
         		        
 		        		AssetManager.drawTile(gc, currentTile, coordISO[0], coordISO[1]);
-		        		
 		        		//
 		        		//Where the mouse is pointing
 		        		//
