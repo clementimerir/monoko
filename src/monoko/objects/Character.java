@@ -90,6 +90,7 @@ public class Character extends Nameable{
 			setJob(new Soul(job));
 		if(!god.equals("none"))
 			setGod(new Soul(god));
+		setCost(characterJson.getInt("cost"));
 		buildAllAttributes();
 		setInGameSprite();
 		setInMenuSprite();
@@ -291,6 +292,7 @@ public class Character extends Nameable{
 		JSONArray skillsJSON = new JSONArray();
 		characterJSON.put("ref", getId());
 		characterJSON.put("name", getName());
+		characterJSON.put("cost", getCost());
 		if (job!=null)
 			characterJSON.put("job", job.getName());
 		else

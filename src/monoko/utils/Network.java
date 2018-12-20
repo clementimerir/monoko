@@ -13,6 +13,7 @@ import org.json.simple.JSONObject;
 import javax.json.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import monoko.objects.Character;
 import monoko.objects.Game;
@@ -44,7 +45,7 @@ public class Network {
 		http.joinGame(t);
 		http.login("Mambab", "azerty");
 		http.joinGame(t);
-		http.invitePlayer("p");
+		//http.invitePlayer("p");
 		/*http.login("p", "p");
 		http.joinGame(t);
 		http.login("Mambab", "azerty");
@@ -163,6 +164,7 @@ public class Network {
 
 	@SuppressWarnings("unchecked")
 	public void joinGame(Team t) throws Exception {
+		Random random = new Random();
 		JSONObject urlParametersJSON = new JSONObject();
 		JSONObject teamJSON = new JSONObject();
 		JSONArray teamCharactersJSON = new JSONArray();
@@ -173,7 +175,7 @@ public class Network {
 				teamCharactersJSON.add(t.getCharacters().get(i).toJson());
 			}
 		}
-		teamJSON.put("ref", t.getId());
+		teamJSON.put("ref", random.nextInt(1000000000));
 		teamJSON.put("name", t.getName());
 		teamJSON.put("characters", teamCharactersJSON);
 		urlParametersJSON.put("team", teamJSON);
