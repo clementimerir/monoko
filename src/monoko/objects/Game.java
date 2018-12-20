@@ -1,6 +1,7 @@
 package monoko.objects;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import monoko.utils.Action;
@@ -11,15 +12,18 @@ public class Game extends Nameable{
 	private String status;
 	private String gameID;
 	private List<Action> actions;
+	private int lastActionID;
 	
 	public Game(Player player1, Player player2) {
 		setPlayer1(player1);
 		setPlayer2(player2);
 		actions = new ArrayList<Action>();
+		lastActionID = 0;
 	}
-	
+
 	public void addAction(Action a) {
 		actions.add(a);
+		Collections.sort(actions);
 	}
 	
 	//GETTERS SETTERS
@@ -60,6 +64,14 @@ public class Game extends Nameable{
 
 	public void setGameID(String gameID) {
 		this.gameID = gameID;
+	}
+	
+	public int getLastActionID() {
+		return lastActionID;
+	}
+
+	public void setLastActionID(int lastActionID) {
+		this.lastActionID = lastActionID;
 	}
 	
 }
