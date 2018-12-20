@@ -239,7 +239,6 @@ public class GameController extends GameBase{
             		
             		if(frame.doubleValue() >= 4) {
             			animationStart = false;
-            			frame.set(0.0);
             		}else {
             			currentSprite = new WritableImage(animImage.getPixelReader(), frame.intValue()*AssetManager.ANIM_WIDTH, 0,  AssetManager.ANIM_WIDTH, AssetManager.ANIM_HEIGHT);
                 		gc.drawImage(currentSprite, animPlace[0], animPlace[1], AssetManager.ANIM_WIDTH, AssetManager.ANIM_HEIGHT);
@@ -393,10 +392,13 @@ public class GameController extends GameBase{
         
     }
     
+    
+    //Fonction appelées lors des attaques
     private void animateSkill(Skill skill, int[] target) {
     	String skillName = skill.getName();
     	animPlace = AssetManager.toIso(target[0],target[1]);
     	animationStart = true;
+		frame.set(0.0);
     	switch(skillName) {
     	case "Sword":
     		animImage = AssetManager.slash;
