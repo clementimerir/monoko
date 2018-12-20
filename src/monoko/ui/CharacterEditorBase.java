@@ -35,6 +35,7 @@ public abstract class CharacterEditorBase implements Initializable{
 	
 	@FXML ImageView _jobImageView;
 	@FXML ImageView _godImageView;
+	@FXML ImageView _coinImageView;
 	
 	@FXML AnchorPane _jobAnchorPane;
 	

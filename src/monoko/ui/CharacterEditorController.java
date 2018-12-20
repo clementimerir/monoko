@@ -89,16 +89,22 @@ public class CharacterEditorController extends CharacterEditorBase{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		new FxmlManager().fitToParent(_rootVBox, 0.0);
+		
+		new FxmlManager().fitToParent(_jobImageView, 0.0);
+		new FxmlManager().fitToParent(_godImageView, 0.0);
+		
 		populateComboBoxes();
 		loadAttributes();
 
+		_coinImageView.setImage( new Image( new StringBuilder("/textures/").append("coin.png").toString() ) );
+		
 		_jobImageView.setFitHeight(_jobAnchorPane.widthProperty().doubleValue() * 0.9);
 		_jobImageView.setFitWidth(_jobAnchorPane.widthProperty().doubleValue() * 0.9);
 		_jobImageView.setX(-125);
 		_jobImageView.setY( 125 );
 		
-		_godImageView.setFitHeight(_jobAnchorPane.widthProperty().doubleValue());
-		_godImageView.setFitWidth(_jobAnchorPane.widthProperty().doubleValue());
+		_godImageView.setFitHeight(_jobAnchorPane.widthProperty().doubleValue() * 2);
+		_godImageView.setFitWidth(_jobAnchorPane.widthProperty().doubleValue() * 2);
 //		_godImageView.setX(-125);
 //		_godImageView.setY( 125 );
 
