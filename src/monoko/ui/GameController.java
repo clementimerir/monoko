@@ -19,7 +19,6 @@ import monoko.objects.Player;
 import monoko.objects.Skill;
 import monoko.objects.Team;
 import monoko.objects.Tile;
-import monoko.objects.User;
 import monoko.utils.AssetManager;
 import monoko.utils.FxmlManager;
 import monoko.utils.Manager;
@@ -57,12 +56,12 @@ public class GameController extends GameBase{
 		players[0] = new Player(1, "Player 1", Manager.getInstance().getController().getUser().getTeams().get(0));
 		players[1] = new Player(2, "Player 2", Manager.getInstance().getController().getUser().getTeams().get(1));
 		
-//		for(Character currentCharacter : players[0].getTeam().getCharacters()) {
-//			currentCharacter.setTeam(players[0].getTeam());
-//		}
-//		for(Character currentCharacter : players[1].getTeam().getCharacters()) {
-//			currentCharacter.setTeam(players[1].getTeam());
-//		}
+		for(Character currentCharacter : players[0].getTeam().getCharacters()) {
+			currentCharacter.setTeam(players[0].getTeam());
+		}
+		for(Character currentCharacter : players[1].getTeam().getCharacters()) {
+			currentCharacter.setTeam(players[1].getTeam());
+		}
 //		System.out.println(1);
 	}
 	
