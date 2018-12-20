@@ -84,6 +84,7 @@ public class Character extends Nameable{
 		baseAttributes = new Attributes(0, 0, 0, 0, 0);
 		currentAttributes = new Attributes(0, 0, 0, 0, 0);
 		allSkills = new ArrayList<Skill>();
+		addedSkills = new ArrayList<Skill>();
 		String job = characterJson.getString("job");
 		String god = characterJson.getString("god");
 		if(!job.equals("none"))
