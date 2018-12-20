@@ -16,7 +16,7 @@ public class InviteController extends InviteBase{
 	
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
-		_nameLabel.setText(game.getName());
+		_nameLabel.setText(game.getPlayer1().getName());
 	}
 
 	@Override
