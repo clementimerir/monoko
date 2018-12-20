@@ -4,15 +4,17 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 
+import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import monoko.objects.Character;
 import monoko.objects.Gameboard;
 import monoko.objects.Player;
@@ -36,15 +38,18 @@ public class GameController extends GameBase{
 	int mvmntUsed = 0;//Contains how many cases did the player used
 	int skillUsed = 0;
 	//Timer
-	Timer timer;
-	Timer countdown = new Timer();
-	int counter = 0;
+	Timeline timer;
+	Timeline countdown = new Timeline();
+	double counter = 0;
+	double turnDuration = 10;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		start();
 		//Manager.getInstance().getController().setBackgroundMusic("./res/sound/fight-theme.wav");
 		root.getChildren().add( new FxmlManager("./ui/skillBar.fxml", skillBar).load() );
+		_vsLabel.setText( new StringBuilder("Red Team (").append(players[0].getTeam().getName()).append(")").append(" vs ").append("Blue Team (").append(players[1].getTeam().getName()).append(")").toString() );
+		_currentPlayerLabel.setText(players[0].getTeam().getName());
 	}
 
 	public void reloadSkillBar(Character character) {
@@ -75,8 +80,8 @@ public class GameController extends GameBase{
 		//
 		//TO CHANGE
 		//
-		//players = AssetManager.teamCreator();
-		loadPlayers();//remove this line for pre-made teams
+		players = AssetManager.teamCreator();
+//		loadPlayers();//remove this line for pre-made teams
 		//
 		//
 		//
@@ -89,25 +94,18 @@ public class GameController extends GameBase{
         root.getChildren().add( canvas );
         
         
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-            	nextTurn();
-            	System.out.println("Changement de tour pour : " + playerTurn.getName());
-            }
-        };
-        timer = new Timer();
-        timer.schedule(timerTask, 5*1000);
+        timer = new Timeline(new KeyFrame(Duration.seconds(turnDuration), ev -> {
+        	nextTurn();
+        }));
+        timer.setCycleCount(Animation.INDEFINITE);
+        timer.play();
         
-        countdown.scheduleAtFixedRate(new TimerTask() {
-    	  @Override
-    	  public void run() {
-    	    counter++;
-    	    System.out.println("Time Elapsed : " + counter + " s");
-    	  }
-    	}, 1000, 1000);
-        
-        
+        countdown = new Timeline(new KeyFrame(Duration.seconds(0.1), ev -> {
+    	    counter += 0.1;
+    	    _turnTimerIndicator.setProgress( counter / turnDuration );
+        }));
+        countdown.setCycleCount(Animation.INDEFINITE);
+        countdown.play();
         
         new AnimationTimer()
         {
@@ -385,8 +383,10 @@ public class GameController extends GameBase{
 	private void nextTurn() {
 		if (playerTurn.getName().equals(players[0].getTeam().getName())) {
 			playerTurn = players[1].getTeam();
+			_currentPlayerLabel.setText(players[1].getTeam().getName());
 		}else {
 			playerTurn = players[0].getTeam();
+			_currentPlayerLabel.setText(players[0].getTeam().getName());
 		}
 		haveCharacter = false; //Boolean to check if a character is currently selected
 		mvmntUsed = 0;//Contains how many cases did the player used
@@ -400,16 +400,9 @@ public class GameController extends GameBase{
 		board.resetAction_Mouvmnnt();
 		board.changeSelected(-1, -1);
 		
-		TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-            	System.out.println("Changement de tour pour : " + playerTurn.getName());
-            	nextTurn();
-            }
-        };
-		timer.cancel();
-		timer = new Timer();
-        timer.schedule(timerTask, 5*1000);
+        timer.stop();
+        timer.play();
+        
         counter = 0;
 	}
 	

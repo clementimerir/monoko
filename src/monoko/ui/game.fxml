@@ -10,9 +10,24 @@
 
 <StackPane fx:id="root" alignment="BOTTOM_CENTER" prefHeight="1015.0" prefWidth="1920.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <children>
-    <HBox alignment="TOP_RIGHT" prefHeight="-1.0" prefWidth="-1.0" StackPane.alignment="CENTER">
+    <HBox alignment="TOP_CENTER" prefHeight="-1.0" prefWidth="-1.0" StackPane.alignment="CENTER">
       <children>
-        <ProgressIndicator fx:id="_turnTimerIndicator" progress="0.0" />
+        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+          <children>
+            <Label fx:id="_vsLabel" text="Label">
+              <font>
+                <Font size="30.0" />
+              </font>
+            </Label>
+          </children>
+        </VBox>
+        <VBox id="VBox" alignment="CENTER" spacing="5.0">
+          <children>
+            <Label text="Currently playing : " />
+            <Label fx:id="_currentPlayerLabel" text="name" />
+            <ProgressIndicator fx:id="_turnTimerIndicator" disable="false" minHeight="100.0" minWidth="100.0" progress="0.0" style="" />
+          </children>
+        </VBox>
       </children>
       <StackPane.margin>
         <Insets />
