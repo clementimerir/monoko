@@ -34,7 +34,7 @@ public class LobbyController extends LobbyBase{
 		
 		_teamsComboBox.getSelectionModel().select( getUser().getTeams().get(0).getName() );
 		
-		Timeline countdown = new Timeline(new KeyFrame(Duration.seconds(1), ev -> {
+		Timeline countdown = new Timeline(new KeyFrame(Duration.millis(500), ev -> {
 			refreshQueue();
         }));
         countdown.setCycleCount(Animation.INDEFINITE);
