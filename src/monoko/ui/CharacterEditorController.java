@@ -312,6 +312,7 @@ public class CharacterEditorController extends CharacterEditorBase{
 		Character character = new Character(ThreadLocalRandom.current().nextInt( 0 , 999999 + 1 ), _nameTextfield.getText(), job, god);
 		character.setSkills(_itemList);
 		character.setAddedSkills(_addedItemList);
+		character.setCost(getTotalPrice());
 
 		if(editionMode) {
 			character.setId(_id);

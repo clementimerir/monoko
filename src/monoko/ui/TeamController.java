@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
@@ -26,7 +27,9 @@ public class TeamController extends TeamBase{
 	public void initialize(URL url, ResourceBundle bundle) {
 		_teamTitledPane.setText(getTeam().getName());
 		
-		loadCharacters();
+		if(_team.getCharacters().size() > 0) {
+			loadCharacters();			
+		}
 		
 		_teamsHBox.setOnDragOver(new EventHandler<DragEvent>() {
 		    public void handle(DragEvent event) {
@@ -102,19 +105,30 @@ public class TeamController extends TeamBase{
 
 	private void loadCharacters() {
 		_teamsHBox.getChildren().clear();
+		_teamsHBox.setAlignment(Pos.CENTER_LEFT);
+		int cost = 0;
 		for(Character character : getTeam().getCharacters()) {
 //			character.setTeam(_team);
 			CharacterController controller = new CharacterController(_root, character, true);
 			controller.setTeam(_team);
 			_teamsHBox.getChildren().add(new FxmlManager("./ui/character.fxml", controller).load());
+			cost += character.getCost();
 		}
+		
+		_teamTitledPane.setText( String.valueOf(cost) );
 	}
 	
 	@Override
 	public void onDeleteClicked() {
 		try {
 			new Network(_root.getRoot().getUser()).deleteTeam(_team);
-			_root.getRoot().getUser().deleteTeam(this.getTeam().getId());
+			
+			for(Team team : _root.getRoot().getUser().getTeams()) {
+				if(team.getId() == this.getTeam().getId()) {
+					_root.getRoot().getUser().getTeams().remove(team);
+					break;
+				}
+			}
 			_root.loadTeams();
 		} catch (Exception e) {
 			e.printStackTrace();

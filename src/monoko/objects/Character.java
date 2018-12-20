@@ -23,8 +23,8 @@ public class Character extends Nameable{
 	private int vision = 0; // 0 = up || 1 = right || 2 = bas || 3 = left
 	private boolean inUse;
 	private Team team;
+	private int cost;
 
-	
 	public Character(int id, String name, Soul job, Soul god, String inGame, String inMenu) {
 		setId(id);
 		setName(name);
@@ -441,6 +441,12 @@ public class Character extends Nameable{
 	public void setInUse(boolean inUse) {
 		this.inUse = inUse;
 	}
+	public int getCost() {
+		return cost;
+	}
 
+	public void setCost(int cost) {
+		this.cost = cost;
+	}
 
 }

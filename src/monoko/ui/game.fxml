@@ -8,4 +8,15 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<StackPane fx:id="root" alignment="BOTTOM_CENTER" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" />
+<StackPane fx:id="root" alignment="BOTTOM_CENTER" prefHeight="1015.0" prefWidth="1920.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <children>
+    <HBox alignment="TOP_RIGHT" prefHeight="-1.0" prefWidth="-1.0" StackPane.alignment="CENTER">
+      <children>
+        <ProgressIndicator fx:id="_turnTimerIndicator" progress="0.0" />
+      </children>
+      <StackPane.margin>
+        <Insets />
+      </StackPane.margin>
+    </HBox>
+  </children>
+</StackPane>

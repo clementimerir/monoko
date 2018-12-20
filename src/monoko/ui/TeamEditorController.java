@@ -61,7 +61,7 @@ public class TeamEditorController extends TeamEditorBase{
 	}
 	
 	public void loadTeams() {
-		System.out.println("ss");
+		System.out.println("Reloading teams");
 		_teamsVBox.getChildren().clear();
 		if(_root.getUser() != null) {
 			for(Team team : _root.getUser().getTeams()) {
