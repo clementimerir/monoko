@@ -98,6 +98,10 @@ public class Character extends Nameable{
 		for(int j=0; j<skills.size(); j++) {
 			addSkill(new Skill(skills.getString(j)));
 		}
+		JsonArray addedSkills = characterJson.getJsonArray("addedSkills");
+		for(int j=0; j<addedSkills.size(); j++) {
+			addAddedSkill(new Skill(addedSkills.getString(j)));
+		}
 	}
 	
 	public List<Skill> getAddedSkills() {
@@ -118,6 +122,10 @@ public class Character extends Nameable{
 
 	public void addSkill(Skill s) {
 		allSkills.add(s);
+	}
+
+	public void addAddedSkill(Skill s) {
+		addedSkills.add(s);
 	}
 
 	public void removeSkill(String skillName) {
@@ -290,6 +298,7 @@ public class Character extends Nameable{
 	public JSONObject toJson() {
 		JSONObject characterJSON = new JSONObject();
 		JSONArray skillsJSON = new JSONArray();
+		JSONArray addedSkillsJSON = new JSONArray();
 		characterJSON.put("ref", getId());
 		characterJSON.put("name", getName());
 		characterJSON.put("cost", getCost());
@@ -306,7 +315,13 @@ public class Character extends Nameable{
 				skillsJSON.add(allSkills.get(i).getName());
 			}
 		}
+		if (addedSkills!=null) {
+			for(int i=0; i<addedSkills.size(); i++) {
+				addedSkillsJSON.add(addedSkills.get(i).getName());
+			}
+		}
 		characterJSON.put("skills", skillsJSON);
+		characterJSON.put("addedSkills", addedSkillsJSON);
 		return characterJSON;
 	}
 	

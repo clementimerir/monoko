@@ -30,7 +30,8 @@ public class Network {
 
 	public static void main(String[] args) throws Exception {
 		Network http = new Network();
-		
+		http.login("p", "p");
+		/*
 		List<Character> l = new ArrayList<Character>();
 		Character c1 = new Character(0, "Escanor", new Soul("Fighter"), new Soul("Ross'Fert"));
 		Character c2 = new Character(1, "Phillipe", new Soul("Hunter"), new Soul("Simmenoid"));
@@ -44,7 +45,7 @@ public class Network {
 		http.login("p", "p");
 		http.joinGame(t);
 		http.login("Mambab", "azerty");
-		http.joinGame(t);
+		http.joinGame(t);*/
 		//http.invitePlayer("p");
 		/*http.login("p", "p");
 		http.joinGame(t);
@@ -69,8 +70,9 @@ public class Network {
 		action = new Action(1,2,2,"Sword",10,5);
 		http.updateGame(game, action);
 		http.getGameUpdates(game);
-		http.endGame(game);*/
-		//http.register("p", "p");
+		http.endGame(game);*//*
+		http.register("p", "p");
+		http.register("Mambab", "azerty");*/
 	}
 	
 	public Network() {
