@@ -3,13 +3,15 @@ package monoko.objects;
 public class Tile{
 
 	private int type;
+	private int image;
 	private Character c;
 	private boolean selected;
 	private boolean mvmnt;//boolean to check if a coloration for mouvement is needed
 	private boolean action;//boolean to check if a coloration for mouvement is needed
 
-	public Tile(int type, Character c) {
+	public Tile(int type, int image, Character c) {
 		setType(type);
+		setImage(image);
 		setCharacter(c);
 		setSelected(false);
 		setMvmnt(false);
@@ -21,8 +23,15 @@ public class Tile{
 		}else {
 			return false;
 		}
-		
-		
+			
+	}
+	
+	public int getImage() {
+		return image;
+	}
+
+	public void setImage(int image) {
+		this.image = image;
 	}
 	
 	public void setCharacter(Character c) {

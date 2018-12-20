@@ -1,7 +1,13 @@
 package monoko.objects;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class Gameboard extends Nameable{
 
@@ -23,8 +29,10 @@ public class Gameboard extends Nameable{
 	
 	public void setBoard(int width, int height) {
 		//Creation aleatoire de la map
+		
         this.board = new Tile[width][height];
-        double rand = 0;
+        this.mapReader("map1.txt");
+        //double rand = 0;
         //double rand2 = 0;
         int mod = 0;
         //int mod2 = 0;
@@ -33,6 +41,7 @@ public class Gameboard extends Nameable{
         int widthP1 = this.getPlayer1().getTeam().getCharacters().size();
         int widthP2 = this.getPlayer2().getTeam().getCharacters().size();
         int mod2 = 0;
+       /*
         for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
 				//Creation de la tile
@@ -44,33 +53,75 @@ public class Gameboard extends Nameable{
 					if(i % mod2 == 1 && x < p1.getTeam().getCharacters().size()) {
 						p1.getTeam().getCharacters().get(x).setVision(2);
 						p1.getTeam().getCharacters().get(x).setInGameSprite();
-						this.board[i][j] = new Tile(0,p1.getTeam().getCharacters().get(x));
+						this.board[i][j] = new Tile(0,0,p1.getTeam().getCharacters().get(x));
 						x++;
 					}else {
-						this.board[i][j] = new Tile(0,null);
+						this.board[i][j] = new Tile(0,0,null);
 					}
 				}else if(j == height-1) {
 					mod2 = width/widthP2;
 					if(i % mod2 == 1  && x2 < p2.getTeam().getCharacters().size()) {
-						this.board[i][j] = new Tile(0,p2.getTeam().getCharacters().get(x2));
+						this.board[i][j] = new Tile(0,0,p2.getTeam().getCharacters().get(x2));
 						x2++;
 					}else {
-						this.board[i][j] = new Tile(0,null);
+						this.board[i][j] = new Tile(0,0,null);
 					}
 				}else {
 					if(mod <= 20) {
-						this.board[i][j] = new Tile(0,null);
+						this.board[i][j] = new Tile(0,0,null);
 					}else if(mod <= 23){
-						this.board[i][j] = new Tile(1,null);
+						this.board[i][j] = new Tile(1,1,null);
 					}else {
-						this.board[i][j] = new Tile(2,null);
+						this.board[i][j] = new Tile(2,2,null);
 					}
 				}
-				
 			}
 		}
+		*/
+        mod = width/widthP1;
+        mod2 = width/widthP2;
+        int j1 = 0;
+        int j2 = height-1;
+        for (int i = 0; i < width; i++) {
+        	if(i % mod == 1 && x < p1.getTeam().getCharacters().size()) {
+    			p1.getTeam().getCharacters().get(x).setVision(2);
+    			p1.getTeam().getCharacters().get(x).setInGameSprite();
+    			this.board[i][j1].setCharacter(p1.getTeam().getCharacters().get(x));
+    			x++;
+    		}
+        	if(i % mod2 == 1  && x2 < p2.getTeam().getCharacters().size()) {
+				this.board[i][j2].setCharacter(p2.getTeam().getCharacters().get(x2));
+				x2++;
+			}
+        }
         
         
+	}
+	
+	//Lis un fichier text contenant une map et creer le board en fonction
+	public void mapReader(String mapName) {
+		try{
+			InputStream flux=new FileInputStream(new File("./res/data/"+mapName).getAbsolutePath()); 
+			InputStreamReader lecture=new InputStreamReader(flux);
+			BufferedReader buff=new BufferedReader(lecture);
+			String ligne;
+			int j = 0;
+			
+			while ((ligne=buff.readLine())!=null){
+				String num[] =ligne.split(",");
+				for(int i = 0; i < getBoard().length; i++) {
+					int image = Integer.parseInt(num[i]);
+					this.getBoard()[i][j] = new Tile(image % 3,image,null);
+				}
+				j++;
+				
+			}
+			buff.close(); 
+			}		
+			catch (Exception e){
+			System.out.println(e.toString());
+			}
+		
 	}
 	
 	
