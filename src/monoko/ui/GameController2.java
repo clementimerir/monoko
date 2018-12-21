@@ -148,7 +148,6 @@ public class GameController2 extends GameBase{
             public void handle(long currentNanoTime)
             {
             	
-            	
             	if (!appliedNetChange) {
             		_game.getActions();
             		if(_game.getLastActionID() > numAction) {
