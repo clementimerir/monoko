@@ -38,11 +38,11 @@ public class Gameboard extends Nameable{
         int widthP2 = this.getPlayer2().getTeam().getCharacters().size();
         int mod = width/widthP1;
         int mod2 = width/widthP2;
-        int j1 = 1;
-        int j2 = height-2;
+        int j1 = 6;
+        int j2 = height-7;
         
         //Ajout des personnages
-        for (int i = 0; i < width; i++) {
+        for (int i = 1; i < width-2; i++) {
         	if(i % mod == 1 && x < p1.getTeam().getCharacters().size()) {
     			p1.getTeam().getCharacters().get(x).setVision(2);
     			p1.getTeam().getCharacters().get(x).setInGameSprite();
