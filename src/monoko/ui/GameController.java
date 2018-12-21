@@ -54,6 +54,7 @@ public class GameController extends GameBase{
 	WritableImage currentSprite = null;
 	int[] animPlace = new int[] {0,0};
 	DoubleProperty frame  = new SimpleDoubleProperty();
+	boolean endGame = false;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -96,6 +97,7 @@ public class GameController extends GameBase{
 		if( Manager.getInstance().getController().getUser().getTeams().size() >= 2) {
 			loadPlayers();//remove this line for pre-made teams
 		}
+		
 		//
 		//
 		//
@@ -135,6 +137,8 @@ public class GameController extends GameBase{
         {
             public void handle(long currentNanoTime)
             {
+            	
+            
             	//We clear the board
             	gc.clearRect(0, 0, AssetManager.GAME_WIDTH, AssetManager.GAME_HEIGHT);
             	//We draw the full board with the character
@@ -258,7 +262,9 @@ public class GameController extends GameBase{
             	coordSelected = AssetManager.toGrid(event.getSceneX(), event.getSceneY());
             	int [] oldCoordSelected = board.getCurrentlySelected();
             	//We check if a character is present on the selected tile
-            	
+            	if(endGame) {
+            		onMainMenuClicked();
+            	}
             	
             	if(caraTurn != null) {
             		if(board.getTile(coordSelected).isMvmnt() && !board.getTile(oldCoordSelected).getCharacter().isUsingSkill()){
@@ -281,6 +287,7 @@ public class GameController extends GameBase{
             			caraTurn.useSkill(c, caraTurn.getUsedSkill(), coordSelected[0], coordSelected[1]);
             			if(c.getCurrentAttributes().getHp() <= 0) {
             				board.getTile(coordSelected).setCharacter(null);
+            				endGame = checkEndGame();
             			}
             			board.getCurrentTileSelected().getCharacter().setUsedSkill(null);
             			board.resetAction_Mouvmnnt();
@@ -343,6 +350,7 @@ public class GameController extends GameBase{
                 			caraTurn.useSkill(c, caraTurn.getUsedSkill(), coordSelected[0], coordSelected[1]);
                 			if(c.getCurrentAttributes().getHp() <= 0) {
                 				board.getTile(coordSelected).setCharacter(null);
+                				endGame = checkEndGame();
                 			}
                 			board.getCurrentTileSelected().getCharacter().setUsedSkill(null);
                 			board.resetAction_Mouvmnnt();
@@ -460,6 +468,32 @@ public class GameController extends GameBase{
         timer.play();
         
         counter = 0;
+	}
+	
+	private boolean checkEndGame(){
+		Team team1 = players[0].getTeam();
+		Team team2 = players[1].getTeam();
+		int team1NB = team1.getCharacters().size();
+		int team2NB = team2.getCharacters().size();
+		int counterT1 = 0;
+		int counterT2 = 0;
+		for(int i=0; i<board.getBoard().length; i++) {
+			for(int j = 0; j<board.getBoard()[0].length; j++) {
+				if (board.getBoard()[i][j].getCharacter() != null) {
+					if (board.getBoard()[i][j].getCharacter().getTeam().getName().equals(team1.getName())) {
+						counterT1++;
+					}else if (board.getBoard()[i][j].getCharacter().getTeam().getName().equals(team2.getName())) {
+						counterT2++;
+					}
+				}
+			}
+		}
+		if(counterT1 == 0 || counterT2 == 0) {
+			return true;
+		}else {
+			return false;
+		}
+		
 	}
 	
 }
