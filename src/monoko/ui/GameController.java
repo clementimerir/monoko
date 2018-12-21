@@ -93,7 +93,9 @@ public class GameController extends GameBase{
 		//TO CHANGE
 		//
 		players = AssetManager.teamCreator();
-//		loadPlayers();//remove this line for pre-made teams
+		if( Manager.getInstance().getController().getUser().getTeams().size() >= 2) {
+			loadPlayers();//remove this line for pre-made teams
+		}
 		//
 		//
 		//

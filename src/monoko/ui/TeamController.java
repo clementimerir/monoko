@@ -121,16 +121,13 @@ public class TeamController extends TeamBase{
 	private void loadCharacters() {
 		_teamsHBox.getChildren().clear();
 		_teamsHBox.setAlignment(Pos.CENTER_LEFT);
-		int cost = 0;
 		for(Character character : getTeam().getCharacters()) {
 //			character.setTeam(_team);
 			CharacterController controller = new CharacterController(_root, character, true);
 			controller.setTeam(_team);
 			_teamsHBox.getChildren().add(new FxmlManager("./ui/character.fxml", controller).load());
-			cost += character.getCost();
 		}
 		
-		_teamTitledPane.setText( String.valueOf(cost) );
 	}
 	
 	@Override
