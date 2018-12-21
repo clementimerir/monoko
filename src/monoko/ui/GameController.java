@@ -90,10 +90,20 @@ public class GameController extends GameBase{
 		
 		for(Character currentCharacter : players[0].getTeam().getCharacters()) {
 			currentCharacter.setTeam(players[0].getTeam());
+//			currentCharacter.setCurrentAttributes(currentCharacter.getBaseAttributes());
 		}
 		for(Character currentCharacter : players[1].getTeam().getCharacters()) {
 			currentCharacter.setTeam(players[1].getTeam());
+//			currentCharacter.setCurrentAttributes(currentCharacter.getBaseAttributes());
 		}
+		
+//		try {
+//			Manager.getInstance().getNetwork().saveTeam(players[0].getTeam());
+//			Manager.getInstance().getNetwork().saveTeam(players[1].getTeam());
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+		
 //		System.out.println(1);
 	}
 	
@@ -106,9 +116,9 @@ public class GameController extends GameBase{
 		//TO CHANGE
 		//
 		players = AssetManager.teamCreator();
-		if( Manager.getInstance().getController().getUser().getTeams().size() >= 2) {
-			loadPlayers();//remove this line for pre-made teams
-		}
+//		if( Manager.getInstance().getController().getUser().getTeams().size() >= 2) {
+//			loadPlayers();//remove this line for pre-made teams
+//		}
 		
 		//
 		//
@@ -441,7 +451,7 @@ public class GameController extends GameBase{
     
 	@Override
 	public void onMainMenuClicked() {
-		Manager.getInstance().getController().getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/mainMenu.fxml", new GameController()).load());		
+		Manager.getInstance().getController().getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/mainMenu.fxml", Manager.getInstance().getMainMenu()).load());		
 	}
     
 	private void clearSkillBar() {
