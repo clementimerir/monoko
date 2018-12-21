@@ -30,10 +30,11 @@ public class Network {
 
 	public static void main(String[] args) throws Exception {
 		Network http = new Network();
+		/*
 		http.register("p", "p");
 		http.register("patol", "patol");
 		http.register("Mambab", "azerty");
-		/*
+		*/
 		List<Character> l = new ArrayList<Character>();
 		Character c1 = new Character(0, "Escanor", new Soul("Fighter"), new Soul("Ross'Fert"));
 		Character c2 = new Character(1, "Phillipe", new Soul("Hunter"), new Soul("Simmenoid"));
@@ -44,10 +45,8 @@ public class Network {
 		c1.addSkill(new Skill("Sword"));
 		c3.addSkill(new Skill("Scepter"));
 		Team t = new Team(0, "lolilol", l);
-		http.login("p", "p");
-		http.joinGame(t);
 		http.login("Mambab", "azerty");
-		http.joinGame(t);*/
+		http.joinGame(t);
 		//http.invitePlayer("p");
 		/*http.login("p", "p");
 		http.joinGame(t);
@@ -176,7 +175,7 @@ public class Network {
 		urlParametersJSON.put("password", user.getPassword());
 		if (t!=null) {
 			for(int i=0; i<t.getCharacters().size(); i++) {
-				teamCharactersJSON.add(t.getCharacters().get(i).toJson());
+				teamCharactersJSON.add(t.getCharacters().get(i).toJson(true));
 			}
 		}
 		teamJSON.put("ref", random.nextInt(1000000000));

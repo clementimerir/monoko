@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -296,11 +297,17 @@ public class Character extends Nameable{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public JSONObject toJson() {
+	public JSONObject toJson(boolean... randomId) {
+		boolean isRandomId = (boolean) (randomId.length > 0 ? randomId[0] : 0);
 		JSONObject characterJSON = new JSONObject();
 		JSONArray skillsJSON = new JSONArray();
 		JSONArray addedSkillsJSON = new JSONArray();
-		characterJSON.put("ref", getId());
+		if(isRandomId) {
+			Random random = new Random();
+			characterJSON.put("ref", random.nextInt(1000000000));
+		}
+		else
+			characterJSON.put("ref", getId());
 		characterJSON.put("name", getName());
 		characterJSON.put("cost", getCost());
 		if (job!=null)
