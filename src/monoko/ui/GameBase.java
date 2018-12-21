@@ -2,6 +2,7 @@ package monoko.ui;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ToolBar;
@@ -16,4 +17,7 @@ public abstract class GameBase implements Initializable{
 	@FXML ProgressIndicator _turnTimerIndicator;
 	@FXML Label _vsLabel;
 	@FXML Label _currentPlayerLabel;
+	@FXML Button _mainMenuButton;
+	
+	@FXML public abstract void onMainMenuClicked();
 }

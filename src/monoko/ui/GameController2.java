@@ -553,6 +553,12 @@ public class GameController2 extends GameBase{
 		}
 		return null;
 	}
+
+	@Override
+	public void onMainMenuClicked() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

@@ -46,7 +46,7 @@ public class GameController extends GameBase{
 	Timeline timer, animation;
 	Timeline countdown = new Timeline();
 	double counter = 0;
-	double turnDuration = 10;
+	double turnDuration = 20;
 	
 	//Variable d'animation
 	boolean animationStart = false;
@@ -418,6 +418,12 @@ public class GameController extends GameBase{
             break;
     	}
     }
+    
+	@Override
+	public void onMainMenuClicked() {
+		System.out.println("ss");
+		Manager.getInstance().getController().getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/mainMenu.fxml", Manager.getInstance().getMainMenu()).load());		
+	}
     
 	private void clearSkillBar() {
 		skillBar.setSkills(new ArrayList<Skill>());

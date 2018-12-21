@@ -23,9 +23,15 @@
         </VBox>
         <VBox id="VBox" alignment="CENTER" spacing="5.0">
           <children>
-            <Label text="Currently playing : " textFill="WHITE" />
-            <Label fx:id="_currentPlayerLabel" text="name" textFill="WHITE" />
+            <Label text="Currently playing : " textFill="WHITE">
+              <font>
+                <Font size="24.0" fx:id="x1" />
+              </font>
+            </Label>
+            <Label fx:id="_currentPlayerLabel" font="$x1" text="name" textFill="WHITE" />
             <ProgressIndicator fx:id="_turnTimerIndicator" disable="false" minHeight="100.0" minWidth="100.0" progress="0.0" style="" />
+            <Pane prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS" />
+            <Button fx:id="_mainMenuButton" contentDisplay="CENTER" font="$x1" minHeight="50.0" mnemonicParsing="false" onAction="#onMainMenuClicked" text="Main Menu" visible="false" />
           </children>
         </VBox>
       </children>
