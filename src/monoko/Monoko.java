@@ -47,4 +47,8 @@ public class Monoko extends Application {
 		System.out.println("Initialization...");
 	}
 	
+	public static void main(String[] args) {
+        launch(args);
+    }
+	
 }
