@@ -26,9 +26,9 @@
             <Separator prefWidth="-1.0" />
             <HBox id="HBox" alignment="TOP_LEFT" spacing="5.0" VBox.vgrow="ALWAYS">
               <children>
-                <Pane minWidth="5.0" prefHeight="-1.0" prefWidth="-1.0" />
-                <FlowPane fx:id="_charactersFlowpane" hgap="10.0" maxHeight="540.0" maxWidth="540.0" opacity="0.6" orientation="HORIZONTAL" prefHeight="-1.0" prefWidth="-1.0" vgap="10.0" />
-                <Pane minWidth="5.0" prefHeight="-1.0" prefWidth="-1.0" />
+                <Pane minWidth="5.0" prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="NEVER" />
+                <FlowPane fx:id="_charactersFlowpane" hgap="10.0" maxHeight="800.0" maxWidth="800.0" minHeight="800.0" minWidth="800.0" opacity="0.6" orientation="VERTICAL" prefHeight="-1.0" prefWidth="-1.0" vgap="10.0" HBox.hgrow="NEVER" />
+                <Pane minWidth="5.0" prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="NEVER" />
               </children>
               <VBox.margin>
                 <Insets />
