@@ -17,6 +17,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -63,6 +65,16 @@ public class GameController extends GameBase{
 		root.getChildren().add( new FxmlManager("./ui/skillBar.fxml", skillBar).load() );
 		_vsLabel.setText( new StringBuilder("Red Team (").append(players[0].getTeam().getName()).append(")").append(" vs ").append("Blue Team (").append(players[1].getTeam().getName()).append(")").toString() );
 		_currentPlayerLabel.setText(players[0].getTeam().getName());
+		
+		root.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+			@Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+                    nextTurn();
+                }
+            }
+		});
+		
 	}
 
 	public void reloadSkillBar(Character character) {
@@ -429,8 +441,7 @@ public class GameController extends GameBase{
     
 	@Override
 	public void onMainMenuClicked() {
-		System.out.println("ss");
-		Manager.getInstance().getController().getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/mainMenu.fxml", Manager.getInstance().getMainMenu()).load());		
+		Manager.getInstance().getController().getRootAnchorPane().getChildren().set(0, new FxmlManager("./ui/mainMenu.fxml", new GameController()).load());		
 	}
     
 	private void clearSkillBar() {
